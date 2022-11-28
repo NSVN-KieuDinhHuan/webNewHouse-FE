@@ -1,62 +1,127 @@
-<div class="container-fluid">
-  <div class="row no-gutter">
-    <div class="d-none d-md-flex col-md-4 col-lg-6 bg-image"></div>
-    <div class="col-md-8 col-lg-6">
-      <div class="login d-flex align-items-center py-5">
-        <div class="container">
-          <div class="row">
-            <div class="col-md-9 col-lg-8 mx-auto pl-5 pr-5">
-              <h3 class="login-heading mb-4">Đăng ký thành viên nhận ngay ưu đãi!</h3>
-              <form [formGroup]="registerForm" (ngSubmit)="register()">
-                <div class="mt-3">
-                  <label for="inputEmail">Email</label>
+<app-search></app-search>
+<!-- ##### Main Content Wrapper Start ##### -->
+<div class="main-content-wrapper d-flex clearfix">
+
+  <!-- Mobile Nav (max width 767px)-->
+  <div class="mobile-nav">
+    <!-- Navbar Brand -->
+    <div class="amado-navbar-brand">
+      <a href="index.html"><img src="assets/img/core-img/logo.png" alt=""></a>
+    </div>
+    <!-- Navbar Toggler -->
+    <div class="amado-navbar-toggler">
+      <span></span><span></span><span></span>
+    </div>
+  </div>
+
+  <app-sidebar></app-sidebar>
+
+  <div class="cart-table-area section-padding-100">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-12 col-lg-6">
+          <div class="checkout_details_area mt-50 clearfix">
+
+            <div class="cart-title">
+              <h2>Thông tin nhận hàng</h2>
+            </div>
+
+            <form [formGroup]="registerForm" (ngSubmit)="register()">
+              <div class="row">
+                <div class="col-12 mb-3">
                   <input type="email" id="inputEmail" class="form-control"
                          placeholder="Nhập địa chỉ email" formControlName="email">
                   <div class="validate" [hidden]="email.valid || !email.touched">
-                    <div *ngIf="email.errors?.required">Nhập địa chỉ Email</div>
+                    <div *ngIf="email.errors?.required">NEmail</div>
                     <div *ngIf="email.errors?.email">Sai định dang email</div>
                   </div>
                 </div>
-                <div class="mt-3">
-                  <label for="inputUsername">Tên đăng nhập</label>
-                  <input type="text" id="inputUsername" class="form-control"
-                         placeholder="Nhập tên đăng nhập" formControlName="username">
-                  <p class="validate" [hidden]="username.valid || !username.touched">Nhập tên đăng nhập</p>
+                <div class="col-12 mb-3">
+
+                  <input type="text" id="username" class="form-control"
+                         placeholder="Nhập họ tên" formControlName="username">
+                  <p class="validate" [hidden]="username.valid || !username.touched"> Họ và tên</p>
                 </div>
-                <div class="mt-3">
-                  <label for="inputUsername">Họ và tên</label>
-                  <input type="text" id="fullName" class="form-control"
-                         placeholder="Nhập họ tên" formControlName="fullName">
-                  <p class="validate" [hidden]="fullName.valid || !fullName.touched">Nhập Họ và tên</p>
-                </div>
-                <div class="mt-3">
-                  <label for="inputUsername">Địa chỉ</label>
+                <div class="col-12 mb-3">
+
                   <input type="text" id="address" class="form-control"
-                         placeholder="Nhập địa chỉ" formControlName="address">
+                         placeholder="Nhập địa chỉ" formControlName="address" required>
+                  <p class="validate" [hidden]="address.valid || !address.touched"> Nhập số điện thoại</p>
                 </div>
-                <div class="mt-3">
-                  <label for="inputPassword">Mật khẩu</label>
-                  <input type="password" id="inputPassword" class="form-control"
-                         placeholder="Nhập mật khẩu" formControlName="password">
-                  <div class="validate" [hidden]="password.valid || !password.touched">
-                    <div *ngIf="password.errors?.required">Nhập mật khẩu</div>
-                    <div *ngIf="password.errors?.pattern">Mật khẩu ít nhất tám ký tự, ít nhất một chữ cái và một số</div>
+                <div class="col-12 mb-3">
+                  <input type="text" id="phone" class="form-control"
+                         placeholder="Nhập số điện thoại" formControlName="phone" required>
+                  <p class="validate" [hidden]="phone.valid || !phone.touched"> Nhập số điện thoại</p>
+                </div>
+                <div class="col-12 col-lg-8">
+                  <div class="custom-control custom-checkbox d-block mb-2">
+                    <input type="checkbox" class="custom-control-input" id="customCheck2">
+                    <label class="custom-control-label" for="customCheck2">Tạo tài khoản</label>
                   </div>
+                  <button type="submit"
+                          class="btn amado-btn w-100">Đăng Ký</button>
                 </div>
-                <div class="mb-4 mt-3">
-                  <label for="ptext">Xác nhận mật khẩu</label>
-                  <input type="password" id="ptext" class="form-control" placeholder="Nhập lại mật khẩu" formControlName="confirmPassword">
-                  <div class="validate" [hidden]="confirmPassword.valid || !confirmPassword.touched">
-                    <div *ngIf="confirmPassword.errors?.required">Nhập confirm password</div>
-                    <div *ngIf="confirmPassword.errors?.pattern">Mật khẩu ít nhất tám ký tự, ít nhất một chữ cái và một số</div>
+              </div>
+            </form>
+          </div>
+        </div>
+        <div class="col-12 col-lg-6">
+          <div class="cart-summary">
+            <h5>Đơn hàng</h5>
+            <table class="table table-responsive">
+              <thead>
+              <tr>
+                <th></th>
+                <th>Tên</th>
+                <th>Giá</th>
+                <th>Số lượng</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr>
+                <td class="cart_product_img">
+                  <a href="#"><img src="assets/img/bg-img/cart1.jpg" alt="Product"></a>
+                </td>
+                <td class="cart_product_desc">
+                  <h5>White Modern Chair</h5>
+                </td>
+                <td class="price">
+                  <span>$130</span>
+                </td>
+                <td class="qty">
+                  <div class="qty-btn d-flex">
+                    <p>Qty</p>
+                    <div class="quantity">
+                      <span class="qty-minus" onclick="var effect = document.getElementById('qty'); var qty = effect.value; if( !isNaN( qty ) &amp;&amp; qty &gt; 1 ) effect.value--;return false;"><i class="fa fa-minus" aria-hidden="true"></i></span>
+                      <input type="number" class="qty-text" id="qty" step="1" min="1" max="300" name="quantity" value="1">
+                      <span class="qty-plus" onclick="var effect = document.getElementById('qty'); var qty = effect.value; if( !isNaN( qty )) effect.value++;return false;"><i class="fa fa-plus" aria-hidden="true"></i></span>
+                    </div>
                   </div>
-                </div>
-                <button type="submit"
-                   class="btn btn-lg btn-outline-primary btn-block btn-login text-uppercase font-weight-bold mb-2">Đăng Ký</button>
-                <div class="text-center pt-3">
-                  Bạn đã có tài khoản? <a class="font-weight-bold" routerLink="/login" >Đăng nhập ngay</a>
-                </div>
-              </form>
+                </td>
+              </tr>
+              </tbody>
+            </table>
+            <ul class="summary-table">
+              <li><span>Tổng Đơn hàng:</span> <span>$140.00</span></li>
+              <li><span>Phí vận chuyển:</span> <span>40.000</span></li>
+              <li><span>Tổng:</span> <span>$140.00</span></li>
+            </ul>
+
+            <div class="payment-method">
+              <!-- Cash on delivery -->
+              <div class="custom-control custom-checkbox mr-sm-2">
+                <input type="checkbox" class="custom-control-input" id="cod" checked>
+                <label class="custom-control-label" for="cod">Thanh toán khi giao hàng(COD)</label>
+              </div>
+              <!-- Paypal -->
+              <div class="custom-control custom-checkbox mr-sm-2">
+                <input type="checkbox" class="custom-control-input" id="paypal">
+                <label class="custom-control-label" for="paypal">Chuyển khoản ngân hàng</label>
+              </div>
+            </div>
+
+            <div class="cart-btn mt-100">
+              <a type="submit" href="#" class="btn amado-btn w-100">Thanh toán</a>
             </div>
           </div>
         </div>
@@ -64,3 +129,6 @@
     </div>
   </div>
 </div>
+<!-- ##### Main Content Wrapper End ##### -->
+<app-newsletter></app-newsletter>
+<app-footer></app-footer>

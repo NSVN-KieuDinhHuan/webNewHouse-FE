@@ -135,6 +135,14 @@ img {
 
 .height-800 {
   height: 800px !important; }
+.width-400 {
+  width: 400px !important;
+
+}
+.width-100 {
+  width: 100px !important;
+
+}
 
 /* Section Padding */
 .section-padding-100 {
@@ -264,12 +272,12 @@ img {
       display: flex; } }
   .mobile-nav .amado-navbar-brand {
     -webkit-box-flex: 0;
-    -ms-flex: 0 0 70px;
-    flex: 0 0 70px;
-    max-width: 70px; }
+    -ms-flex: 0 0 150px;
+    flex: 0 0 150px;
+    max-width: 150px; }
     .mobile-nav .amado-navbar-brand a {
       display: block;
-      max-width: 70px; }
+      max-width: 150px; }
   .mobile-nav .amado-navbar-toggler {
     cursor: pointer; }
     .mobile-nav .amado-navbar-toggler span {

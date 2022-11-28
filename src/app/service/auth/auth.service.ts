@@ -46,14 +46,6 @@ export class AuthService {
     return loggedIn;
   }
 
-  isMerchant() {
-    if (!this.isLoggedIn()) {
-      return null;
-    }
-    const isMerchant = this.getCurrentUser().roles[0].authority === `ROLE_MERCHANT`;
-    return isMerchant;
-  }
-
   getCurrentUser() {
     return JSON.parse(sessionStorage.getItem('user'));
   }

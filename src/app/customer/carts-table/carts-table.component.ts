@@ -4,6 +4,9 @@ import {CartService} from '../../service/cart/cart.service';
 import {Cart} from '../../model/cart';
 import {NotificationService} from '../../service/notification/notification.service';
 import {Router} from '@angular/router';
+import {CartDetail} from '../model/cart-detail';
+import {Dish} from '../model/dish';
+import {JsService} from '../../service/js.service';
 
 @Component({
   selector: 'app-carts-table',
@@ -13,24 +16,30 @@ import {Router} from '@angular/router';
 export class CartsTableComponent implements OnInit, OnChanges {
 
   carts: Cart[] = [];
-
+  cartDetailList: {
+    dish:Dish,
+    quantity:number
+  }[]
+  dish:Dish[];
   @Input()
   refreshNum = 0;
 
   currentUser: any;
   loggedIn = false;
 
-  constructor(private authService: AuthService,
+  constructor(
+    private  js: JsService,
+    private authService: AuthService,
               private cartService: CartService,
               private notificationService: NotificationService,
               private router: Router
   ) {
 
+    this.cartDetailList =  JSON.parse(sessionStorage.getItem("cartDetailList"))
   }
 
   ngOnInit() {
-    this.checkLoginAndGetInfo();
-    this.getCurrentUserCarts();
+    this.js.jsActive()
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -53,20 +62,25 @@ export class CartsTableComponent implements OnInit, OnChanges {
     );
   }
 
-  increaseDishQuantity(cartId: number, dishId: number) {
-    this.cartService.increaseDishQuantity(cartId, dishId).subscribe(
-      (response) => {
-        this.getCurrentUserCarts();
-      }
-    );
+
+
+  increaseDishQuantity(index: number) {
+    this.cartDetailList =  JSON.parse(sessionStorage.getItem("cartDetailList"))
+      this.cartDetailList[index].quantity=this.cartDetailList[index].quantity + 1;
+    sessionStorage.setItem('cartDetailList', JSON.stringify(this.cartDetailList));
   }
 
-  decreaseDishQuantity(cartId: number, dishId: number) {
-    this.cartService.decreaseDishQuantity(cartId, dishId).subscribe(
-      (response) => {
-        this.getCurrentUserCarts();
-      }
-    );
+  decreaseDishQuantity(index: number) {
+    this.cartDetailList =  JSON.parse(sessionStorage.getItem("cartDetailList"))
+    this.cartDetailList[index].quantity=this.cartDetailList[index].quantity - 1;
+    if(this.cartDetailList[index].quantity==0) {
+      this.removeDishOfCart(index)
+    }
+    sessionStorage.setItem('cartDetailList', JSON.stringify(this.cartDetailList));
+  }
+  removeDishOfCart(index: number) {
+    this.cartDetailList =  JSON.parse(sessionStorage.getItem("cartDetailList"))
+    this.cartDetailList.splice(index,1)
   }
 
   checkOut(merchantId: number) {

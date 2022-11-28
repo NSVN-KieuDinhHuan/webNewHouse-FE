@@ -32,7 +32,7 @@ export class UserInfoComponent implements OnInit {
     username: new FormControl(''),
     image: new FormControl('')
   });
-  orderDto: OrderDto = {cart: {cartDetails: []}, merchant: {}, deliveryInfo: {}};
+  orderDto: OrderDto = {cart: {cartDetails: []}, deliveryInfo: {}};
   orderStatus;
   orderId: number;
 

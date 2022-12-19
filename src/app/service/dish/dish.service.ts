@@ -33,7 +33,7 @@ export class DishService {
   }
 
   getDishbyCategoryID(id:number) {
-    return this.httpClient.post<Dish[]>(`${API_URL}/dishes/search`, id);
+    return this.httpClient.get<Dish[]>(`${API_URL}/dishes/category/${id}`);
   }
 
   findDishesWithSameCategoryWith(dishId: number, limit: number): Observable<Dish[]> {

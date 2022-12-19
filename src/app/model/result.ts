@@ -1,4 +1,5 @@
-import {Dish} from '../customer/model/dish';
+import {Dish} from './dish';
+
 
 export interface result {
   content?: Dish[];

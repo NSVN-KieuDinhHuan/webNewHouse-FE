@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {JsService} from '../../../service/js.service';
-import {Dish} from '../../model/dish';
+import {Dish} from '../../../model/dish';
+
 
 @Component({
   selector: 'app-sidebar',

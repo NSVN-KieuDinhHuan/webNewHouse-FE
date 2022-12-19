@@ -5,7 +5,7 @@ import {ActivatedRoute, ParamMap, Router} from '@angular/router';
 import {AuthService} from '../../service/auth/auth.service';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {NotificationService} from '../../service/notification/notification.service';
-import {OrderDto} from '../../model/order-dto';
+
 import {CartDetail} from '../../model/cart-detail';
 import {OrderService} from '../../service/order/order.service';
 
@@ -20,7 +20,6 @@ declare var $: any;
 export class UserInfoComponent implements OnInit {
   currentUser: User = {};
   loggedIn: boolean;
-  orders: OrderDto[] = [];
   userId: number;
   cartDetails: CartDetail[];
   userForm: FormGroup = new FormGroup({
@@ -32,7 +31,7 @@ export class UserInfoComponent implements OnInit {
     username: new FormControl(''),
     image: new FormControl('')
   });
-  orderDto: OrderDto = {cart: {cartDetails: []}, deliveryInfo: {}};
+
   orderStatus;
   orderId: number;
 
@@ -79,7 +78,7 @@ export class UserInfoComponent implements OnInit {
 
   ngOnInit() {
     this.checkLoginAndGetInfo();
-    this.getAllOrdersByUser();
+
   }
 
   checkLoginAndGetInfo() {
@@ -120,20 +119,6 @@ export class UserInfoComponent implements OnInit {
     }
   }
 
-  customerCancelOrder(orderId: number, orderDto: OrderDto) {
-    this.orderService.cancelOrder(orderId, orderDto).subscribe(() => {
-      this.notificationService.showTopRightMessage('success','Đã hủy')
 
-      this.getAllOrdersByUser();
-    });
-    console.log(orderId);
-  }
-
-  getAllOrdersByUser() {
-    this.userId = this.authService.getCurrentUserId();
-    this.userService.getAllOrderByUserId(this.userId).subscribe(ordersBE => {
-      this.orders = ordersBE as OrderDto[];
-    });
-  }
 
 }

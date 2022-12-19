@@ -6,7 +6,7 @@
   <div class="mobile-nav">
     <!-- Navbar Brand -->
     <div class="amado-navbar-brand">
-      <a href="index.html"><img src="assets/img/core-img/logo.png" alt=""></a>
+      <a href="index.html"><img src="assets/img/core-img/logo_newhouse_long.jpg" alt=""></a>
     </div>
     <!-- Navbar Toggler -->
     <div class="amado-navbar-toggler">
@@ -19,7 +19,7 @@
   <div class="cart-table-area section-padding-100">
     <div class="container-fluid">
       <div class="row">
-        <div class="col-12 col-lg-6">
+        <div class="col-12 col-lg-12">
           <div class="checkout_details_area mt-50 clearfix">
 
             <div class="cart-title">
@@ -65,70 +65,9 @@
             </form>
           </div>
         </div>
-        <div class="col-12 col-lg-6">
-          <div class="cart-summary">
-            <h5>Đơn hàng</h5>
-            <table class="table table-responsive">
-              <thead>
-              <tr>
-                <th></th>
-                <th>Tên</th>
-                <th>Giá</th>
-                <th>Số lượng</th>
-              </tr>
-              </thead>
-              <tbody>
-              <tr>
-                <td class="cart_product_img">
-                  <a href="#"><img src="assets/img/bg-img/cart1.jpg" alt="Product"></a>
-                </td>
-                <td class="cart_product_desc">
-                  <h5>White Modern Chair</h5>
-                </td>
-                <td class="price">
-                  <span>$130</span>
-                </td>
-                <td class="qty">
-                  <div class="qty-btn d-flex">
-                    <p>Qty</p>
-                    <div class="quantity">
-                      <span class="qty-minus" onclick="var effect = document.getElementById('qty'); var qty = effect.value; if( !isNaN( qty ) &amp;&amp; qty &gt; 1 ) effect.value--;return false;"><i class="fa fa-minus" aria-hidden="true"></i></span>
-                      <input type="number" class="qty-text" id="qty" step="1" min="1" max="300" name="quantity" value="1">
-                      <span class="qty-plus" onclick="var effect = document.getElementById('qty'); var qty = effect.value; if( !isNaN( qty )) effect.value++;return false;"><i class="fa fa-plus" aria-hidden="true"></i></span>
-                    </div>
-                  </div>
-                </td>
-              </tr>
-              </tbody>
-            </table>
-            <ul class="summary-table">
-              <li><span>Tổng Đơn hàng:</span> <span>$140.00</span></li>
-              <li><span>Phí vận chuyển:</span> <span>40.000</span></li>
-              <li><span>Tổng:</span> <span>$140.00</span></li>
-            </ul>
-
-            <div class="payment-method">
-              <!-- Cash on delivery -->
-              <div class="custom-control custom-checkbox mr-sm-2">
-                <input type="checkbox" class="custom-control-input" id="cod" checked>
-                <label class="custom-control-label" for="cod">Thanh toán khi giao hàng(COD)</label>
-              </div>
-              <!-- Paypal -->
-              <div class="custom-control custom-checkbox mr-sm-2">
-                <input type="checkbox" class="custom-control-input" id="paypal">
-                <label class="custom-control-label" for="paypal">Chuyển khoản ngân hàng</label>
-              </div>
-            </div>
-
-            <div class="cart-btn mt-100">
-              <a type="submit" href="#" class="btn amado-btn w-100">Thanh toán</a>
-            </div>
-          </div>
-        </div>
       </div>
     </div>
   </div>
 </div>
 <!-- ##### Main Content Wrapper End ##### -->
-<app-newsletter></app-newsletter>
 <app-footer></app-footer>

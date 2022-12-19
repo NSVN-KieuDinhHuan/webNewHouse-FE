@@ -3,7 +3,7 @@ import {environment} from '../../../environments/environment';
 import {HttpClient} from '@angular/common/http';
 import {User} from '../../model/user';
 import {Observable} from 'rxjs';
-import {OrderDto} from '../../model/order-dto';
+
 
 const API_URL = `${environment.apiUrl}`;
 
@@ -27,7 +27,5 @@ export class UseService {
     return this.http.post<User>(`${API_URL}/users/${id}`, user);
   }
 
-  getAllOrderByUserId(userId: number): Observable<OrderDto[]> {
-    return this.http.get<OrderDto[]>(`${API_URL}/users/${userId}/orders`);
-  }
+
 }

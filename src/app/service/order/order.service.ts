@@ -1,8 +1,11 @@
 import {Injectable} from '@angular/core';
 import {environment} from '../../../environments/environment';
 import {HttpClient} from '@angular/common/http';
-import {OrderDto} from '../../model/order-dto';
+
 import {Observable} from 'rxjs';
+import {OrderListDto} from '../../model/OrderListDto';
+import {Dish} from '../../model/dish';
+import {OrderDetailDto} from '../../model/orderDetailDto';
 
 const API_URL = `${environment.apiUrl}`;
 
@@ -15,15 +18,10 @@ export class OrderService {
   constructor(private httpClient: HttpClient) {
   }
 
-  createOrder(orderDto: OrderDto): Observable<{ id?: number }> {
-    return this.httpClient.post(`${API_URL}/current-user/create-order`, orderDto);
+  createOrderDetail(OrderListDto: { address: any; phone: any; email: any; username: any }): Observable<OrderListDto> {
+    return this.httpClient.post<OrderListDto>(`${API_URL}/api/ordersList`, OrderListDto);
   }
-
-  getOrder(orderId: number): Observable<OrderDto> {
-    return this.httpClient.get(`${API_URL}/orders/${orderId}`);
-  }
-
-  cancelOrder(orderId: number, orderDto: OrderDto) {
-    return this.httpClient.post(`${API_URL}/orders/${orderId}/cancels`, orderDto);
+  createOrderList(OrderDetailDto: OrderDetailDto): Observable<OrderDetailDto> {
+    return this.httpClient.post<OrderDetailDto>(`${API_URL}/api/orderdetail`, OrderDetailDto);
   }
 }

@@ -14,14 +14,8 @@ const API_URL = environment.apiUrl;
 
 export class CategoryService {
 
-  constructor(private httpClient: HttpClient) {
-  }
-
-  getAllCategory() : Observable<Category[]> {
-    return this.httpClient.get<Category[]>(`${API_URL}/categories`,);
-  }
-
-  getTop5Categories() {
-    return this.httpClient.get(`${API_URL}/categories/top-five`);
+  constructor(private http: HttpClient) { }
+  getAllCategory(): Observable<Category[]> {
+    return this.http.get<Category[]>(`${API_URL}/categories`);
   }
 }

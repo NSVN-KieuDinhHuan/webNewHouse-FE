@@ -29,14 +29,12 @@
             <div class="product-sorting d-flex">
               <div class="sort-by-date d-flex align-content-lg-around mr-15">
                 <p class="mr-15" style="background: white">Danh mục</p>
-<!--                <select name="select" id="viewProduct" [(ngModel)]="selectedItem" (click)="getDishByCategory(selectedItem)" >-->
-<!--                  <option *ngFor="let x of categoryAll" value="{{x.id}}">{{x.name}}</option>-->
-<!--                </select>-->
-                <form  [formGroup]="form">
-                <select  class="form-control" formControlName="category">
-                  <option *ngFor="let category of categoryAll" [value]="category.id">{{category.name}}</option>
-                </select>
-                  </form>
+                  <button type="button" class="btn btn-warning dropdown-toggle w-auto" data-bs-toggle="dropdown" aria-expanded="false">
+                    {{categories[selectItem].name}}
+                  </button>
+                  <ul class="dropdown-menu">
+                    <li *ngFor="let c of categories; x as index;" (click)="getDishByCategory(c.id)" ><a  class="dropdown-item w-auto"> {{c.name}}    </a></li>
+                  </ul>
               </div>
 
               <div class="view-product d-flex align-items-center">
@@ -69,15 +67,7 @@
             <!-- Product Description -->
             <div class="product-description d-flex align-items-center justify-content-between">
               <!-- Product Meta Data -->
-              <div class="product-meta-data">
-                <div class="line"></div>
-                <p class="product-price">{{product.price}} VND</p>
-                <a routerLink="/newhouse/product/{{product.id}}">
-                  <h6>{{product.name}}</h6>
-                </a>
-              </div>
-              <!-- Ratings & Cart -->
-              <div class="ratings-cart text-right">
+              <div class="product-meta-data ratings-cart">
                 <div class="ratings">
                   <i class="fa fa-star" aria-hidden="true"></i>
                   <i class="fa fa-star" aria-hidden="true"></i>
@@ -85,9 +75,17 @@
                   <i class="fa fa-star" aria-hidden="true"></i>
                   <i class="fa fa-star" aria-hidden="true"></i>
                 </div>
-                <div class="cart">
-                  <a href="cart.html" data-toggle="tooltip" data-placement="left" title="Add to Cart"><img src="assets/img/core-img/cart.png" alt=""></a>
-                </div>
+                <div class="line"></div>
+                <p class="product-price">{{product.price}} VND</p>
+                <a routerLink="/newhouse/product/{{product.id}}">
+                  <h6>{{product.name}}</h6>
+                </a>
+              </div>
+              <!-- Ratings & Cart -->
+              <div class=" text-right">
+<!--                <div class="cart">-->
+<!--                  <a href="cart.html" data-toggle="tooltip" data-placement="left" title="thêm vào giỏ"><i class="fa fa-shopping-cart" style="font-size: 30px"></i></a>-->
+<!--                </div>-->
               </div>
             </div>
           </div>
@@ -98,12 +96,15 @@
       <div class="row">
         <div class="col-12">
           <!-- Pagination -->
+
+
           <nav aria-label="navigation">
             <ul class="pagination justify-content-end mt-50">
-              <li class="page-item"><a class="page-link" (click)="getAllDishes(0)">01.</a></li>
-              <li class="page-item"><a class="page-link" (click)="getAllDishes(1)">02.</a></li>
-              <li class="page-item"><a class="page-link" (click)="getAllDishes(3)">03.</a></li>
-              <li class="page-item"><a class="page-link" (click)="getAllDishes(4)" >04.</a></li>
+              <li class="page-item w-auto"><a class="page-link" (click)="backPage()" >Sau</a></li>
+              <li id="pageDisplay1" class="page-item w-auto active"><a class="page-link" (click)="getAllDishes(pageDisplay1)">{{pageDisplay1}}</a></li>
+              <li id="pageDisplay2" class="page-item w-auto"><a class="page-link" (click)="getAllDishes(pageDisplay1 +1)">{{pageDisplay1 + 1}} </a></li>
+              <li id="pageDisplay3" class="page-item w-auto"><a class="page-link" (click)="getAllDishes(pageDisplay1 +2)">{{pageDisplay1 + 2}} </a></li>
+              <li class="page-item w-auto"><a class="page-link" (click)="nextPage()" >Trước</a></li>
             </ul>
           </nav>
         </div>

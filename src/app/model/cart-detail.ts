@@ -1,6 +1,7 @@
 import {Dish} from './dish';
 
 export interface CartDetail {
-  dish?: Dish;
+  dishId?: number;
   quantity?: number;
+  productOption:number[];
 }

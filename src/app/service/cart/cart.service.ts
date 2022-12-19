@@ -18,14 +18,25 @@ export class CartService {
               ) {
   }
 
+  createCart(id:number) {
+    return this.httpClient.post(`${API_URL}/carts`, id);
+  }
+  findAllCart() {
+    return this.httpClient.get(`${API_URL}/carts`);
+  }
+  getAllDetailByCartId(id:number) {
+     return this.httpClient.get(`${API_URL}/carts/{id}`);
+  }
+
+  addDishToCart(cartDetail: CartDetail,id:number) {
+    return this.httpClient.post(`${API_URL}/carts/addDish/${id}`, cartDetail);
+  }
   getCurrentUserCarts() {
     const currentUserId = this.authService.getCurrentUserId();
     return this.httpClient.get(`${API_URL}/carts/users/${currentUserId}`);
   }
 
-  addDishToCart(cartDetail: CartDetail) {
-    return this.httpClient.post(`${API_URL}/carts/users/current-user/add-dish-to-cart`, cartDetail);
-  }
+
 
   increaseDishQuantity(cartId: number, dishId: number) {
     return this.httpClient.get(`${API_URL}/carts/${cartId}/increase-dish-quantity/${dishId}`);

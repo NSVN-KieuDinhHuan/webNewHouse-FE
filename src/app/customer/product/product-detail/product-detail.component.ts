@@ -1,15 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import {JsService} from '../../../service/js.service';
-import {Dish} from '../../model/dish';
 import {DishService} from '../../../service/dish/dish.service';
 import {ActivatedRoute, ParamMap, Router} from '@angular/router';
-import {environment} from '../../../../environments/environment';
 import {AuthService} from '../../../service/auth/auth.service';
-import {Cart} from '../../model/cart';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
-import {CartDetail} from '../../model/cart-detail';
 import {NotificationService} from '../../../service/notification/notification.service';
-
+import {Dish} from '../../../model/dish';
+import {Cart} from '../../../model/cart';
+import {CartDetail} from '../../../model/cart-detail';
+import {productOptionList} from '../../../model/productOptionList';
+import {CartService} from '../../../service/cart/cart.service';
+declare var $: any
 @Component({
   selector: 'app-product-detail',
   templateUrl: './product-detail.component.html',
@@ -20,31 +21,50 @@ export class ProductDetailComponent implements OnInit {
   loggedIn: boolean;
   currentUser: any;
   cart: Cart;
+  cartAll:Cart[];
   cartDetailList:CartDetail[]
+  optionOfProduct:number[]
   addProductForm: FormGroup = new FormGroup({
     quantity: new FormControl(1),
   });
+  cartId:number;
+
+  mainProductImg:string;
+
   constructor(private  js: JsService,
   private dishService: DishService,
               private activatedRoute: ActivatedRoute,
               private router: Router,
               private authService: AuthService,
               private notificationService: NotificationService,
+              private cartService: CartService
               ) {
+
   }
   get quantity() {
-    return this.addProductForm.get('quantity');
+     return this.addProductForm.get('quantity');
   }
+
+  createCart(){
+   this.cartId= JSON.parse(sessionStorage.getItem("cartId"));
+   if (this.cartId==null) {
+   this.cartService.findAllCart().subscribe((res:Cart[]) => {
+     this.cartAll=res;
+     let CartId=this.cartAll.length +1;
+     this.cartService.createCart(CartId).subscribe(() => {
+        sessionStorage.setItem('cartId', JSON.stringify(CartId));
+     })
+   });
+   }
+  }
+
   ngOnInit() {
     this.js.jsActive()
     this.activatedRoute.paramMap.subscribe((paramMap: ParamMap) => {
       const id = +paramMap.get('product-id');
       this.getDetailProduct(id);
       this.checkLoginAndGetInfo();
-      this.cartDetailList =  JSON.parse(sessionStorage.getItem("cartDetailList"))
-      if (this.cartDetailList==null) {
-        this.cartDetailList=[];
-      }
+      this.createCart();
     })
   }
   checkLoginAndGetInfo() {
@@ -54,18 +74,46 @@ export class ProductDetailComponent implements OnInit {
     }
 
   }
+
+  selectOption() {
+    let optionList= this.product.optionOfProduct;
+    let SelectOption=[];
+    let SelectOptionName=[];
+    for (let i = 0; i < optionList.length; i++) {
+      let option:number;
+      let nameId=optionList[i].name.toString()
+    $( document ).ready(function() {
+       option = $('#'+nameId).val();
+      SelectOption.push(Number(option))
+    })
+    }
+    this.optionOfProduct=SelectOption;
+  }
   addDishIntoCart() {
+    this.selectOption();
     if (this.addProductForm.valid) {
       const cartDetail = {
-        dish: this.product,
-        quantity: this.addProductForm.value.quantity,
+        dishId: this.product.id,
+        quantity: this.quantity.value,
+        productOption:this.optionOfProduct
       };
-      this.cartDetailList.push(cartDetail);
-      sessionStorage.setItem('cartDetailList', JSON.stringify(this.cartDetailList));
-      this.notificationService.showTopRightMessage('success', 'Đăng ký thành công');
-    }
+      let cartId= JSON.parse(sessionStorage.getItem("cartId"));
+      this.cartService.addDishToCart(cartDetail,cartId).subscribe(() => {
+        alert('Thành công!');
+        this.router.navigateByUrl("/newhouse/shop")
+      })
 
+    }
 }
+   increaseQuantity (){
+     this.quantity.setValue( this.quantity.value+1)
+  }
+  decreaseQuantity (){
+    this.quantity.setValue( this.quantity.value-1)
+  }
+  setImgMain(img:string){
+    this.mainProductImg=img;
+  }
   getDetailProduct(id:number) {
     const API_URL = "http://localhost:8080/image/"
     this.dishService.getById(id).subscribe(res => {
@@ -95,7 +143,10 @@ export class ProductDetailComponent implements OnInit {
       if (this.product.image08 !=null) {
         this.product.image08=API_URL+res.image08;
       }
+        this.setImgMain(this.product.image01)
       }
     });
+
+
   }
 }

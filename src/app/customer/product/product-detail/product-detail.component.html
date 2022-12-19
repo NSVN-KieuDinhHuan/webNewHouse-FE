@@ -20,144 +20,110 @@
   <!-- Product Details Area Start -->
   <div class="single-product-area section-padding-100 clearfix">
     <div class="container-fluid">
-
       <div class="row">
         <div class="col-12">
           <nav aria-label="breadcrumb">
             <ol class="breadcrumb mt-50">
               <li class="breadcrumb-item"><a href="#">Sản phẩm </a></li>
-              <li class="breadcrumb-item active "><a href="#">Đồng hồ</a></li>
+              <li class="breadcrumb-item active "><a href="#">{{product.categories[0].name}}</a></li>
             </ol>
           </nav>
         </div>
       </div>
-
       <div class="row">
-        <div class="col-12 col-lg-1" ></div>
-        <div class="col-12 col-lg-4">
-          <div class="single_product_thumb">
-            <div id="product_details_slider" class="carousel slide" data-ride="carousel" *ngIf="product != null">
-              <ol class="carousel-indicators align-items-center" >
-                <li class="active"  *ngIf="product.image01 != null" data-target="#product_details_slider" data-slide-to="0" [style.background-image]="'url(' + product.image01 + ')'">
-                </li>
-                <li *ngIf="product.image02 != null" data-target="#product_details_slider" data-slide-to="1" [style.background-image]="'url(' + product.image02 + ')'">
-                </li>
-                <li  *ngIf="product.image03 != null" data-target="#product_details_slider" data-slide-to="2" [style.background-image]="'url(' + product.image03 + ')'">
-                </li>
-                <li *ngIf="product.image04 != null" data-target="#product_details_slider" data-slide-to="3" [style.background-image]="'url(' + product.image04 + ')'">
-                </li>
-<!--                <li   *ngIf="product.image05 != null" data-target="#product_details_slider" data-slide-to="0" [style.background-image]="'url(' + product.image05 + ')'">-->
-<!--                </li>-->
-<!--                <li *ngIf="product.image06!= null" data-target="#product_details_slider" data-slide-to="1" [style.background-image]="'url(' + product.image06 + ')'">-->
-<!--                </li>-->
-<!--                <li  *ngIf="product.image07 != null" data-target="#product_details_slider" data-slide-to="2" [style.background-image]="'url(' + product.image07 + ')'">-->
-<!--                </li>-->
-<!--                <li *ngIf="product.image08 != null" data-target="#product_details_slider" data-slide-to="3" [style.background-image]="'url(' + product.image08 + ')'">-->
-<!--                </li>-->
-              </ol>
+        <div class="col-12 col-sm-4">
+          <h3 class="d-inline-block d-sm-none">LOWA Men’s Renegade GTX Mid Hiking Boots Review</h3>
+          <div class="col-12">
+            <img src="{{mainProductImg}}" class="product-image" alt="Product Image">
+          </div>
+          <div class="col-12 product-image-thumbs">
 
-              <div class="carousel-inner">
-
-                <div class="carousel-item active " *ngIf="product.image01 != null">
-                  <a class="gallery_img" href="{{product.image01}}">
-                    <img class="d-block  w-100" src="{{product.image01}}" alt="First slide">
-                  </a>
-                </div>
-                <div class="carousel-item" *ngIf="product.image02 != null">
-                  <a class="gallery_img" href="{{product.image02}}">
-                    <img class="d-block w-100"  src="{{product.image02}}" alt="Second slide">
-                  </a>
-                </div>
-                <div class="carousel-item" *ngIf="product.image03 != null">
-                  <a class="gallery_img" href="{{product.image03}}">
-                    <img class="d-block  w-100" src="{{product.image03}}" alt="Third slide">
-                  </a>
-                </div>
-                <div class="carousel-item" *ngIf="product.image04 != null">
-                  <a class="gallery_img" href="{{product.image04}}">
-                    <img class="d-block   w-100" src="{{product.image04}}" alt="Fourth slide">
-                  </a>
-                </div>
-
-
-                <div class="carousel-item" *ngIf="product.image05 != null">
-                  <a class="gallery_img" href="{{product.image05}}">
-                    <img class="d-block  w-100" src="{{product.image05}}" alt="Fourth slide">
-                  </a>
-                </div>
-                <div class="carousel-item" *ngIf="product.image06 != null">
-                  <a class="gallery_img" href="{{product.image06}}">
-                    <img class="d-block  w-100" src="{{product.image06}}" alt="Fourth slide">
-                  </a>
-                </div>
-                <div class="carousel-item" *ngIf="product.image07 != null">
-                  <a class="gallery_img" href="{{product.image07}}">
-                    <img class="d-block  w-100" src="{{product.image07}}" alt="Fourth slide">
-                  </a>
-                </div>
-                <div class="carousel-item" *ngIf="product.image08 != null">
-                  <a class="gallery_img" href="{{product.image08}}">
-                    <img class="d-block w-100" src="{{product.image08}}" alt="Fourth slide">
-                  </a>
-                </div>
-
-              </div>
-            </div>
-
-
+            <div *ngIf="product.image01 != null" (click)="setImgMain(product.image01)" [style.border-color]="mainProductImg== product.image01? 'red' :  'white'" class="product-image-thumb active" ><img src="{{product.image01}}" alt="Product Image" width="50px" height="auto"></div>
+            <div *ngIf="product.image02 != null" (click)="setImgMain(product.image02)" [style.border-color]="mainProductImg== product.image02? 'red' :  'white'" class="product-image-thumb" ><img src="{{product.image02}}" alt="Product Image" width="50px" height="auto"></div>
+            <div *ngIf="product.image03 != null" (click)="setImgMain(product.image03)" [style.border-color]="mainProductImg== product.image03? 'red' :  'white'" class="product-image-thumb" ><img src="{{product.image03}}" alt="Product Image" width="50px" height="auto"></div>
+            <div *ngIf="product.image04 != null" (click)="setImgMain(product.image04)" [style.border-color]="mainProductImg== product.image04? 'red' :  'white'" class="product-image-thumb" ><img src="{{product.image04}}" alt="Product Image" width="50px" height="auto" ></div>
+          </div>
+          <div class="col-12 product-image-thumbs">
+            <div *ngIf="product.image05 != null" (click)="setImgMain(product.image05)" [style.border-color]="mainProductImg== product.image05? 'red' :  'white'" class="product-image-thumb" ><img src="{{product.image05}}" alt="Product Image" width="50px" height="auto"></div>
+            <div *ngIf="product.image06 != null" (click)="setImgMain(product.image06)" [style.border-color]="mainProductImg== product.image06? 'red' :  'white'"class="product-image-thumb" ><img src="{{product.image06}}" alt="Product Image" width="50px" height="auto"></div>
+            <div *ngIf="product.image07 != null" (click)="setImgMain(product.image07)" [style.border-color]="mainProductImg== product.image07? 'red' :  'white'" class="product-image-thumb" ><img src="{{product.image07}}" alt="Product Image" width="50px" height="auto"></div>
+            <div *ngIf="product.image08 != null" (click)="setImgMain(product.image08)" [style.border-color]="mainProductImg== product.image08? 'red' :  'white'" class="product-image-thumb" ><img src="{{product.image08}}" alt="Product Image" width="50px" height="auto"></div>
           </div>
 
+
+
         </div>
-        <div class="col-12 col-lg-1" ></div>
-        <div class="col-12 col-lg-6">
-          <div class="single_product_desc">
+        <div class="col-12 col-sm-6">
+            <div class="single_product_desc">
             <!-- Product Meta Data -->
             <div class="product-meta-data">
-              <div class="line"></div>
-              <p class="product-price">{{product.price}}</p>
-              <a href="product-details.html">
-                <h6>{{product.name}}</h6>
-              </a>
+              <h2>{{product.name}}</h2>
+              <div class="line w-auto"></div>
+              <p class="product-price">{{product.price}} VND</p>
+
               <!-- Ratings & Review -->
-              <div class="ratings-review mb-15 d-flex align-items-center justify-content-between">
+              <div class="ratings-review mb-15 d-flex align-items-center justify-content-between" style="font-size: 20px">
                 <div class="ratings">
                   <i class="fa fa-star" aria-hidden="true"></i>
                   <i class="fa fa-star" aria-hidden="true"></i>
                   <i class="fa fa-star" aria-hidden="true"></i>
                   <i class="fa fa-star" aria-hidden="true"></i>
-                  <i class="fa fa-star" aria-hidden="true"></i>
+                  <i class="fa fa-star" aria-hidden="false"></i>
                 </div>
               </div>
               <!-- Avaiable -->
-              <p class="avaibility"><i class="fa fa-circle"></i> Còn hàng</p>
-            </div>
-
-            <div class="short_overview my-5">
-              <p>{{product.description}}</p>
+              <h5 class="avaibility"><i class="fa fa-circle mb-15"></i> Còn hàng</h5>
             </div>
             <form class="cart clearfix" [formGroup]="addProductForm" (ngSubmit)="addDishIntoCart()">
-              <div class="cart-btn d-flex mb-50">
+              <div class="mt-20" >
+                <table *ngFor="let option of product.optionOfProduct, op as index" class="width-100" >
+                  <tr >
+                    <td  class="mt-1" style="min-width: 100px;"> <p style="background: white">{{option.name}}  </p></td>
+                    <td class="text-center">
+                      <select class=" form-select-lg mb-3" style="min-width: 250px" aria-label=".form-select-lg example" id="{{option.name}}" >
+                        <option  *ngFor="let y of option.optionList"  value="{{y.id}}"  >{{y.name}}</option>
+                      </select>
+                    </td>
+                  </tr>
+                </table>
+              </div>
+              <div class="cart-btn d-flex mt-30">
                 <p>Số lượng</p>
                 <div class="quantity">
-                  <span class="qty-minus" onclick="var effect = document.getElementById('qty'); var qty = effect.value; if( !isNaN( qty ) &amp;&amp; qty &gt; 1 ) effect.value--;return false;"><i class="fa fa-caret-down" aria-hidden="true"></i></span>
-                  <input type="number" class="form-control"  id="qty" step="1" min="1" max="300" name="quantity"  formControlName="quantity" value="1">
-                  <span class="qty-plus" onclick="var effect = document.getElementById('qty'); var qty = effect.value; if( !isNaN( qty )) effect.value++;return false;"><i class="fa fa-caret-up" aria-hidden="true"></i></span>
+                  <span class="qty-plus" (click)="increaseQuantity()"><i class="fa fa-caret-up" aria-hidden="true"></i></span>
+                  <input type="number" class="form-control"  id="qty" step="1" min="1" max="300" name="quantity"  formControlName="quantity" [value]="quantity">
+                  <span class="qty-minus" (click)="decreaseQuantity()" aria-hidden="true"><i class="fa fa-caret-down" aria-hidden="true"></i></span>
                 </div>
               </div>
-              <button  type="submit" name="addtocart" value="5" class="btn btn-warning">Thêm Vào Giỏ</button>
-              <a class="btn btn-primary m-5">Mua ngay</a>
+              <button  type="submit" name="addtocart" value="5" class="btn btn-warning fa-regular mt-50"><i class="fa fa-plus"></i> Thêm Vào Giỏ Hàng</button>
+              <a class="btn btn-default  mt-50 ml-15">Mua ngay</a>
             </form>
-
-          </div>
+              <div class="short_overview my-5">
+                  <ul class="nav nav-tabs" id="myTab" role="tablist">
+              <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home-tab-pane" type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true">MÔ TẢ SẢN PHẨM </button>
+              </li>
+              <li class="nav-item" role="presentation">
+                <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile-tab-pane" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false">CHI TIẾT SẢN PHẨM</button>
+              </li>
+            </ul>
+                  <div class="tab-content" id="myTabContent">
+              <div class="tab-pane fade show active" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
+                <pre style="font-family: 'Times New Roman';font-size: 15px">{{product.description}}</pre>
+              </div>
+              <div class="tab-pane fade" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
+                <pre style="font-family: 'Times New Roman';font-size: 15px">{{product.specifications}}</pre></div>
+            </div>
+              </div>
+              </div>
 
         </div>
       </div>
-    </div>
   </div>
   <!-- Product Details Area End -->
 </div>
+  </div>
 <!-- ##### Main Content Wrapper End ##### -->
 
 <!-- ##### Main Content Wrapper End ##### -->
-<app-newsletter></app-newsletter>
 <app-footer></app-footer>

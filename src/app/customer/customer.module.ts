@@ -17,6 +17,7 @@ import {HttpClientModule} from '@angular/common/http';
 import { CheckoutComponent } from './checkout/checkout.component';
 
 
+
 @NgModule({
   declarations: [
     ProductListComponent,

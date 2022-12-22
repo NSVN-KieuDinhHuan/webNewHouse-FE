@@ -1,9 +1,9 @@
 import {User} from './user';
 import {DeliveryInfo} from './delivery-info';
+import {productOption} from './productOption';
 
 export interface OrderDetailDto {
-  id?: number;
   dishId?: number;
-  productOption?: []
   quantity?: number;
+  productOption?: number[];
 }

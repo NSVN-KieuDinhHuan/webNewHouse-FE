@@ -25,12 +25,23 @@ export class CartService {
     return this.httpClient.get(`${API_URL}/carts`);
   }
   getAllDetailByCartId(id:number) {
-     return this.httpClient.get(`${API_URL}/carts/{id}`);
+     return this.httpClient.get(`${API_URL}/carts/${id}`);
+  }
+  increaseQuantity(id:number) {
+    return this.httpClient.get(`${API_URL}/carts/increase/${id}`);
+  }
+  decreaseQuantity(id:number) {
+    return this.httpClient.get(`${API_URL}/carts/decrease/${id}`);
   }
 
-  addDishToCart(cartDetail: CartDetail,id:number) {
+  addDishToCart(cartDetail: { productOption: number[]; quantity: any; dishId: number }, id: number) {
     return this.httpClient.post(`${API_URL}/carts/addDish/${id}`, cartDetail);
   }
+
+   deleteCartDetaiById(id:number) {
+     return this.httpClient.get(`${API_URL}/carts/delete/${id}`);
+   }
+
   getCurrentUserCarts() {
     const currentUserId = this.authService.getCurrentUserId();
     return this.httpClient.get(`${API_URL}/carts/users/${currentUserId}`);
@@ -38,13 +49,6 @@ export class CartService {
 
 
 
-  increaseDishQuantity(cartId: number, dishId: number) {
-    return this.httpClient.get(`${API_URL}/carts/${cartId}/increase-dish-quantity/${dishId}`);
-  }
-
-  decreaseDishQuantity(cartId: number, dishId: number) {
-    return this.httpClient.get(`${API_URL}/carts/${cartId}/decrease-dish-quantity/${dishId}`);
-  }
 
   getCurrentUserCartByMerchant(merchantId: number){
     const currentUserId = this.authService.getCurrentUserId();

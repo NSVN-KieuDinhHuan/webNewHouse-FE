@@ -38,16 +38,17 @@
               </tr>
               </thead>
               <tbody class="text-center">
-              <tr *ngFor="let cartDetail of cartDetailDto;index as i">
+
+              <tr *ngFor="let cartDetail of cartDetailList;index as i">
                 <td style="max-width: 5%;">{{i+1}}</td>
                 <td class="border-danger" style="max-width: 14%;">
-                  <a href="#"><img src="{{cartDetail.dish.image01}}" alt="Product" width="50px"></a>
+                  <a  href="#"><img src="http://localhost:8080/image/{{cartDetail.dish.image01}}" alt="Product" width="50px"></a>
                 </td>
                 <td class="cart_product_desc" style="min-width: 30%;">
-                  <h6>{{cartDetail.dish.name}}</h6>
-                  <h6> Tùy chọn:</h6>
-                  <div *ngFor="let opt of cartDetail.productOptionName">
-                  <h6  >{{opt}}</h6>
+                  <h6  >{{cartDetail.dish.name}}</h6>
+                  <h6  > Tùy chọn:</h6>
+                  <div *ngFor="let opt of cartDetail.productOption">
+                  <h6 >{{opt.name}}</h6>
                   </div>
                 </td>
                 <td class="price" style="max-width: 15%;">
@@ -56,14 +57,14 @@
                 <td class="qty text-center" style="max-width: 25%;">
                   <div class="cart-btn">
                     <div class="quantity">
-                      <span class="qty-plus  w-50 h-25" (click)="increaseDishQuantity(i)" aria-hidden="false"><i class="fa fa-caret-up text-center" aria-hidden="true"></i></span>
-                      <input type="text" class="text-center w-25 h-25 border-1 "  id="quantity"  name="quantity" [value]="cartDetail.quantity">
-                      <span class="qty-minus" (click)="decreaseDishQuantity(i)" aria-hidden="false"><i class="fa fa-caret-down" aria-hidden="true"></i></span>
+                      <span class="qty-plus  w-50 h-25" (click)="increaseDishQuantity(i,cartDetail.id)" aria-hidden="false"><i class="fa fa-caret-up text-center" aria-hidden="true"></i></span>
+                      <input type="text" class="text-center w-25 h-25 border-1 mr-15"  id="quantity"  name="quantity" [value]="cartDetail.quantity">
+                      <span class="qty-minus" (click)="decreaseDishQuantity(i,cartDetail.id)" aria-hidden="false"><i class="fa fa-caret-down" aria-hidden="true"></i></span>
                     </div>
 
                   </div>
                 </td>
-                <td style="max-width: 10%;" (click)="removeDishOfCart(i)"><i class="fa fa-trash"></i></td>
+                <td style="max-width: 10%;" (click)="removeDishOfCart(i,cartDetail.id)"><i class="fa fa-trash"></i></td>
               </tr>
               <tr>
                 <td  style="max-width: 50%;background: #e9ecef"> Tổng </td>

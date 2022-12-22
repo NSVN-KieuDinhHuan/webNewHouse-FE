@@ -29,18 +29,18 @@
             <div class="product-sorting d-flex">
               <div class="sort-by-date d-flex align-content-lg-around mr-15">
                 <p class="mr-15" style="background: white">Danh mục</p>
-                  <button type="button" class="btn btn-warning dropdown-toggle w-auto" data-bs-toggle="dropdown" aria-expanded="false">
+                  <button type="button" class="btn btn-warning dropdown-toggle text-center"  data-bs-toggle="dropdown" aria-expanded="false">
                     {{categories[selectItem].name}}
                   </button>
                   <ul class="dropdown-menu">
-                    <li *ngFor="let c of categories; x as index;" (click)="getDishByCategory(c.id)" ><a  class="dropdown-item w-auto"> {{c.name}}    </a></li>
+                    <li *ngFor="let c of categories; x as index;" (click)="getDishByCategory(c.id)" ><a  class="dropdown-item text-center"> {{c.name}}    </a></li>
                   </ul>
               </div>
 
               <div class="view-product d-flex align-items-center">
                 <p class="mr-15" style="background: white">Lọc</p>
                 <select name="select" id="sortBydate" class="ml-15">
-                  <option value="date">ngày</option>
+                  <option value="date">Giá tăng dần</option>
                   <option value="new">sản phẩm mới</option>
                   <option value="buyLot">mua nhiều</option>
                 </select>
@@ -52,7 +52,7 @@
 
       <div class="row">
         <!-- Single Product Area -->
-        <div class="col-12 col-sm-4 col-md-12 col-xl-4" *ngFor="let product of ProductList;">
+        <div class="col-12 col-sm-3 col-md-12 col-xl-3" *ngFor="let product of ProductList;">
           <div class="single-product-wrapper">
             <!-- Product Image -->
             <div class="product-img">
@@ -100,11 +100,15 @@
 
           <nav aria-label="navigation">
             <ul class="pagination justify-content-end mt-50">
-              <li class="page-item w-auto"><a class="page-link" (click)="backPage()" >Sau</a></li>
-              <li id="pageDisplay1" class="page-item w-auto active"><a class="page-link" (click)="getAllDishes(pageDisplay1)">{{pageDisplay1}}</a></li>
-              <li id="pageDisplay2" class="page-item w-auto"><a class="page-link" (click)="getAllDishes(pageDisplay1 +1)">{{pageDisplay1 + 1}} </a></li>
-              <li id="pageDisplay3" class="page-item w-auto"><a class="page-link" (click)="getAllDishes(pageDisplay1 +2)">{{pageDisplay1 + 2}} </a></li>
-              <li class="page-item w-auto"><a class="page-link" (click)="nextPage()" >Trước</a></li>
+              <table>
+                <tr>
+                  <td style="width: 50px"> <li class="page-item w-auto"><a class="page-link font-bold" (click)="backPage()" > <<</a></li>  </td>
+                  <td style="width: 50px">  <li id="0" class="page-item w-auto"><a class="page-link" (click)="backPage()">{{pageDisplay1}}</a></li></td>
+                  <td style="width: 50px"> <li id="1" class="page-item w-auto active"><a class="page-link" (click)="getAllDishes(pageDisplay1 +1)">{{pageDisplay1 + 1}} </a></li></td>
+                  <td style="width: 50px" > <li id="2" class="page-item w-auto"><a class="page-link" (click)="nextPage()">{{pageDisplay1 + 2}} </a></li></td>
+                  <td style="width: 50px" > <li class="page-item w-auto"><a class="page-link" (click)="nextPage()" >>></a></li></td>
+                </tr>
+              </table>
             </ul>
           </nav>
         </div>
@@ -113,5 +117,5 @@
   </div>
 </div>
 <!-- ##### Main Content Wrapper End ##### -->
-<app-newsletter></app-newsletter>
+<!--<app-newsletter></app-newsletter>-->
 <app-footer></app-footer>

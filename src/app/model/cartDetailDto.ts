@@ -1,9 +1,9 @@
 import {Dish} from './dish';
 import {productOption} from './productOption';
 
-export interface CartDetail {
+export interface CartDetailDto {
   id?:number,
-  dish?: Dish;
+  dishId?: number;
   quantity?: number;
-  productOption?:productOption[];
+  productOptions?:productOption[];
 }

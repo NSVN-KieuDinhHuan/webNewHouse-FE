@@ -9,6 +9,12 @@ import {Dish} from '../../model/dish';
 import {CartService} from '../../service/cart/cart.service';
 import {AuthService} from '../../service/auth/auth.service';
 import {UserToken} from '../../model/user-token';
+import {CartDetailDto} from '../../model/cartDetailDto';
+import {CartDetail} from '../../model/cart-detail';
+import {DishService} from '../../service/dish/dish.service';
+import {OrderService} from '../../service/order/order.service';
+import {OrderDetailDto} from '../../model/orderDetailDto';
+import {OrderListDto} from '../../model/OrderListDto';
 
 @Component({
   selector: 'app-checkout',
@@ -25,14 +31,15 @@ export class CheckoutComponent implements OnInit {
   });
 
   carts: Cart[] = [];
-  cartDetailList: {
-    dish:Dish,
-    quantity:number
-  }[]
-  dish:Dish[];
+  cartDetailDto:CartDetailDto[]=[];
+  cartDetailList:CartDetail[]=[]
+  ProductList: Dish[];
+  cartId:number
+  quantity:number=1
   billValue=0;
   currentUser: UserToken = {};
   loggedIn = false;
+
 
   constructor(private userService: UseService,
               private router: Router,
@@ -40,12 +47,17 @@ export class CheckoutComponent implements OnInit {
               private  js: JsService,
               private authService: AuthService,
               private notificationService: NotificationService,
+              private dishService: DishService,
+              private orderService: OrderService,
+              private authenticationService: AuthService
               ) {
-    this.cartDetailList =  JSON.parse(sessionStorage.getItem("cartDetailList"))
+
   }
   ngOnInit() {
     this.js.jsActive()
-    this.summaryBill();
+    this.getAllDishes();
+    this.cartId= JSON.parse(sessionStorage.getItem("cartId"));
+    this.getAllCart();
   }
   get email() {
     return this.registerForm.get('email');
@@ -62,7 +74,6 @@ export class CheckoutComponent implements OnInit {
   }
 
   register() {
-    sessionStorage.removeItem("cartId")
     if (this.registerForm.valid) {
       const user = {
         email: this.registerForm.value.email,
@@ -71,19 +82,71 @@ export class CheckoutComponent implements OnInit {
         address: this.registerForm.value.address,
       };
       this.userService.register(user).subscribe(() => {
-        this.authService.login(this.registerForm.value.email, "Newhouse2022").subscribe((data) => {
-           sessionStorage.setItem('user', JSON.stringify(user));
+        sessionStorage.setItem('user', JSON.stringify(user));
+        let orderDetailDtoList: OrderDetailDto[]=[];
+        for (let i = 0; i < this.cartDetailList.length; i++) {
+          let productOption: number[] =[];
+          for (let j = 0; j < this.cartDetailList[i].productOption.length; j++) {
+            productOption.push(this.cartDetailList[i].productOption[j].id);
+          }
+          const orderDetailDto= {
+            dishId: this.cartDetailList[i].dish.id,
+            quantity: this.cartDetailList[i].quantity,
+            productOption: productOption
+          }
+          orderDetailDtoList.push(orderDetailDto);
+        }
+
+        const OrderListDto:OrderListDto = {
+          createDate: new Date().getDay().toString(),
+          userPhone:user.phone,
+          status:0,
+          orderDetailList:orderDetailDtoList
+        }
+
+        this.orderService.createOrderList(OrderListDto).subscribe((data) => {
+          sessionStorage.removeItem("cartId")
+          alert("Đơn hàng thành công")
         });
-
-        alert("Đơn hàng thành công")
-
       }, error => {
         this.notificationService.showMessage('error', error.error.message);
       });
     }
   }
 
+  logout() {
+    this.authenticationService.logout();
+    this.router.navigateByUrl('/newhome');
+  }
+  getAllCart() {
+    if (this.cartId!=null) {
+      this.cartService.getAllDetailByCartId(this.cartId).subscribe((res:CartDetailDto[]) => {
+        this.cartDetailDto=res;
+        for (let i = 0; i < this.cartDetailDto.length; i++) {
+          for (let j = 0; j < this.ProductList.length; j++) {
+            if(this.cartDetailDto[i].dishId==this.ProductList[j].id) {
+              const CartDetail={
+                id:this.cartDetailDto[i].id,
+                dish: this.ProductList[j],
+                quantity: this.cartDetailDto[i].quantity,
+                productOption: this.cartDetailDto[i].productOptions
+              }
+              this.cartDetailList.push(CartDetail);
+              break;
+            }
+          }
+        }
+        this.summaryBill()
+      })
 
+    }
+  }
+
+  getAllDishes() {
+    this.dishService.findAll().subscribe((res) => {
+      this.ProductList = (<Dish[]> res);
+    });
+  }
   ngOnChanges(changes: SimpleChanges): void {
     this.getCurrentUserCarts();
   }
@@ -104,39 +167,44 @@ export class CheckoutComponent implements OnInit {
     );
   }
 
-  increaseDishQuantity(index: number) {
-    this.cartDetailList =  JSON.parse(sessionStorage.getItem("cartDetailList"))
-    this.cartDetailList[index].quantity=this.cartDetailList[index].quantity + 1;
-    this.summaryBill()
-    sessionStorage.setItem('cartDetailList', JSON.stringify(this.cartDetailList));
+  increaseDishQuantity(index: number,id:number) {
+    this.cartDetailList[index].quantity=this.cartDetailList[index].quantity+1;
+    this.summaryBill();
+    this.cartService.increaseQuantity(id).subscribe(
+      () => {
+
+      })
+
   }
 
-  decreaseDishQuantity(index: number) {
-    this.cartDetailList =  JSON.parse(sessionStorage.getItem("cartDetailList"))
-    this.cartDetailList[index].quantity=this.cartDetailList[index].quantity - 1;
-    this.summaryBill()
-    if(this.cartDetailList[index].quantity==0) {
-      this.removeDishOfCart(index)
-    }
-    sessionStorage.setItem('cartDetailList', JSON.stringify(this.cartDetailList));
+  decreaseDishQuantity(index: number,id:number) {
+    this.cartService.decreaseQuantity(id).subscribe(
+      () => {
+        this.cartDetailList[index].quantity=this.cartDetailList[index].quantity-1;
+        this.summaryBill();
+      })
   }
-  removeDishOfCart(index: number) {
-    this.cartDetailList =  JSON.parse(sessionStorage.getItem("cartDetailList"))
-    this.cartDetailList.splice(index,1)
-    sessionStorage.setItem('cartDetailList', JSON.stringify(this.cartDetailList));
-    this.summaryBill()
+  removeDishOfCart(index: number,id:number) {
+    this.cartService.deleteCartDetaiById(id).subscribe(
+      (res:CartDetail) => {
+        this.cartDetailList.splice(index,1)
+        this.summaryBill();
+      })
   }
 
   summaryBill(){
-    this.billValue=0;
+    let value=0
     if(this.cartDetailList.length>0) {
       for (let i = 0; i < this.cartDetailList.length; i++) {
-        let productPrice=this.cartDetailList[i].dish.price;
+        let optionSum=0
+        for (let j = 0; j < this.cartDetailList[i].productOption.length; j++) {
+          optionSum+=this.cartDetailList[i].productOption[j].price;
+        }
+        let productPrice=this.cartDetailList[i].dish.price + optionSum
         let  quantity= this.cartDetailList[i].quantity;
-        this.billValue+=productPrice*quantity;
+        value+=productPrice*quantity;
       }
-
-
+      this.billValue=value;
     }else {
       this.billValue=0;
     }

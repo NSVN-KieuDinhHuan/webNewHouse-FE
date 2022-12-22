@@ -1,13 +1,13 @@
-import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {AuthService} from '../../service/auth/auth.service';
 import {CartService} from '../../service/cart/cart.service';
-import {Cart} from '../../model/cart';
 import {NotificationService} from '../../service/notification/notification.service';
-import {Router} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {JsService} from '../../service/js.service';
+import {CartDetail} from '../../model/cart-detail';
+import {CartDetailDto} from '../../model/cartDetailDto';
+import {DishService} from '../../service/dish/dish.service';
 import {Dish} from '../../model/dish';
-import {OptionService} from '../../service/option/option.service';
-import {Option} from '../../model/option';
 
 
 
@@ -16,24 +16,16 @@ import {Option} from '../../model/option';
   templateUrl: './carts-table.component.html',
   styleUrls: ['./carts-table.component.css']
 })
-export class CartsTableComponent implements OnInit, OnChanges {
+export class CartsTableComponent implements OnInit {
+  cartDetailDto:CartDetailDto[]=[];
+  cartDetailList:CartDetail[]=[]
+  ProductList: Dish[];
+  cartId:number
+  quantity:number=1
+  billValue: number=0;
 
-  carts: Cart[] = [];
-  cartDetailList: {
-    dish:Dish,
-    quantity:number
-    productOption:number[];
-  }[]=[]
-  cartDetailDto: {
-    dish:Dish,
-    quantity:number
-    productOption:Option[]
-  }[]=[]
-  optionList: Option[]
-  dish:Dish[];
   @Input()
   refreshNum = 0;
-  billValue=0;
   currentUser: any;
   loggedIn = false;
 
@@ -43,26 +35,48 @@ export class CartsTableComponent implements OnInit, OnChanges {
               private cartService: CartService,
               private notificationService: NotificationService,
               private router: Router,
-    private  optionService:OptionService
+              private activatedRoute: ActivatedRoute,
+              private dishService: DishService,
   ) {
+    this.js.jsActive()
+
   }
 
   ngOnInit() {
-    this.js.jsActive()
-    this.getAllOption();
-    this.summaryBill();
+    this.getAllDishes();
+    this.cartId= JSON.parse(sessionStorage.getItem("cartId"));
+    this.getAllCart();
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
-    this.getCurrentUserCarts();
-  }
-  getAllOption() {
-    let cartId= JSON.parse(sessionStorage.getItem("cartId"));
-    if (cartId!=null) {
-      this.cartService.getAllDetailByCartId(cartId).subscribe((res: any[]) => {
-        this.cartDetailDto = res;
+
+  getAllCart() {
+    if (this.cartId!=null) {
+      this.cartService.getAllDetailByCartId(this.cartId).subscribe((res:CartDetailDto[]) => {
+         this.cartDetailDto=res;
+        for (let i = 0; i < this.cartDetailDto.length; i++) {
+          for (let j = 0; j < this.ProductList.length; j++) {
+             if(this.cartDetailDto[i].dishId==this.ProductList[j].id) {
+               const CartDetail={
+                 id:this.cartDetailDto[i].id,
+                 dish: this.ProductList[j],
+                 quantity: this.cartDetailDto[i].quantity,
+                 productOption: this.cartDetailDto[i].productOptions
+               }
+               this.cartDetailList.push(CartDetail);
+               break;
+             }
+          }
+        }
+        this.summaryBill()
       })
+
     }
+  }
+
+  getAllDishes() {
+    this.dishService.findAll().subscribe(res  => {
+      this.ProductList = (<Dish[]> res);
+    })
   }
 
   checkLoginAndGetInfo() {
@@ -72,52 +86,44 @@ export class CartsTableComponent implements OnInit, OnChanges {
     }
   }
 
+  increaseDishQuantity(index: number,id:number) {
+    this.cartService.increaseQuantity(id).subscribe(
+      () => {
+        this.cartDetailList[index].quantity=this.cartDetailList[index].quantity+1;
+        this.summaryBill();
+      })
 
-  getCurrentUserCarts() {
-    if (!this.loggedIn) return;
-    this.cartService.getCurrentUserCarts().subscribe(
-      (response) => {
-        this.carts = response as Cart[];
-      }
-    );
   }
 
-
-
-  increaseDishQuantity(index: number) {
-    this.getAllOption();
-      this.cartDetailDto[index].quantity=this.cartDetailDto[index].quantity + 1;
-    this.summaryBill()
-    sessionStorage.setItem('cartDetailList', JSON.stringify(this.cartDetailList));
+  decreaseDishQuantity(index: number,id:number) {
+    this.cartService.decreaseQuantity(id).subscribe(
+      () => {
+        this.cartDetailList[index].quantity=this.cartDetailList[index].quantity-1;
+        this.summaryBill();
+      })
   }
 
-  decreaseDishQuantity(index: number) {
-    this.getAllOption();
-    this.cartDetailDto[index].quantity=this.cartDetailDto[index].quantity - 1;
-    this.summaryBill()
-    if(this.cartDetailDto[index].quantity==0) {
-      this.removeDishOfCart(index)
-    }
-    sessionStorage.setItem('cartDetailList', JSON.stringify(this.cartDetailList));
-  }
-  removeDishOfCart(index: number) {
-    this.cartDetailList =  JSON.parse(sessionStorage.getItem("cartDetailList"))
-    this.cartDetailList.splice(index,1);
-    sessionStorage.setItem('cartDetailList', JSON.stringify(this.cartDetailList));
-    this.getAllOption();
-    this.summaryBill()
+  removeDishOfCart(index: number,id:number) {
+    this.cartService.deleteCartDetaiById(id).subscribe(
+      (res:CartDetail) => {
+        this.cartDetailList.splice(index,1)
+        this.summaryBill();
+      })
   }
 
   summaryBill(){
-    this.billValue=0;
+    let value=0
     if(this.cartDetailList.length>0) {
     for (let i = 0; i < this.cartDetailList.length; i++) {
-      let productPrice=this.cartDetailList[i].dish.price;
+       let optionSum=0
+      for (let j = 0; j < this.cartDetailList[i].productOption.length; j++) {
+        optionSum+=this.cartDetailList[i].productOption[j].price;
+      }
+      let productPrice=this.cartDetailList[i].dish.price + optionSum
       let  quantity= this.cartDetailList[i].quantity;
-      this.billValue+=productPrice*quantity;
+      value+=productPrice*quantity;
     }
-
-
+      this.billValue=value;
   }else {
       this.billValue=0;
     }

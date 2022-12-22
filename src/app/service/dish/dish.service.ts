@@ -23,6 +23,10 @@ export class DishService {
   getById(id: number): Observable<Dish> {
     return this.httpClient.get<Dish>(`${API_URL}/dishes/${id}`);
   }
+    findAll(): Observable<result> {
+    return this.httpClient.get<result>(`${API_URL}/dishes/all`);
+  }
+
 
   getMostPurchasedDishes() {
     return this.httpClient.get(`${API_URL}/dishes/most-purchased/8`);

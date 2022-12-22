@@ -5,10 +5,10 @@ import {DishService} from '../../../service/dish/dish.service';
 import {CategoryService} from '../../../service/category/category.service';
 
 import {FormControl, FormGroup} from '@angular/forms';
-import {ActivatedRoute, Router} from '@angular/router';
+import {ActivatedRoute, ParamMap, Router} from '@angular/router';
 import {Dish} from '../../../model/dish';
 import {Category} from '../../../model/category';
-
+declare var $: any
 @Component({
   selector: 'app-product-list',
   templateUrl: './product-list.component.html',
@@ -17,7 +17,7 @@ import {Category} from '../../../model/category';
 export class ProductListComponent implements OnInit {
   ProductList: Dish[];
   form  : FormGroup;
-  selectItem:any;
+  selectItem:number;
   categories: Category[];
   pageDisplay1:number
 
@@ -29,7 +29,10 @@ export class ProductListComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private categoryService:CategoryService) {
     this.js.jsActive();
-
+    this.activatedRoute.paramMap.subscribe((paramMap: ParamMap) => {
+      const id = paramMap.get('category-id');
+      this.getDishByCategory(Number(id));
+    });
 
   }
 
@@ -37,6 +40,7 @@ export class ProductListComponent implements OnInit {
      this.pageDisplay1=0
     this.getCategoryList();
     this.getAllDishes(this.pageDisplay1);
+     $('#0').hide();
 
     }
 
@@ -47,7 +51,7 @@ export class ProductListComponent implements OnInit {
     });
   }
   getDishByCategory(category_id:number) {
-    this.selectItem=category_id;
+    this.selectItem=category_id-1;
     if(category_id==0) {
       this.getAllDishes(0);
     }
@@ -67,19 +71,28 @@ export class ProductListComponent implements OnInit {
      }
 
      nextPage(){
+
+       if(this.ProductList.length<9){
+         this.pageDisplay1-=1;
+         $('#2').hide();
+       }
        this.pageDisplay1+=1;
        this.getAllDishes(this.pageDisplay1)
-       if(this.ProductList.length==0){
-         this.pageDisplay1-=1;
-       }
-
+       $('#0').show();
      }
 
      backPage(){
        this.pageDisplay1-=1;
-       if(this.pageDisplay1<0){
+       if(this.pageDisplay1<1){
          this.pageDisplay1=0
+         $('#0').hide();
+       }else {
+         $('#2').show();
        }
+
+
        this.getAllDishes(this.pageDisplay1)
+
      }
+
 }

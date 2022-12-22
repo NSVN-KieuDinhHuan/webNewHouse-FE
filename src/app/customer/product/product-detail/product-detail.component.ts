@@ -7,8 +7,7 @@ import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {NotificationService} from '../../../service/notification/notification.service';
 import {Dish} from '../../../model/dish';
 import {Cart} from '../../../model/cart';
-import {CartDetail} from '../../../model/cart-detail';
-import {productOptionList} from '../../../model/productOptionList';
+
 import {CartService} from '../../../service/cart/cart.service';
 declare var $: any
 @Component({
@@ -22,7 +21,7 @@ export class ProductDetailComponent implements OnInit {
   currentUser: any;
   cart: Cart;
   cartAll:Cart[];
-  cartDetailList:CartDetail[]
+
   optionOfProduct:number[]
   addProductForm: FormGroup = new FormGroup({
     quantity: new FormControl(1),
@@ -39,7 +38,6 @@ export class ProductDetailComponent implements OnInit {
               private notificationService: NotificationService,
               private cartService: CartService
               ) {
-
   }
   get quantity() {
      return this.addProductForm.get('quantity');
@@ -47,16 +45,21 @@ export class ProductDetailComponent implements OnInit {
 
   createCart(){
    this.cartId= JSON.parse(sessionStorage.getItem("cartId"));
-   if (this.cartId==null) {
    this.cartService.findAllCart().subscribe((res:Cart[]) => {
      this.cartAll=res;
      let CartId=this.cartAll.length +1;
-     this.cartService.createCart(CartId).subscribe(() => {
-        sessionStorage.setItem('cartId', JSON.stringify(CartId));
-     })
+     if(this.cartId!=null && res.length==0) {
+       sessionStorage.removeItem("cartId")
+       this.cartId=null;
+     }
+     if(this.cartId==null) {
+        this.cartService.createCart(CartId).subscribe(() => {
+            sessionStorage.setItem('cartId', JSON.stringify(CartId));
+       })
+     }
    });
    }
-  }
+
 
   ngOnInit() {
     this.js.jsActive()

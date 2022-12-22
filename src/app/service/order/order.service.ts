@@ -2,10 +2,10 @@ import {Injectable} from '@angular/core';
 import {environment} from '../../../environments/environment';
 import {HttpClient} from '@angular/common/http';
 
-import {Observable} from 'rxjs';
+
 import {OrderListDto} from '../../model/OrderListDto';
-import {Dish} from '../../model/dish';
-import {OrderDetailDto} from '../../model/orderDetailDto';
+
+import {OrderList} from '../../model/OrderList';
 
 const API_URL = `${environment.apiUrl}`;
 
@@ -18,10 +18,7 @@ export class OrderService {
   constructor(private httpClient: HttpClient) {
   }
 
-  createOrderDetail(OrderListDto: { address: any; phone: any; email: any; username: any }): Observable<OrderListDto> {
-    return this.httpClient.post<OrderListDto>(`${API_URL}/api/ordersList`, OrderListDto);
-  }
-  createOrderList(OrderDetailDto: OrderDetailDto): Observable<OrderDetailDto> {
-    return this.httpClient.post<OrderDetailDto>(`${API_URL}/api/orderdetail`, OrderDetailDto);
+  createOrderList(orderListDto: OrderListDto) {
+    return this.httpClient.post(`${API_URL}/ordersList`, orderListDto);
   }
 }

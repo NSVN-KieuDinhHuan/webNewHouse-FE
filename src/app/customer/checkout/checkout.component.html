@@ -20,7 +20,7 @@
     <div class="container-fluid">
       <h2>Thông tin đặt hàng</h2>
       <div class="row">
-        <div class="col-12 col-lg-6 cart-summary mt-0">
+        <div class="col-12 col-lg-7 cart-summary mt-0">
 
             <table class="table table-bordered ">
               <thead class="text-center">
@@ -37,7 +37,7 @@
               <tr *ngFor="let cartDetail of cartDetailList;index as i">
                 <td style="max-width: 5%;">{{i+1}}</td>
                 <td class="border-danger" style="max-width: 14%;">
-                  <a href="#"><img src="{{cartDetail.dish.image01}}" alt="Product" width="50px"></a>
+                  <a href="#"><img src="http://localhost:8080/image/{{cartDetail.dish.image01}}" alt="Product" width="50px"></a>
                 </td>
                 <td class="cart_product_desc" style="min-width: 30%;">
                   <h6>{{cartDetail.dish.name}}</h6>
@@ -48,14 +48,14 @@
                 <td class="qty text-center" style="max-width: 25%;">
                   <div class="cart-btn">
                     <div class="quantity">
-                      <span class="qty-plus  w-50 h-25" (click)="increaseDishQuantity(i)" aria-hidden="false"><i class="fa fa-caret-up text-center" aria-hidden="true"></i></span>
+                      <span class="qty-plus  w-50 h-25" (click)="increaseDishQuantity(i,cartDetail.id)" aria-hidden="false"><i class="fa fa-plus text-center" aria-hidden="true"></i></span>
                       <input type="text" class="text-center w-25 h-25 border-1 "  id="quantity"  name="quantity" [value]="cartDetail.quantity">
-                      <span class="qty-minus" (click)="decreaseDishQuantity(i)" aria-hidden="false"><i class="fa fa-caret-down" aria-hidden="true"></i></span>
+                      <span class="qty-minus" (click)="decreaseDishQuantity(i,cartDetail.id)" aria-hidden="false">  <i class="fa fa-minus font-italic" aria-hidden="true"></i> </span>
                     </div>
 
                   </div>
                 </td>
-                <td style="max-width: 10%;" (click)="removeDishOfCart(i)"><i class="fa fa-trash"></i></td>
+                <td style="max-width: 10%;" (click)="removeDishOfCart(i,cartDetail.id)"><i class="fa fa-trash"></i></td>
               </tr>
               </tbody>
             </table>
@@ -81,7 +81,7 @@
 
 
         </div>
-        <div class="col-12 col-lg-6 mt-0">
+        <div class="col-12 col-lg-5 mt-0">
           <div class="checkout_details_area  clearfix">
 
             <div class="cart-title">

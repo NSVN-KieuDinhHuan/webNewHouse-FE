@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {JsService} from '../../../service/js.service';
 import {Dish} from '../../../model/dish';
+import {CartService} from '../../../service/cart/cart.service';
+import {CartDetail} from '../../../model/cart-detail';
 
 
 @Component({
@@ -9,18 +11,22 @@ import {Dish} from '../../../model/dish';
   styleUrls: ['./sidebar.component.css']
 })
 export class SidebarComponent implements OnInit {
-  cartDetailList: {
-    dish:Dish,
-    quantity:number
-  }[]
+  cartDetailDto:CartDetail[];
   cartLength: number;
-  constructor(private  js: JsService) {
-    this.cartDetailList =  JSON.parse(sessionStorage.getItem("cartDetailList"))
-    if (this.cartDetailList) {
-    this.cartLength=this.cartDetailList.length;
+  cartId:number;
+  constructor(private  js: JsService,
+              private cartService: CartService,) {
+    this.cartId= JSON.parse(sessionStorage.getItem("cartId"));
+    this.getAllCart();
+  }
+  getAllCart() {
+    if (this.cartId!=null) {
+      this.cartService.getAllDetailByCartId(this.cartId).subscribe((res:CartDetail[]) => {
+        this.cartDetailDto = res;
+         this.cartLength=this.cartDetailDto.length;
+      })
     }
   }
-
   ngOnInit() {
     this.js.jsActive()
   }

@@ -5,6 +5,8 @@ import {Dish} from '../../model/dish';
 import {HttpClient} from '@angular/common/http';
 import {SearchForm} from '../../model/search-form';
 import {result} from '../../model/result';
+import {CategoryDto} from '../../model/categoryDto';
+import {DishForm} from '../../model/dishForm';
 
 const API_URL = `${environment.apiUrl}`;
 
@@ -16,7 +18,7 @@ export class DishService {
   constructor(private httpClient: HttpClient) {
   }
 
-  getAll(pageNumber:number): Observable<result> {
+  getAll(pageNumber: number): Observable<result> {
     return this.httpClient.get<result>(`${API_URL}/dishes/page/${pageNumber}`,);
   }
 
@@ -26,7 +28,9 @@ export class DishService {
     findAll(): Observable<result> {
     return this.httpClient.get<result>(`${API_URL}/dishes/all`);
   }
-
+  createDish(dish: DishForm) {
+    return this.httpClient.post<Dish>(`${API_URL}/dishes`, dish);
+  }
 
   getMostPurchasedDishes() {
     return this.httpClient.get(`${API_URL}/dishes/most-purchased/8`);

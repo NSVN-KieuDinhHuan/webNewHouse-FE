@@ -4,6 +4,7 @@ import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {result} from '../../model/result';
 import {Category} from '../../model/category';
+import {CategoryDto} from '../../model/categoryDto';
 
 
 const API_URL = environment.apiUrl;
@@ -15,7 +16,7 @@ const API_URL = environment.apiUrl;
 export class CategoryService {
 
   constructor(private http: HttpClient) { }
-  getAllCategory(): Observable<Category[]> {
-    return this.http.get<Category[]>(`${API_URL}/categories`);
+  getAllCategory(): Observable<CategoryDto[]> {
+    return this.http.get<CategoryDto[]>(`${API_URL}/categories`);
   }
 }

@@ -33,13 +33,16 @@ export class HomeComponent implements OnInit {
   ngOnInit() {
     this.pageDisplay1 = 0;
     this.getCategoryList();
-    this.js.jsActive();
+    // this.js.jsActive();
     $('#0').hide();
 
   }
   getCategoryList() {
     this.categoryService.getAllCategory().subscribe(res => {
       this.categories = res;
+      for (let i = 0; i < this.categories.length; i++) {
+        this.categories[i].image="http://localhost:8080/image/"+this.categories[i].image;
+      }
     });
   }
 

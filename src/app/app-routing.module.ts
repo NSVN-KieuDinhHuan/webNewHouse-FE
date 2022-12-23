@@ -14,7 +14,12 @@ const routes: Routes = [
     loadChildren: () => import('./customer/customer.module').then(module => module.CustomerModule)
   },
   {
+    path: 'admin',
+    loadChildren: () => import('./admin/admin.module').then(module => module.AdminModule)
+  },
+  {
     path: 'auth',
+    canActivate: [AuthGuardGuard],
     loadChildren: () => import('./auth/auth.module').then(module => module.AuthModule)
   },
   {

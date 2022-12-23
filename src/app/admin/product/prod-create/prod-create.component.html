@@ -1,0 +1,134 @@
+<div class="wrapper">
+
+  <app-sidebar></app-sidebar>
+
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1>Thêm sản phẩm</h1>
+          </div>
+
+        </div>
+      </div><!-- /.container-fluid -->
+
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+      <div class="container-fluid">
+        <!-- /.row -->
+        <div class="row">
+          <!-- left column -->
+          <div class="col-md-12">
+            <!-- general form elements -->
+            <div class="card card-primary">
+              <div class="card-header">
+                <h3 class="card-title">Điền Thông Tin sản phẩm</h3>
+              </div>
+              <!-- /.card-header -->
+              <!-- form start -->
+              <form [formGroup]="productForm" (ngSubmit)="submit()">
+                <div class="card-body">
+                  <div class="form-group">
+                    <label for="name">1. Tên sản phẩm </label>
+                    <input type="text" class="form-control" id="name" placeholder="Tên sản phẩm" formControlName="name">
+                  </div>
+                  <div class="form-group">
+                    <label for="price">2. Giá</label>
+                    <input type="password" class="form-control" id="price" placeholder="Nhập Giá sản phẩm" formControlName="price">
+                  </div>
+                  <div class="form-group">
+                    <label>3. Danh mục</label>
+                    <select class="form-control select2" style="width: 100%;" formControlName="categories">
+                    <option disabled [ngValue]="null"> Lựa chọn danh mục</option>
+                    <option *ngFor="let category of categories" value="{{category.id}}">{{category.name}}</option>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label>4. Tùy chọn</label>
+                    <select class="form-control select2" style="width: 100%;">
+                      <option selected="selected">Alabama</option>
+                      <option>Alaska</option>
+                      <option>California</option>
+                    </select>
+                  </div>
+
+                  <div class="row form-group ">
+                    <label>5. Ảnh sản phẩm</label>
+                    <div class="col-12 product-image-thumbs"  style="height: 100px">
+                      <div class="product-image-thumb"  [style.background-image]="'url(' + image1 + ')'" style="background-size: 100% ;background-repeat: no-repeat;background-position: center;">
+                        <input type="file" class="custom-file-input" id="image1" formControlName="image1">
+                      </div>
+                      <div class="product-image-thumb"  [style.background-image]="'url(' + image2 + ')'" style="background-size: 100% ;background-repeat: no-repeat;background-position: center;">
+                        <input type="file" class="custom-file-input" id="image2" formControlName="image2">
+                      </div>
+                      <div class="product-image-thumb"  [style.background-image]="'url(' + image3 + ')'" style="background-size: 100% ;background-repeat: no-repeat;background-position: center;">
+                        <input type="file" class="custom-file-input" id="image3" formControlName="image3">
+                      </div>
+                      <div class="product-image-thumb"  [style.background-image]="'url(' + image4 + ')'" style="background-size: 100% ;background-repeat: no-repeat;background-position: center;">
+                        <input type="file" class="custom-file-input" id="image4" formControlName="image4">
+                      </div>
+                      <div class="product-image-thumb"  [style.background-image]="'url(' + image5 + ')'" style="background-size: 100% ;background-repeat: no-repeat;background-position: center;">
+                        <input type="file" class="custom-file-input" id="image5" formControlName="image5">
+                      </div>
+                      <div class="product-image-thumb"  [style.background-image]="'url(' + image6 + ')'" style="background-size: 100% ;background-repeat: no-repeat;background-position: center;">
+                        <input type="file" class="custom-file-input" id="image6" formControlName="image6">
+                      </div>
+                      <div class="product-image-thumb"  [style.background-image]="'url(' + image7 + ')'" style="background-size: 100% ;background-repeat: no-repeat;background-position: center;">
+                        <input type="file" class="custom-file-input" id="image7" formControlName="image7">
+                      </div>
+                      <div class="product-image-thumb"  [style.background-image]="'url(' + image8 + ')'" style="background-size: 100% ;background-repeat: no-repeat;background-position: center;">
+                        <input type="file" class="custom-file-input" id="image8" formControlName="image8">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label>Mô tả sản phẩm</label>
+                    <div [ngxSummernote]>
+                    <textarea id="compose1-textarea" class="form-control" style="height: 300px">
+                    </textarea>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label>Thông số kỹ thuật</label>
+                    <div [ngxSummernote]>
+                    <textarea id="compose2-textarea" class="form-control" style="height: 300px">
+                    </textarea>
+                    </div>
+                  </div>
+
+
+                </div>
+                <!-- /.card-body -->
+
+                <div class="card-footer col-12 align-content-center">
+                  <button type="submit" class="btn btn-primary mr-50 width-100">Thêm</button>
+                  <button type="submit" class="btn btn-primary width-100">Hủy</button>
+                </div>
+
+
+              </form>
+            </div>
+            <!-- /.card -->
+
+          </div>
+          <!--/.col (left) -->
+        </div>
+        <!-- /.row -->
+      </div><!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+
+  <app-footer></app-footer>
+  <!-- Control Sidebar -->
+  <aside class="control-sidebar control-sidebar-dark">
+    <!-- Control sidebar content goes here -->
+  </aside>
+  <!-- /.control-sidebar -->
+</div>

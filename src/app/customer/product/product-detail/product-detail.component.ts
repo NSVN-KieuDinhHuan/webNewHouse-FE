@@ -11,7 +11,7 @@ import {Cart} from '../../../model/cart';
 import {CartService} from '../../../service/cart/cart.service';
 declare var $: any
 @Component({
-  selector: 'app-product-detail',
+  selector: 'app-product-create',
   templateUrl: './product-detail.component.html',
   styleUrls: ['./product-detail.component.css']
 })
@@ -30,14 +30,25 @@ export class ProductDetailComponent implements OnInit {
 
   mainProductImg:string;
 
-  constructor(private  js: JsService,
-  private dishService: DishService,
+  constructor(
+              private  js: JsService,
+              private dishService: DishService,
               private activatedRoute: ActivatedRoute,
               private router: Router,
               private authService: AuthService,
               private notificationService: NotificationService,
               private cartService: CartService
               ) {
+  }
+
+  ngOnInit() {
+    this.js.jsActive()
+    this.activatedRoute.paramMap.subscribe((paramMap: ParamMap) => {
+      const id = +paramMap.get('product-id');
+      this.getDetailProduct(id);
+      this.checkLoginAndGetInfo();
+      this.createCart();
+    })
   }
   get quantity() {
      return this.addProductForm.get('quantity');
@@ -61,15 +72,7 @@ export class ProductDetailComponent implements OnInit {
    }
 
 
-  ngOnInit() {
-    this.js.jsActive()
-    this.activatedRoute.paramMap.subscribe((paramMap: ParamMap) => {
-      const id = +paramMap.get('product-id');
-      this.getDetailProduct(id);
-      this.checkLoginAndGetInfo();
-      this.createCart();
-    })
-  }
+
   checkLoginAndGetInfo() {
     this.loggedIn = this.authService.isLoggedIn();
     if (this.loggedIn) {

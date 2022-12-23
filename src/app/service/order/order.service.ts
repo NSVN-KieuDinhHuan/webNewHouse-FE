@@ -6,6 +6,8 @@ import {HttpClient} from '@angular/common/http';
 import {OrderListDto} from '../../model/OrderListDto';
 
 import {OrderList} from '../../model/OrderList';
+import {Option} from '../../model/option';
+import {Observable} from 'rxjs';
 
 const API_URL = `${environment.apiUrl}`;
 
@@ -21,4 +23,9 @@ export class OrderService {
   createOrderList(orderListDto: OrderListDto) {
     return this.httpClient.post(`${API_URL}/ordersList`, orderListDto);
   }
+
+  getOrderListAll(): Observable<OrderList[]> {
+    return this.httpClient.get<OrderList[]>(`${API_URL}/ordersList`);
+  }
+
 }

@@ -8,7 +8,7 @@ import {FormControl, FormGroup} from '@angular/forms';
 import {ActivatedRoute, ParamMap, Router} from '@angular/router';
 import {Dish} from '../../../model/dish';
 import {Category} from '../../../model/category';
-declare var $: any
+declare var $: any;
 @Component({
   selector: 'app-product-list',
   templateUrl: './product-list.component.html',

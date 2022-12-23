@@ -11,7 +11,7 @@ import {Cart} from '../../../model/cart';
 import {CartService} from '../../../service/cart/cart.service';
 declare var $: any
 @Component({
-  selector: 'app-product-detail',
+  selector: 'app-product-create',
   templateUrl: './product-detail.component.html',
   styleUrls: ['./product-detail.component.css']
 })

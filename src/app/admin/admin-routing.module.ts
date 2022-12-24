@@ -5,6 +5,12 @@ import {ProdListComponent} from './product/prod-list/prod-list.component';
 import {ProdCreateComponent} from './product/prod-create/prod-create.component';
 import {OptionListComponent} from './option/option-list/option-list.component';
 import {CategoryListComponent} from './categories/category-list/category-list.component';
+import {OptionGroupListComponent} from './option-group/option-group-list/option-group-list.component';
+import {OptionCreateComponent} from './option/option-create/option-create.component';
+import {OptionEditComponent} from './option/option-edit/option-edit.component';
+import {OptionGroupCreateComponent} from './option-group/option-group-create/option-group-create.component';
+import {CategoryCreateComponent} from './categories/category-create/category-create.component';
+import {CategoryEditComponent} from './categories/category-edit/category-edit.component';
 
 
 
@@ -28,8 +34,34 @@ const routes: Routes = [
     component: OptionListComponent
   },
   {
+    path: 'option/create',
+    component: OptionCreateComponent
+  },
+  {
+    path: 'option/edit/:option-id',
+    component: OptionEditComponent
+  },
+  {
+    path: 'option-group/list',
+    component: OptionGroupListComponent
+  },
+  {
+    path: 'option-group/create',
+    component: OptionGroupCreateComponent
+  },
+  {
     path: 'category/list',
     component: CategoryListComponent
+  },
+
+  {
+    path: 'category/create',
+    component: CategoryCreateComponent
+  },
+
+  {
+    path: 'category/edit/:id',
+    component: CategoryEditComponent
   },
   {
     path: '',

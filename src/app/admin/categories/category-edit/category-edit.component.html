@@ -9,7 +9,7 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>Thêm sản phẩm</h1>
+            <h1>Chỉnh sửa Danh mục</h1>
           </div>
 
         </div>
@@ -27,33 +27,30 @@
             <!-- general form elements -->
             <div class="card card-primary">
               <div class="card-header">
-                <h3 class="card-title">Điền Thông Tin Tùy chọn</h3>
+                <h3 class="card-title">Thông Tin Danh mục</h3>
               </div>
               <!-- /.card-header -->
               <!-- form start -->
-              <form [formGroup]="optionForm" (ngSubmit)="submit()">
+              <form [formGroup]="categoryForm" (ngSubmit)="submit()">
                 <div class="card-body">
                   <div class="form-group">
-                    <label for="name">1. Tên tùy chọn </label>
-                    <input type="text" class="form-control" id="name" placeholder="Tên tùy chọn" formControlName="name">
+                    <label for="name">1.Tên </label>
+                    <input type="text" class="form-control" id="name" placeholder="Tên" formControlName="name">
                   </div>
                   <div class="form-group">
-                    <label for="price">2. Giá</label>
-                    <input type="text" class="form-control" id="price" placeholder="Nhập Giá sản tùy chọn" formControlName="price">
+                    <label for="image">2.Ảnh </label>
+                    <input type="file" class="form-control" id="image" placeholder="Nhập Giá sản tùy chọn" formControlName="image">
                   </div>
+
                   <div class="form-group">
-                    <label for="price">3. Nhóm tùy chọn</label>
-                    <select class="form-control select2" style="width: 100%;" formControlName="group">
-                      <option disabled [ngValue]="null"> Lựa chọn Nhóm</option>
-                      <option *ngFor="let optionGroup of optionGroupList" value="{{optionGroup.id}}">{{optionGroup.name}}</option>
-                    </select>
+                    <label for="description">3.Mô tả</label>
+                    <input type="text" class="form-control" id="description" placeholder="Nhập mô tả" formControlName="description">
                   </div>
                 </div>
                 <!-- /.card-body -->
-
                 <div class="card-footer col-12 align-content-center">
                   <button type="submit" class="btn btn-primary mr-50 width-100">Thêm</button>
-                  <a routerLink="/admin/option/list"><button  class="btn btn-primary width-100">Hủy</button></a>
+                  <a routerLink="/admin/category/list"><button  class="btn btn-primary width-100">Hủy</button></a>
                 </div>
 
 
@@ -78,4 +75,5 @@
   </aside>
   <!-- /.control-sidebar -->
 </div>
+
 

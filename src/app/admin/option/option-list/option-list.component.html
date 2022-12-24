@@ -9,10 +9,12 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>Danh sách sản phẩm</h1>
+            <h1>Danh sách các tùy chọn</h1>
           </div>
           <div class="col-sm-6">
+            <a routerLink="/admin/option/create">
             <div class="breadcrumb-item float-sm-right mr-50"><button type="button" class="btn btn-block btn-primary btn-lg "> <i class="fas fa-plus"></i>  Thêm tùy chọn</button></div>
+            </a>
           </div>
         </div>
       </div><!-- /.container-fluid -->
@@ -37,16 +39,19 @@
                     <th>STT</th>
                     <th>Tên</th>
                     <th>Ảnh</th>
+                    <th>Nhóm</th>
                     <th>Hành Động</th>
                   </tr>
                   </thead>
                   <tbody class="text-center">
-
                   <tr *ngFor="let product of optionList;index as i">
                     <td>{{i+1}}</td>
-                    <td>{{product.name}}</td>
+                    <td><a routerLink="/admin/option/edit/{{product.id}}">{{product.name}}</a></td>
                     <td>{{product.price}}</td>
-                    <td><i class="fas fa-trash"></i></td>
+                    <td>{{product.group.name}}</td>
+                    <td><i class="fas fa-trash">
+                      <a type="button" class="btn btn-default" data-toggle="modal" data-target="#modal-sm">
+                    </a></i></td>
                   </tr>
 
                   </tbody>

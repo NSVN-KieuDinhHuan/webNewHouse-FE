@@ -15,6 +15,14 @@ import { OptionListComponent } from './option/option-list/option-list.component'
 import { OptionCreateComponent } from './option/option-create/option-create.component';
 import { CategoryListComponent } from './categories/category-list/category-list.component';
 import { OrderListComponent } from './order/order-list/order-list.component';
+import { OptionGroupListComponent } from './option-group/option-group-list/option-group-list.component';
+import { OptionGroupCreateComponent } from './option-group/option-group-create/option-group-create.component';
+import { OptionGroupEditComponent } from './option-group/option-group-edit/option-group-edit.component';
+import { OptionEditComponent } from './option/option-edit/option-edit.component';
+import { CategoryCreateComponent } from './categories/category-create/category-create.component';
+import { CategoryEditComponent } from './categories/category-edit/category-edit.component';
+import { CategoryDeleteComponent } from './categories/category-delete/category-delete.component';
+
 
 
 @NgModule({
@@ -27,7 +35,14 @@ import { OrderListComponent } from './order/order-list/order-list.component';
     OptionListComponent,
     OptionCreateComponent,
     CategoryListComponent,
-    OrderListComponent],
+    OrderListComponent,
+    OptionGroupListComponent,
+    OptionGroupCreateComponent,
+    OptionGroupEditComponent,
+    OptionEditComponent,
+    CategoryCreateComponent,
+    CategoryEditComponent,
+    CategoryDeleteComponent],
   exports: [
     AdminComponent,
     FooterComponent,

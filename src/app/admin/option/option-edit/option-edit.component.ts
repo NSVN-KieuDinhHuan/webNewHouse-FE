@@ -1,21 +1,23 @@
 import { Component, OnInit } from '@angular/core';
+import {OptionGroup} from '../../../model/optionGroup';
 import {JsService} from '../../../service/js.service';
 import {DishService} from '../../../service/dish/dish.service';
-import {ActivatedRoute, Router} from '@angular/router';
+import {ActivatedRoute, ParamMap, Router} from '@angular/router';
+import {OptionService} from '../../../service/option/option.service';
 import {AuthService} from '../../../service/auth/auth.service';
 import {NotificationService} from '../../../service/notification/notification.service';
 import {CartService} from '../../../service/cart/cart.service';
 import {CategoryService} from '../../../service/category/category.service';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
-import {OptionService} from '../../../service/option/option.service';
-import {OptionGroup} from '../../../model/optionGroup';
+import {Option} from '../../../model/option';
 
 @Component({
-  selector: 'app-option-create',
-  templateUrl: './option-create.component.html',
-  styleUrls: ['./option-create.component.css']
+  selector: 'app-option-edit',
+  templateUrl: './option-edit.component.html',
+  styleUrls: ['./option-edit.component.css']
 })
-export class OptionCreateComponent implements OnInit {
+export class OptionEditComponent implements OnInit {
+  option:Option;
   optionGroupList:OptionGroup[]
   constructor(private js: JsService,
               private dishService: DishService,
@@ -25,7 +27,12 @@ export class OptionCreateComponent implements OnInit {
               private authService: AuthService,
               private notificationService: NotificationService,
               private cartService: CartService,
-              private categoryService:CategoryService) { }
+              private categoryService:CategoryService) {
+    this.activatedRoute.paramMap.subscribe((paramMap: ParamMap) => {
+      const id = +paramMap.get('option-id');
+      this.getOptionrById(id);
+    })
+  }
 
   ngOnInit() {
     this.getAllOptionGroup()
@@ -39,7 +46,15 @@ export class OptionCreateComponent implements OnInit {
   get optionFormControl() {
     return this.optionForm.controls;
   }
+  getOptionrById(id) {
+    this.optionService.getById(id).subscribe((option) => {
+      this.option = option;
+      this.optionFormControl.name.setValue(this.option.name);
+      this.optionFormControl.price.setValue(this.option.price);
+      this.optionFormControl.group.setValue(this.option.group.id);
 
+    });
+  }
   getAllOptionGroup() {
     this.optionService.getOptionGroupAll().subscribe(res => {
       this.optionGroupList = res;
@@ -51,11 +66,12 @@ export class OptionCreateComponent implements OnInit {
     formData.append('price', this.optionForm.value.price);
     formData.append('group', this.optionForm.value.group);
     if (this.optionForm.valid) {
-      this.optionService.saveOption(formData).subscribe(() => {
+      this.optionService.editSong(this.option.id,formData).subscribe(() => {
         this.notificationService.showSuccessMessage('Success');
         this.router.navigateByUrl("/admin/option/list")
       }, error => this.notificationService.showErrorMessage('Error'));
       this.optionForm.reset();
     }
   }
+
 }

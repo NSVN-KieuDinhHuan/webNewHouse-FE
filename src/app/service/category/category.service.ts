@@ -22,10 +22,17 @@ export class CategoryService {
   getAllCategory(): Observable<CategoryDto[]> {
     return this.http.get<CategoryDto[]>(`${API_URL}/categories`);
   }
-  createCategory(category: CategoryDto) {
-    return this.http.post<CategoryDto[]>(`${API_URL}/categories`, category);
+  createCategory(category: FormData) {
+    return this.http.post<CategoryDto>(`${API_URL}/categories`, category);
   }
-  DeleteCategory(id: number): Observable<Dish> {
-    return this.http.delete<Dish>(`${API_URL}/categories/${id}`);
+  UpdateCategory(id:number,category: FormData) {
+    return this.http.post<CategoryDto>(`${API_URL}/categories/edit/${id}`, category);
+  }
+  DeleteCategory(id: number): Observable<CategoryDto> {
+    return this.http.delete<CategoryDto>(`${API_URL}/categories/${id}`);
+  }
+
+  getCategoryById(id: number): Observable<CategoryDto> {
+    return this.http.get<CategoryDto>(`${API_URL}/categories/${id}`);
   }
 }

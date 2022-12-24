@@ -39,7 +39,7 @@
                   </div>
                   <div class="form-group">
                     <label for="price">2. Giá</label>
-                    <input type="password" class="form-control" id="price" placeholder="Nhập Giá sản phẩm" formControlName="price">
+                    <input type="text" class="form-control" id="price" placeholder="Nhập Giá sản phẩm" formControlName="price">
                   </div>
                   <div class="form-group">
                     <label>3. Danh mục</label>
@@ -50,10 +50,9 @@
                   </div>
                   <div class="form-group">
                     <label>4. Tùy chọn</label>
-                    <select class="form-control select2" style="width: 100%;">
-                      <option selected="selected">Alabama</option>
-                      <option>Alaska</option>
-                      <option>California</option>
+                    <select class="form-control select2" style="width: 100%;" formControlName="optionGroup">
+                      <option disabled [ngValue]="null"> Lựa chọn danh mục</option>
+                      <option *ngFor="let optionGroup of optionGroupList" value="{{optionGroup.id}}">{{optionGroup.name}}</option>
                     </select>
                   </div>
 

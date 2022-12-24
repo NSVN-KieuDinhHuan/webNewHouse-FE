@@ -21,8 +21,8 @@
 
       <!-- Single Catagory -->
       <div class="single-products-catagory clearfix" *ngFor="let category of categories; index as i">
-        <a href="shop.html">
-          <img src="assets/img/bg-img/1.jpg" alt="">
+        <a routerLink="/newhouse/shop/{{category.id}}">
+          <img src="{{categories[i].image}}" alt="">
           <!-- Hover Content -->
           <div class="hover-content">
             <div class="line"></div>
@@ -31,6 +31,7 @@
           </div>
         </a>
       </div>
+
 
     </div>
   </div>

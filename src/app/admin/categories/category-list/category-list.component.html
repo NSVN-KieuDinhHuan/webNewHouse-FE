@@ -11,9 +11,9 @@
           <div class="col-sm-6">
             <h1>Danh mục</h1>
           </div>
-          <div class="col-sm-6">
-            <div class="breadcrumb-item float-sm-right mr-50"><button type="button" class="btn btn-block btn-primary btn-lg "> <i class="fas fa-plus"></i>  Thêm danh mục</button></div>
-          </div>
+          <a routerLink="/admin/category/create">
+            <div class="breadcrumb-item float-sm-right mr-50"><button type="button" class="btn btn-block btn-primary btn-lg "> <i class="fas fa-plus"></i>  Thêm</button></div>
+          </a>
         </div>
       </div><!-- /.container-fluid -->
 
@@ -45,7 +45,7 @@
 
                   <tr *ngFor="let category of categories;index as i">
                     <td>{{i+1}}</td>
-                    <td>{{category.name}}</td>
+                    <td><a routerLink="/admin/category/edit/{{category.id}}">{{category.name}}</a></td>
                     <td><img src="http://localhost:8080/image/{{category.image}}" alt="" width="50px"></td>
                     <td>{{category.description}}</td>
                     <td><i class="fas fa-trash"></i></td>

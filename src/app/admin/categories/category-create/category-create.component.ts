@@ -1,21 +1,22 @@
 import { Component, OnInit } from '@angular/core';
+import {OptionGroup} from '../../../model/optionGroup';
 import {JsService} from '../../../service/js.service';
 import {DishService} from '../../../service/dish/dish.service';
 import {ActivatedRoute, Router} from '@angular/router';
+import {OptionService} from '../../../service/option/option.service';
 import {AuthService} from '../../../service/auth/auth.service';
 import {NotificationService} from '../../../service/notification/notification.service';
 import {CartService} from '../../../service/cart/cart.service';
 import {CategoryService} from '../../../service/category/category.service';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
-import {OptionService} from '../../../service/option/option.service';
-import {OptionGroup} from '../../../model/optionGroup';
 
 @Component({
-  selector: 'app-option-create',
-  templateUrl: './option-create.component.html',
-  styleUrls: ['./option-create.component.css']
+  selector: 'app-category-create',
+  templateUrl: './category-create.component.html',
+  styleUrls: ['./category-create.component.css']
 })
-export class OptionCreateComponent implements OnInit {
+export class CategoryCreateComponent implements OnInit {
+
   optionGroupList:OptionGroup[]
   constructor(private js: JsService,
               private dishService: DishService,
@@ -30,14 +31,14 @@ export class OptionCreateComponent implements OnInit {
   ngOnInit() {
     this.getAllOptionGroup()
   }
-  optionForm: FormGroup = new FormGroup({
+  categoryForm: FormGroup = new FormGroup({
     name: new FormControl('', [Validators.required]),
-    price: new FormControl('', [Validators.required]),
-    group: new FormControl('', [Validators.required]),
+    description: new FormControl('', [Validators.required]),
+    image: new FormControl('', [Validators.required]),
   });
 
-  get optionFormControl() {
-    return this.optionForm.controls;
+  get categoryFormControl() {
+    return this.categoryForm.controls;
   }
 
   getAllOptionGroup() {
@@ -47,15 +48,16 @@ export class OptionCreateComponent implements OnInit {
   }
   submit() {
     const formData = new FormData();
-    formData.append('name', this.optionForm.value.name);
-    formData.append('price', this.optionForm.value.price);
-    formData.append('group', this.optionForm.value.group);
-    if (this.optionForm.valid) {
-      this.optionService.saveOption(formData).subscribe(() => {
+    formData.append('name', this.categoryForm.value.name);
+    formData.append('description', this.categoryForm.value.description);
+    formData.append('image', (document.getElementById('image') as HTMLInputElement).files[0]);
+    if (this.categoryForm.valid) {
+      this.categoryService.createCategory(formData).subscribe(() => {
         this.notificationService.showSuccessMessage('Success');
-        this.router.navigateByUrl("/admin/option/list")
+        this.router.navigateByUrl("/admin/category/list")
       }, error => this.notificationService.showErrorMessage('Error'));
-      this.optionForm.reset();
+      this.categoryForm.reset();
     }
   }
+
 }

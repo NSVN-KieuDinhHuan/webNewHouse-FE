@@ -10,6 +10,8 @@ import {NotificationService} from '../../../service/notification/notification.se
 import {CartService} from '../../../service/cart/cart.service';
 import {CategoryService} from '../../../service/category/category.service';
 import {Category} from '../../../model/category';
+import {OptionGroup} from '../../../model/optionGroup';
+import {OptionService} from '../../../service/option/option.service';
 declare var $: any;
 @Component({
   selector: 'app-prod-create',
@@ -27,6 +29,7 @@ export class ProdCreateComponent implements OnInit {
   image7:string="assets/dist/img/prod-2.jpg";
   image8:string="assets/dist/img/prod-1.jpg";
   categories: Category[];
+  optionGroupList: OptionGroup[];
   constructor(    private js: JsService,
                   private dishService: DishService,
                   private activatedRoute : ActivatedRoute,
@@ -34,11 +37,14 @@ export class ProdCreateComponent implements OnInit {
                   private authService: AuthService,
                   private notificationService: NotificationService,
                   private cartService: CartService,
-                  private categoryService:CategoryService) {
+                  private categoryService:CategoryService,
+                  private optionService:OptionService) {
 
   }
   ngOnInit() {
   this.getCategoryList();
+  this.getAllOptionGroup();
+  this.js();
   }
   user: User = {};
   currentUser: UserToken = {};
@@ -53,6 +59,12 @@ export class ProdCreateComponent implements OnInit {
       this.categories=res
     })
   }
+
+  getAllOptionGroup() {
+    this.optionService.getOptionGroupAll().subscribe(res => {
+      this.optionGroupList = res;
+    });
+  }
   submit() {
     const formData = new FormData();
     formData.append('username', this.productForm.value.username);
@@ -63,9 +75,58 @@ export class ProdCreateComponent implements OnInit {
      if (files.length > 0) {
        formData.append('image', files[0]);
      }
-
-
   }
 
+  Js() {
+    Dropzone.autoDiscover = false
 
+    // Get the template HTML and remove it from the doumenthe template HTML and remove it from the doument
+    var previewNode = document.querySelector("#template")
+    previewNode.id = ""
+    var previewTemplate = previewNode.parentNode.innerHTML
+    previewNode.parentNode.removeChild(previewNode)
+
+    var myDropzone = new Dropzone(document.body, { // Make the whole body a dropzone
+      url: "/target-url", // Set the url
+      thumbnailWidth: 80,
+      thumbnailHeight: 80,
+      parallelUploads: 20,
+      previewTemplate: previewTemplate,
+      autoQueue: false, // Make sure the files aren't queued until manually added
+      previewsContainer: "#previews", // Define the container to display the previews
+      clickable: ".fileinput-button" // Define the element that should be used as click trigger to select files.
+    })
+
+    myDropzone.on("addedfile", function(file) {
+      // Hookup the start button
+      file.previewElement.querySelector(".start").onclick = function() { myDropzone.enqueueFile(file) }
+    })
+
+    // Update the total progress bar
+    myDropzone.on("totaluploadprogress", function(progress) {
+      document.querySelector("#total-progress .progress-bar").style.width = progress + "%"
+    })
+
+    myDropzone.on("sending", function(file) {
+      // Show the total progress bar when upload starts
+      document.querySelector("#total-progress").style.opacity = "1"
+      // And disable the start button
+      file.previewElement.querySelector(".start").setAttribute("disabled", "disabled")
+    })
+
+    // Hide the total progress bar when nothing's uploading anymore
+    myDropzone.on("queuecomplete", function(progress) {
+      document.querySelector("#total-progress").style.opacity = "0"
+    })
+
+    // Setup the buttons for all transfers
+    // The "add files" button doesn't need to be setup because the config
+    // `clickable` has already been specified.
+    document.querySelector("#actions .start").onclick = function() {
+      myDropzone.enqueueFiles(myDropzone.getFilesWithStatus(Dropzone.ADDED))
+    }
+    document.querySelector("#actions .cancel").onclick = function() {
+      myDropzone.removeAllFiles(true)
+    }
+  }
 }

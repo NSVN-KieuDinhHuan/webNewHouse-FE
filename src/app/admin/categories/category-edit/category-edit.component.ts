@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {OptionGroup} from '../../../model/optionGroup';
 import {JsService} from '../../../service/js.service';
-import {DishService} from '../../../service/dish/dish.service';
+
 import {ActivatedRoute, ParamMap, Router} from '@angular/router';
 import {OptionService} from '../../../service/option/option.service';
 import {AuthService} from '../../../service/auth/auth.service';
@@ -10,6 +10,7 @@ import {CartService} from '../../../service/cart/cart.service';
 import {CategoryService} from '../../../service/category/category.service';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {CategoryDto} from '../../../model/categoryDto';
+import {DishService} from '../../../service/product/dish.service';
 
 @Component({
   selector: 'app-category-edit',

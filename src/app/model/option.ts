@@ -3,7 +3,7 @@ import {OptionGroup} from './optionGroup';
 
 export interface Option {
   id?: number;
-  name?: string;
-  price?: number;
-  group?:OptionGroup
+  name?: String;
+  price?:number;
+  optionGroup?: OptionGroup
 }

@@ -1,27 +1,25 @@
 import { Component, OnInit } from '@angular/core';
-import {FormControl, FormGroup, Validators} from '@angular/forms';
-import {User} from '../../../model/user';
-import {UserToken} from '../../../model/user-token';
+import {Category} from '../../../model/category';
+import {OptionGroup} from '../../../model/optionGroup';
 import {JsService} from '../../../service/js.service';
 
-import {ActivatedRoute, Router} from '@angular/router';
+import {ActivatedRoute, ParamMap, Router} from '@angular/router';
 import {AuthService} from '../../../service/auth/auth.service';
 import {NotificationService} from '../../../service/notification/notification.service';
 import {CartService} from '../../../service/cart/cart.service';
 import {CategoryService} from '../../../service/category/category.service';
-import {Category} from '../../../model/category';
-import {OptionGroup} from '../../../model/optionGroup';
 import {OptionService} from '../../../service/option/option.service';
+import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {Dish} from '../../../model/dish';
 import {DishService} from '../../../service/product/dish.service';
-declare var $: any;
-const API_URL = "http://localhost:8080/image/"
-@Component({
-  selector: 'app-prod-create',
-  templateUrl: './prod-create.component.html',
-  styleUrls: ['./prod-create.component.css']
-})
 
-export class ProdCreateComponent implements OnInit {
+@Component({
+  selector: 'app-product-edit',
+  templateUrl: './product-edit.component.html',
+  styleUrls: ['./product-edit.component.css']
+})
+export class ProductEditComponent implements OnInit {
+
   image1:string="";
   image2:string="";
   image3:string="";
@@ -30,6 +28,7 @@ export class ProdCreateComponent implements OnInit {
   image6:string="";
   image7:string="";
   image8:string="";
+  product:Dish
   categories: Category[];
   optionGroupList: OptionGroup[];
   constructor(    private js: JsService,
@@ -42,19 +41,22 @@ export class ProdCreateComponent implements OnInit {
                   private categoryService:CategoryService,
                   private optionService:OptionService) {
 
-
+    this.activatedRoute.paramMap.subscribe((paramMap: ParamMap) => {
+      const id = +paramMap.get('id');
+      this.getProductByID(id);
+    })
 
   }
   ngOnInit() {
-  this.getCategoryList();
-  this.getAllOptionGroup();
+    this.getCategoryList();
+    this.getAllOptionGroup();
   }
 
   productForm: FormGroup = new FormGroup({
     name: new FormControl('', [Validators.required]),
     price: new FormControl('', [Validators.required]),
     categories: new FormControl('', [Validators.required]),
-    optionGroups: new FormControl(''),
+    optionGroup: new FormControl(''),
     description: new FormControl(''),
     specifications: new FormControl(''),
     image1: new FormControl(''),
@@ -72,7 +74,20 @@ export class ProdCreateComponent implements OnInit {
       this.categories=res
     })
   }
-
+  get productFormControl() {
+    return this.productForm.controls;
+  }
+  getProductByID(id){
+    this.dishService.getById(id).subscribe((product) => {
+      this.product = product;
+      this.productFormControl.name.setValue(this.product.name);
+      this.productFormControl.price.setValue(this.product.price);
+      this.productFormControl.categories.setValue(this.product.categories[0].id);
+      this.productFormControl.optionGroup.setValue(this.product.optionGroups);
+      this.productFormControl.description.setValue(this.product.description);
+      this.productFormControl.specifications.setValue(this.product.specifications);
+    });
+  }
   getAllOptionGroup() {
     this.optionService.getOptionGroupAll().subscribe(res => {
       this.optionGroupList = res;
@@ -83,15 +98,15 @@ export class ProdCreateComponent implements OnInit {
     formData.append('name', this.productForm.value.name);
     formData.append('price', this.productForm.value.price);
     formData.append('categories', this.productForm.value.categories);
-    formData.append('optionGroups', this.productForm.value.optionGroups);
+    formData.append('optionGroup', this.productForm.value.optionGroup);
     formData.append('description', this.productForm.value.description);
     formData.append('specifications', this.productForm.value.specifications);
 
 
     const files1= (document.getElementById('image1') as HTMLInputElement).files;
-     if (files1.length > 0) {
-       formData.append('image', files1[0]);
-     }
+    if (files1.length > 0) {
+      formData.append('image', files1[0]);
+    }
     const files2 = (document.getElementById('image2') as HTMLInputElement).files;
     if (files2.length > 0) {
       formData.append('image', files2[0]);
@@ -128,7 +143,6 @@ export class ProdCreateComponent implements OnInit {
       }, error => this.notificationService.showErrorMessage('Error'));
 
     }
-
 
   }
 

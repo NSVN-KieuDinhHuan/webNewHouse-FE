@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {JsService} from '../../../service/js.service';
-import {DishService} from '../../../service/dish/dish.service';
+
 import {ActivatedRoute, ParamMap, Router} from '@angular/router';
 import {AuthService} from '../../../service/auth/auth.service';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
@@ -9,7 +9,13 @@ import {Dish} from '../../../model/dish';
 import {Cart} from '../../../model/cart';
 
 import {CartService} from '../../../service/cart/cart.service';
+import {DishService} from '../../../service/product/dish.service';
+import {OptionService} from '../../../service/option/option.service';
+import {OptionGroup} from '../../../model/optionGroup';
+import {Option} from '../../../model/option';
 declare var $: any
+declare var Swal: any;
+declare var toastr: any;
 @Component({
   selector: 'app-product-create',
   templateUrl: './product-detail.component.html',
@@ -21,12 +27,12 @@ export class ProductDetailComponent implements OnInit {
   currentUser: any;
   cart: Cart;
   cartAll:Cart[];
-
-  optionOfProduct:number[]
+  optionGroups:Option[][] =[];
+  optionOfProduct:number[]=[];
   addProductForm: FormGroup = new FormGroup({
     quantity: new FormControl(1),
   });
-  cartId:number;
+  cartId:number=0;
 
   mainProductImg:string;
 
@@ -34,29 +40,43 @@ export class ProductDetailComponent implements OnInit {
               private  js: JsService,
               private dishService: DishService,
               private activatedRoute: ActivatedRoute,
+              private optionService:OptionService,
               private router: Router,
               private authService: AuthService,
               private notificationService: NotificationService,
               private cartService: CartService
               ) {
+
   }
 
   ngOnInit() {
     this.js.jsActive()
+    this.quantity.setValue( 1)
     this.activatedRoute.paramMap.subscribe((paramMap: ParamMap) => {
       const id = +paramMap.get('product-id');
       this.getDetailProduct(id);
       this.checkLoginAndGetInfo();
       this.createCart();
+      this.selectOption();
     })
   }
   get quantity() {
      return this.addProductForm.get('quantity');
   }
+  showMessage() {
+    $(function() {
+      Swal.fire({
+        icon: 'success',
+        title: "Thêm thành công",
+        showConfirmButton: false,
+        timer: 2000
+      });
+    });
 
+  }
   createCart(){
    this.cartId= JSON.parse(sessionStorage.getItem("cartId"));
-   this.cartService.findAllCart().subscribe((res:Cart[]) => {
+   this.cartService.findAllCartGroup().subscribe((res:Cart[]) => {
      this.cartAll=res;
      let CartId=this.cartAll.length +1;
      if(this.cartId!=null && res.length==0) {
@@ -64,12 +84,22 @@ export class ProductDetailComponent implements OnInit {
        this.cartId=null;
      }
      if(this.cartId==null) {
-        this.cartService.createCart(CartId).subscribe(() => {
+        this.cartService.createCartGroup(CartId).subscribe(() => {
             sessionStorage.setItem('cartId', JSON.stringify(CartId));
        })
      }
    });
    }
+
+  getOptionGroup(){
+    if(this.product!=null){
+    for (let i = 0; i < this.product.optionGroups.length; i++) {
+      this.optionService.getOptionByOptionGroup(this.product.optionGroups[i].id).subscribe((res) => {
+        this.optionGroups.push(res);
+      })
+    }
+    }
+  }
 
 
 
@@ -82,31 +112,29 @@ export class ProductDetailComponent implements OnInit {
   }
 
   selectOption() {
-    let optionList= this.product.optionOfProduct;
+    let optionList= this.product.optionGroups;
     let SelectOption=[];
     let SelectOptionName=[];
     for (let i = 0; i < optionList.length; i++) {
       let option:number;
-      let nameId=optionList[i].name.toString()
-    $( document ).ready(function() {
+      let nameId=optionList[i].id.toString()
        option = $('#'+nameId).val();
-      SelectOption.push(Number(option))
-    })
+      this.optionOfProduct.push(Number(option))
     }
-    this.optionOfProduct=SelectOption;
+
   }
   addDishIntoCart() {
-    this.selectOption();
+    this.selectOption()
     if (this.addProductForm.valid) {
+      let cartId= JSON.parse(sessionStorage.getItem("cartId"));
       const cartDetail = {
         dishId: this.product.id,
         quantity: this.quantity.value,
-        productOption:this.optionOfProduct
+        optionList:this.optionOfProduct,
+        cartGroupId:cartId
       };
-      let cartId= JSON.parse(sessionStorage.getItem("cartId"));
-      this.cartService.addDishToCart(cartDetail,cartId).subscribe(() => {
-        alert('Thành công!');
-        this.router.navigateByUrl("/newhouse/shop")
+      this.cartService.addDishToCart(cartDetail).subscribe(() => {
+      this.showMessage()
       })
 
     }
@@ -125,6 +153,7 @@ export class ProductDetailComponent implements OnInit {
     this.dishService.getById(id).subscribe(res => {
       if(res) {
       this.product = res
+        this.getOptionGroup();
       if (this.product.image01 !=null) {
         this.product.image01=API_URL+res.image01;
       }

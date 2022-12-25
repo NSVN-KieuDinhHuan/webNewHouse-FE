@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import {JsService} from '../../../service/js.service';
-import {DishService} from '../../../service/dish/dish.service';
+
 import {ActivatedRoute, Router} from '@angular/router';
 import {CategoryService} from '../../../service/category/category.service';
 import {Dish} from '../../../model/dish';
 import {FormGroup} from '@angular/forms';
 import {Category} from '../../../model/category';
+import {DishService} from '../../../service/product/dish.service';
 
 @Component({
   selector: 'app-prod-list',

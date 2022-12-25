@@ -3,7 +3,7 @@ import {Injectable} from '@angular/core';
 
 declare var $: any;
 declare var Swal: any;
-
+declare var toastr: any;
 @Injectable({
   providedIn: 'root'
 })
@@ -21,6 +21,7 @@ export class NotificationService {
         timer: 3000
       });
     });
+
   }
 
   showErrorMessage(title){

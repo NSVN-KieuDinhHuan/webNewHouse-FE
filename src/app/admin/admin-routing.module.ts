@@ -11,6 +11,7 @@ import {OptionEditComponent} from './option/option-edit/option-edit.component';
 import {OptionGroupCreateComponent} from './option-group/option-group-create/option-group-create.component';
 import {CategoryCreateComponent} from './categories/category-create/category-create.component';
 import {CategoryEditComponent} from './categories/category-edit/category-edit.component';
+import {ProductEditComponent} from './product/product-edit/product-edit.component';
 
 
 
@@ -28,6 +29,10 @@ const routes: Routes = [
   {
     path: 'product/create',
     component: ProdCreateComponent
+  },
+  {
+    path: 'product/edit/:id',
+    component: ProductEditComponent
   },
   {
     path: 'option/list',
@@ -61,6 +66,10 @@ const routes: Routes = [
 
   {
     path: 'category/edit/:id',
+    component: CategoryEditComponent
+  },
+  {
+    path: 'order/list',
     component: CategoryEditComponent
   },
   {

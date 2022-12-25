@@ -6,8 +6,9 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {JsService} from '../../service/js.service';
 import {CartDetail} from '../../model/cart-detail';
 import {CartDetailDto} from '../../model/cartDetailDto';
-import {DishService} from '../../service/dish/dish.service';
+
 import {Dish} from '../../model/dish';
+import {DishService} from '../../service/product/dish.service';
 
 
 
@@ -51,7 +52,7 @@ export class CartsTableComponent implements OnInit {
 
   getAllCart() {
     if (this.cartId!=null) {
-      this.cartService.getAllDetailByCartId(this.cartId).subscribe((res:CartDetailDto[]) => {
+      this.cartService.getAllCartByCartGroupId(this.cartId).subscribe((res:CartDetailDto[]) => {
          this.cartDetailDto=res;
         for (let i = 0; i < this.cartDetailDto.length; i++) {
           for (let j = 0; j < this.ProductList.length; j++) {
@@ -60,7 +61,7 @@ export class CartsTableComponent implements OnInit {
                  id:this.cartDetailDto[i].id,
                  dish: this.ProductList[j],
                  quantity: this.cartDetailDto[i].quantity,
-                 productOption: this.cartDetailDto[i].productOptions
+                 options: this.cartDetailDto[i].options
                }
                this.cartDetailList.push(CartDetail);
                break;
@@ -104,7 +105,7 @@ export class CartsTableComponent implements OnInit {
   }
 
   removeDishOfCart(index: number,id:number) {
-    this.cartService.deleteCartDetaiById(id).subscribe(
+    this.cartService.deleteCartById(id).subscribe(
       (res:CartDetail) => {
         this.cartDetailList.splice(index,1)
         this.summaryBill();
@@ -116,8 +117,8 @@ export class CartsTableComponent implements OnInit {
     if(this.cartDetailList.length>0) {
     for (let i = 0; i < this.cartDetailList.length; i++) {
        let optionSum=0
-      for (let j = 0; j < this.cartDetailList[i].productOption.length; j++) {
-        optionSum+=this.cartDetailList[i].productOption[j].price;
+      for (let j = 0; j < this.cartDetailList[i].options.length; j++) {
+        optionSum+=this.cartDetailList[i].options[j].price;
       }
       let productPrice=this.cartDetailList[i].dish.price + optionSum
       let  quantity= this.cartDetailList[i].quantity;

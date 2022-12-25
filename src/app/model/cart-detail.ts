@@ -1,9 +1,11 @@
 import {Dish} from './dish';
-import {productOption} from './productOption';
+import {Option} from './option';
+
 
 export interface CartDetail {
   id?:number,
   dish?: Dish;
   quantity?: number;
-  productOption?:productOption[];
+  options?:Option[];
+
 }

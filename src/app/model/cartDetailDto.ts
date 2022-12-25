@@ -1,9 +1,10 @@
 import {Dish} from './dish';
-import {productOption} from './productOption';
+import {Option} from './option';
+
 
 export interface CartDetailDto {
   id?:number,
   dishId?: number;
   quantity?: number;
-  productOptions?:productOption[];
+  options?:Option[];
 }

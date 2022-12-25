@@ -23,7 +23,7 @@ export class OptionService {
     return this.httpClient.get<Option[]>(`${API_URL}/option`);
   }
 
-  getOptionGroupAll(): Observable<Option[]> {
+  getOptionGroupAll(): Observable<OptionGroup[]> {
     return this.httpClient.get<OptionGroup[]>(`${API_URL}/option-group`);
   }
 
@@ -39,5 +39,9 @@ export class OptionService {
 
   saveOptionGroup(optionGroup: FormData) {
     return this.httpClient.post<Option>(`${API_URL}/option-group`, optionGroup);
+  }
+
+  getOptionByOptionGroup(id: number): Observable<Option[]> {
+    return this.httpClient.get<Option[]>(`${API_URL}/option/option-group/${id}`);
   }
 }

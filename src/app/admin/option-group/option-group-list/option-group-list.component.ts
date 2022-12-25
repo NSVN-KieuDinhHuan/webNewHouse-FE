@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import {Option} from '../../../model/option';
+
 import {JsService} from '../../../service/js.service';
-import {DishService} from '../../../service/dish/dish.service';
+
 import {ActivatedRoute, Router} from '@angular/router';
 import {AuthService} from '../../../service/auth/auth.service';
 import {NotificationService} from '../../../service/notification/notification.service';
@@ -9,6 +9,7 @@ import {CartService} from '../../../service/cart/cart.service';
 import {CategoryService} from '../../../service/category/category.service';
 import {OptionService} from '../../../service/option/option.service';
 import {OptionGroup} from '../../../model/optionGroup';
+import {DishService} from '../../../service/product/dish.service';
 
 
 

@@ -27,14 +27,12 @@
 
             <!-- Sorting -->
             <div class="product-sorting d-flex">
-              <div class="sort-by-date d-flex align-content-lg-around mr-15">
-                <p class="mr-15" style="background: white">Danh mục</p>
-                  <button type="button" class="btn btn-warning dropdown-toggle text-center"  data-bs-toggle="dropdown" aria-expanded="false">
-                    {{categories[selectItem].name}}
-                  </button>
-                  <ul class="dropdown-menu">
-                    <li *ngFor="let c of categories; x as index;" (click)="getDishByCategory(c.id)" ><a  class="dropdown-item text-center"> {{c.name}}    </a></li>
-                  </ul>
+              <p class="mr-15" style="background: white">Danh mục</p>
+              <div class="sort-by-date d-flex align-items-center mr-15" *ngIf="categories!=null">
+                <select id="categoryId" class=" form-select-lg" style="min-width: 150px" aria-label=".form-select-lg example" (change)="getDishByCategory()">
+                  <option  value="0" >Tất cả</option>
+                  <option  *ngFor="let y of categories"  value="{{y.id}}">{{y.name}}</option>
+                </select>
               </div>
 
               <div class="view-product d-flex align-items-center">
@@ -50,7 +48,7 @@
         </div>
       </div>
 
-      <div class="row">
+      <div class="row" *ngIf="ProductList!=null">
         <!-- Single Product Area -->
         <div class="col-12 col-sm-3 col-md-12 col-xl-3" *ngFor="let product of ProductList;">
           <div class="single-product-wrapper">

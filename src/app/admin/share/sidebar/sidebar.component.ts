@@ -21,7 +21,7 @@ export class SidebarComponent implements OnInit {
   }
   getAllCart() {
     if (this.cartId!=null) {
-      this.cartService.getAllDetailByCartId(this.cartId).subscribe((res:CartDetail[]) => {
+      this.cartService.getAllCartByCartGroupId(this.cartId).subscribe((res:CartDetail[]) => {
         this.cartDetailDto = res;
          this.cartLength=this.cartDetailDto.length;
       })

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {OptionGroup} from '../../../model/optionGroup';
 import {JsService} from '../../../service/js.service';
-import {DishService} from '../../../service/dish/dish.service';
+
 import {ActivatedRoute, ParamMap, Router} from '@angular/router';
 import {OptionService} from '../../../service/option/option.service';
 import {AuthService} from '../../../service/auth/auth.service';
@@ -9,6 +9,8 @@ import {NotificationService} from '../../../service/notification/notification.se
 import {CartService} from '../../../service/cart/cart.service';
 import {CategoryService} from '../../../service/category/category.service';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
+
+import {DishService} from '../../../service/product/dish.service';
 import {Option} from '../../../model/option';
 
 @Component({
@@ -51,7 +53,7 @@ export class OptionEditComponent implements OnInit {
       this.option = option;
       this.optionFormControl.name.setValue(this.option.name);
       this.optionFormControl.price.setValue(this.option.price);
-      this.optionFormControl.group.setValue(this.option.group.id);
+      this.optionFormControl.group.setValue(this.option.optionGroup.id);
 
     });
   }

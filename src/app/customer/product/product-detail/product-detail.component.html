@@ -25,18 +25,17 @@
           <nav aria-label="breadcrumb">
             <ol class="breadcrumb mt-50">
               <li class="breadcrumb-item"><a href="#">Sản phẩm </a></li>
-              <li class="breadcrumb-item active "><a href="#">{{product.categories[0].name}}</a></li>
+              <li class="breadcrumb-item active " *ngIf="product!=null"><a href="#">{{product.categories[0].name}}</a></li>
             </ol>
           </nav>
         </div>
       </div>
-      <div class="row">
-        <div class="col-12 col-sm-4">
-          <h3 class="d-inline-block d-sm-none">LOWA Men’s Renegade GTX Mid Hiking Boots Review</h3>
+      <div class="row" *ngIf="product!=null">
+        <div class="col-12 col-sm-4" >
           <div class="col-12">
             <img src="{{mainProductImg}}" class="product-image" alt="Product Image">
           </div>
-          <div class="col-12 product-image-thumbs">
+          <div class="col-12 product-image-thumbs"  >
 
             <div *ngIf="product.image01 != null" (click)="setImgMain(product.image01)" [style.border-color]="mainProductImg== product.image01? 'red' :  'white'" class="product-image-thumb active" ><img src="{{product.image01}}" alt="Product Image" width="50px" height="auto"></div>
             <div *ngIf="product.image02 != null" (click)="setImgMain(product.image02)" [style.border-color]="mainProductImg== product.image02? 'red' :  'white'" class="product-image-thumb" ><img src="{{product.image02}}" alt="Product Image" width="50px" height="auto"></div>
@@ -75,13 +74,13 @@
               <h5 class="avaibility"><i class="fa fa-circle mb-15"></i> Còn hàng</h5>
             </div>
             <form class="cart clearfix" [formGroup]="addProductForm" (ngSubmit)="addDishIntoCart()">
-              <div class="mt-20" >
-                <table *ngFor="let option of product.optionOfProduct, op as index" class="width-100" >
-                  <tr >
+              <div class="mt-20" *ngIf="product != null" >
+                <table class="width-100" >
+                  <tr *ngFor="let option of product.optionGroups, index as i" >
                     <td  class="mt-1" style="min-width: 100px;"> <p style="background: white">{{option.name}}  </p></td>
                     <td class="text-center">
-                      <select class=" form-select-lg mb-3" style="min-width: 250px" aria-label=".form-select-lg example" id="{{option.name}}" >
-                        <option  *ngFor="let y of option.optionList"  value="{{y.id}}"  >{{y.name}}</option>
+                      <select class=" form-select-lg mb-3" style="min-width: 250px" aria-label=".form-select-lg example" id="{{option.id}}" >
+                        <option  *ngFor="let y of optionGroups[i]"  value="{{y.id}}"  >{{y.name}}</option>
                       </select>
                     </td>
                   </tr>
@@ -91,12 +90,14 @@
                 <p>Số lượng</p>
                 <div class="quantity">
                   <span class="qty-plus" (click)="increaseQuantity()"><i class="fa fa-caret-up" aria-hidden="true"></i></span>
-                  <input type="number" class="form-control"  id="qty" step="1" min="1" max="300" name="quantity"  formControlName="quantity" [value]="quantity">
+                  <input type="number" class="form-control"  id="qty" step="1" min="1" max="300" name="quantity"  formControlName="quantity">
                   <span class="qty-minus" (click)="decreaseQuantity()" aria-hidden="true"><i class="fa fa-caret-down" aria-hidden="true"></i></span>
                 </div>
               </div>
               <button  type="submit" name="addtocart" value="5" class="btn btn-warning fa-regular mt-50"><i class="fa fa-plus"></i> Thêm Vào Giỏ Hàng</button>
-              <a class="btn btn-default  mt-50 ml-15">Mua ngay</a>
+             <a routerLink="/newhouse/checkout">
+              <button  type="submit" class="btn btn-primary  mt-50 ml-15">Thanh toán</button>
+             </a>
             </form>
               <div class="short_overview my-5">
                   <ul class="nav nav-tabs" id="myTab" role="tablist">

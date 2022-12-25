@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {JsService} from '../../../service/js.service';
-import {DishService} from '../../../service/dish/dish.service';
+
 
 import {CategoryService} from '../../../service/category/category.service';
 
@@ -8,6 +8,7 @@ import {FormControl, FormGroup} from '@angular/forms';
 import {ActivatedRoute, ParamMap, Router} from '@angular/router';
 import {Dish} from '../../../model/dish';
 import {Category} from '../../../model/category';
+import {DishService} from '../../../service/product/dish.service';
 declare var $: any;
 @Component({
   selector: 'app-product-list',
@@ -17,10 +18,9 @@ declare var $: any;
 export class ProductListComponent implements OnInit {
   ProductList: Dish[];
   form  : FormGroup;
-  selectItem:number;
-  categories: Category[];
-  pageDisplay1:number
-
+  categories: Category[]=[];
+  pageDisplay1:number=0
+  categoryId: number=0;
 
   constructor(
     private  js: JsService,
@@ -31,38 +31,40 @@ export class ProductListComponent implements OnInit {
     this.js.jsActive();
     this.activatedRoute.paramMap.subscribe((paramMap: ParamMap) => {
       const id = paramMap.get('category-id');
-      this.getDishByCategory(Number(id));
+      this.getDishByCategory();
     });
 
   }
 
    ngOnInit() {
      this.pageDisplay1=0
-    this.getCategoryList();
-    this.getAllDishes(this.pageDisplay1);
+     this.getCategoryList();
+     this.getDishByCategory();
+     this.getAllDishes(this.pageDisplay1);
      $('#0').hide();
 
     }
 
   getAllDishes(page:number) {
-    this.selectItem=0;
     this.dishService.getAll(page).subscribe(res => {
       this.ProductList = res.content;
     });
   }
-  getDishByCategory(category_id:number) {
-    this.selectItem=category_id-1;
-    if(category_id==0) {
-      this.getAllDishes(0);
-    }
-    if (category_id!=0) {
-    this.dishService.getDishbyCategoryID(category_id).subscribe(res => {
-      if(res) {
-      this.ProductList = res;
-      }
-    });
+
+  getDishByCategory() {
+   this.categoryId=  $('#categoryId').val();
+   if(this.categoryId==0) {
+     this.getAllDishes(0);
+   }
+    if(this.categoryId!=null && this.categoryId!=0) {
+      this.dishService.getDishbyCategoryID(this.categoryId).subscribe(res => {
+        if(res) {
+          this.ProductList = res;
+        }
+      });
     }
   }
+
 
     getCategoryList() {
       this.categoryService.getAllCategory().subscribe(res => {
@@ -89,7 +91,6 @@ export class ProductListComponent implements OnInit {
        }else {
          $('#2').show();
        }
-
 
        this.getAllDishes(this.pageDisplay1)
 

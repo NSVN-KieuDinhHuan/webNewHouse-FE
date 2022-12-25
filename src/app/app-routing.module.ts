@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import {AuthGuardGuard} from './helper/auth-guard.guard';
+import {ProdCreateComponent} from './admin/product/prod-create/prod-create.component';
+import {CompanyAboutComponent} from './company-about/company-about.component';
 
 
 const routes: Routes = [
@@ -8,6 +10,10 @@ const routes: Routes = [
     path: '',
     redirectTo: 'newhouse',
     pathMatch: 'full'
+  },
+  {
+    path: 'newhouse/about',
+    component: CompanyAboutComponent
   },
   {
     path: 'newhouse',
@@ -22,6 +28,7 @@ const routes: Routes = [
     canActivate: [AuthGuardGuard],
     loadChildren: () => import('./auth/auth.module').then(module => module.AuthModule)
   },
+
   {
     path: 'users',
     canActivate: [AuthGuardGuard],

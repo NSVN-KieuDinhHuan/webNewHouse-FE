@@ -19,32 +19,32 @@ export class DishService {
   }
 
   getAll(pageNumber: number): Observable<result> {
-    return this.httpClient.get<result>(`${API_URL}/dishes/page/${pageNumber}`,);
+    return this.httpClient.get<result>(`${API_URL}/product/page/${pageNumber}`,);
   }
 
   getById(id: number): Observable<Dish> {
-    return this.httpClient.get<Dish>(`${API_URL}/dishes/${id}`);
+    return this.httpClient.get<Dish>(`${API_URL}/product/${id}`);
   }
     findAll(): Observable<result> {
-    return this.httpClient.get<result>(`${API_URL}/dishes/all`);
+    return this.httpClient.get<result>(`${API_URL}/product/all`);
   }
-  createDish(dish: DishForm) {
-    return this.httpClient.post<Dish>(`${API_URL}/dishes`, dish);
+  createDish(dish: FormData) {
+    return this.httpClient.post<Dish>(`${API_URL}/product`, dish);
   }
 
   getMostPurchasedDishes() {
-    return this.httpClient.get(`${API_URL}/dishes/most-purchased/8`);
+    return this.httpClient.get(`${API_URL}/product/most-purchased/8`);
   }
 
   searchDishes(searchForm: SearchForm) {
-    return this.httpClient.post<Dish[]>(`${API_URL}/dishes/search`, searchForm);
+    return this.httpClient.post<Dish[]>(`${API_URL}/product/search`, searchForm);
   }
 
   getDishbyCategoryID(id:number) {
-    return this.httpClient.get<Dish[]>(`${API_URL}/dishes/category/${id}`);
+    return this.httpClient.get<Dish[]>(`${API_URL}/product/category/${id}`);
   }
 
   findDishesWithSameCategoryWith(dishId: number, limit: number): Observable<Dish[]> {
-    return this.httpClient.get<Dish[]>(`${API_URL}/dishes/${dishId}/top-${limit}-same-category`);
+    return this.httpClient.get<Dish[]>(`${API_URL}/product/${dishId}/top-${limit}-same-category`);
   }
 }

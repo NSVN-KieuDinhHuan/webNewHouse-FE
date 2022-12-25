@@ -11,10 +11,11 @@ import {AuthService} from '../../service/auth/auth.service';
 import {UserToken} from '../../model/user-token';
 import {CartDetailDto} from '../../model/cartDetailDto';
 import {CartDetail} from '../../model/cart-detail';
-import {DishService} from '../../service/dish/dish.service';
+
 import {OrderService} from '../../service/order/order.service';
 import {OrderDetailDto} from '../../model/orderDetailDto';
 import {OrderListDto} from '../../model/OrderListDto';
+import {DishService} from '../../service/product/dish.service';
 
 @Component({
   selector: 'app-checkout',
@@ -86,8 +87,8 @@ export class CheckoutComponent implements OnInit {
         let orderDetailDtoList: OrderDetailDto[]=[];
         for (let i = 0; i < this.cartDetailList.length; i++) {
           let productOption: number[] =[];
-          for (let j = 0; j < this.cartDetailList[i].productOption.length; j++) {
-            productOption.push(this.cartDetailList[i].productOption[j].id);
+          for (let j = 0; j < this.cartDetailList[i].options.length; j++) {
+            productOption.push(this.cartDetailList[i].options[j].id);
           }
           const orderDetailDto= {
             dishId: this.cartDetailList[i].dish.id,
@@ -106,7 +107,7 @@ export class CheckoutComponent implements OnInit {
 
         this.orderService.createOrderList(OrderListDto).subscribe((data) => {
           sessionStorage.removeItem("cartId")
-          alert("Đơn hàng thành công")
+          this.router.navigateByUrl('/newhome');
         });
       }, error => {
         this.notificationService.showMessage('error', error.error.message);
@@ -120,7 +121,7 @@ export class CheckoutComponent implements OnInit {
   }
   getAllCart() {
     if (this.cartId!=null) {
-      this.cartService.getAllDetailByCartId(this.cartId).subscribe((res:CartDetailDto[]) => {
+      this.cartService.getAllCartByCartGroupId(this.cartId).subscribe((res:CartDetailDto[]) => {
         this.cartDetailDto=res;
         for (let i = 0; i < this.cartDetailDto.length; i++) {
           for (let j = 0; j < this.ProductList.length; j++) {
@@ -129,7 +130,7 @@ export class CheckoutComponent implements OnInit {
                 id:this.cartDetailDto[i].id,
                 dish: this.ProductList[j],
                 quantity: this.cartDetailDto[i].quantity,
-                productOption: this.cartDetailDto[i].productOptions
+                options: this.cartDetailDto[i].options
               }
               this.cartDetailList.push(CartDetail);
               break;
@@ -185,7 +186,7 @@ export class CheckoutComponent implements OnInit {
       })
   }
   removeDishOfCart(index: number,id:number) {
-    this.cartService.deleteCartDetaiById(id).subscribe(
+    this.cartService.deleteCartById(id).subscribe(
       (res:CartDetail) => {
         this.cartDetailList.splice(index,1)
         this.summaryBill();
@@ -197,8 +198,8 @@ export class CheckoutComponent implements OnInit {
     if(this.cartDetailList.length>0) {
       for (let i = 0; i < this.cartDetailList.length; i++) {
         let optionSum=0
-        for (let j = 0; j < this.cartDetailList[i].productOption.length; j++) {
-          optionSum+=this.cartDetailList[i].productOption[j].price;
+        for (let j = 0; j < this.cartDetailList[i].options.length; j++) {
+          optionSum+=this.cartDetailList[i].options[j].price;
         }
         let productPrice=this.cartDetailList[i].dish.price + optionSum
         let  quantity= this.cartDetailList[i].quantity;

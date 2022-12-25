@@ -7,7 +7,7 @@ export interface Dish {
   name?: string;
   price?: number;
   categories?: Category[];
-  optionOfProduct?: productOptionList[];
+  optionGroups?: productOptionList[];
   sold?: number;
   description?: string;
   specifications?: string;

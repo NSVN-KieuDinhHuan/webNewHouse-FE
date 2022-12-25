@@ -18,28 +18,30 @@ export class CartService {
               ) {
   }
 
-  createCart(id:number) {
-    return this.httpClient.post(`${API_URL}/carts`, id);
+  createCartGroup(id:number) {
+    return this.httpClient.post(`${API_URL}/cart-group`, id);
   }
-  findAllCart() {
-    return this.httpClient.get(`${API_URL}/carts`);
+  findAllCartGroup() {
+    return this.httpClient.get(`${API_URL}/cart-group`);
   }
-  getAllDetailByCartId(id:number) {
-     return this.httpClient.get(`${API_URL}/carts/${id}`);
+  getAllCartByCartGroupId(id:number) {
+     return this.httpClient.get(`${API_URL}/cart/cart-group/${id}`);
   }
   increaseQuantity(id:number) {
-    return this.httpClient.get(`${API_URL}/carts/increase/${id}`);
+    return this.httpClient.get(`${API_URL}/cart/increase/${id}`);
   }
   decreaseQuantity(id:number) {
-    return this.httpClient.get(`${API_URL}/carts/decrease/${id}`);
+    return this.httpClient.get(`${API_URL}/cart/decrease/${id}`);
+  }
+  getCartGroupById(id:number) {
+    return this.httpClient.get(`${API_URL}/cart-group/${id}`);
+  }
+  addDishToCart(cart: { optionList: number[]; quantity: any; dishId: number; cartGroupId:number }) {
+    return this.httpClient.post(`${API_URL}/cart-group/addDish`, cart);
   }
 
-  addDishToCart(cartDetail: { productOption: number[]; quantity: any; dishId: number }, id: number) {
-    return this.httpClient.post(`${API_URL}/carts/addDish/${id}`, cartDetail);
-  }
-
-   deleteCartDetaiById(id:number) {
-     return this.httpClient.get(`${API_URL}/carts/delete/${id}`);
+   deleteCartById(id:number) {
+     return this.httpClient.get(`${API_URL}/cart/delete/${id}`);
    }
 
   getCurrentUserCarts() {

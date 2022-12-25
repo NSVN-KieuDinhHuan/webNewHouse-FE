@@ -12,20 +12,28 @@ import {CartDetail} from '../../../model/cart-detail';
 })
 export class SidebarComponent implements OnInit {
   cartDetailDto:CartDetail[];
-  cartLength: number;
+  cartLength: number=0;
   cartId:number;
+  cartGroup:any=null;
   constructor(private  js: JsService,
               private cartService: CartService,) {
     this.cartId= JSON.parse(sessionStorage.getItem("cartId"));
-    this.getAllCart();
+    this.getAllCartByCartGroupId();
   }
-  getAllCart() {
+  getAllCartByCartGroupId() {
     if (this.cartId!=null) {
-      this.cartService.getAllDetailByCartId(this.cartId).subscribe((res:CartDetail[]) => {
-        this.cartDetailDto = res;
+      this.cartService.getAllCartByCartGroupId(this.cartId).subscribe((res:CartDetail[]) => {
+        if(res) {
+         this.cartDetailDto = res;
          this.cartLength=this.cartDetailDto.length;
-      })
+        }
+      });
     }
+  }
+  getCarGroupById(){
+    this.cartService.getCartGroupById(this.cartId).subscribe((res) => {
+      this.cartGroup = res;
+    })
   }
   ngOnInit() {
     this.js.jsActive()

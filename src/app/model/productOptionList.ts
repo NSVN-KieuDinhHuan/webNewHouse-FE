@@ -1,9 +1,8 @@
-
-import {productOption} from './productOption';
+import {Option} from './option';
 
 
 export interface productOptionList {
   id?: number;
   name?: String;
-  optionList?:productOption[];
+  optionList?:Option[];
 }

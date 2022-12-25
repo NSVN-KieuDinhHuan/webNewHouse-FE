@@ -1,11 +1,11 @@
 import {Cart} from './cart';
 import {DeliveryInfo} from './delivery-info';
 import {User} from './user';
-import {OrderDetailDto} from './orderDetailDto';
+import {OrderDto} from './orderDto';
 
-export interface OrderListDto {
+export interface OrderGroupDto {
   createDate?: string;
   userPhone?:string;
   status?: number;
-  orderDetailList:OrderDetailDto[];
+
 }

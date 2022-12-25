@@ -3,11 +3,11 @@ import {environment} from '../../../environments/environment';
 import {HttpClient} from '@angular/common/http';
 
 
-import {OrderListDto} from '../../model/OrderListDto';
 
-import {OrderList} from '../../model/OrderList';
 import {Option} from '../../model/option';
 import {Observable} from 'rxjs';
+import {OrderGroup} from '../../model/OrderGroup';
+import {OrderDto} from '../../model/orderDto';
 
 const API_URL = `${environment.apiUrl}`;
 
@@ -20,12 +20,15 @@ export class OrderService {
   constructor(private httpClient: HttpClient) {
   }
 
-  createOrderList(orderListDto: OrderListDto) {
-    return this.httpClient.post(`${API_URL}/ordersList`, orderListDto);
+  createOrderList(Ordergroup: OrderGroup) {
+    return this.httpClient.post(`${API_URL}/order-group`, Ordergroup);
   }
 
-  getOrderListAll(): Observable<OrderList[]> {
-    return this.httpClient.get<OrderList[]>(`${API_URL}/ordersList`);
+  getOrderGroupAll(): Observable<OrderGroup[]> {
+    return this.httpClient.get<OrderGroup[]>(`${API_URL}/order-group`);
   }
 
+  getOrderAll(): Observable<OrderDto[]> {
+    return this.httpClient.get<OrderDto[]>(`${API_URL}/order`);
+  }
 }

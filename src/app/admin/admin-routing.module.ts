@@ -12,6 +12,7 @@ import {OptionGroupCreateComponent} from './option-group/option-group-create/opt
 import {CategoryCreateComponent} from './categories/category-create/category-create.component';
 import {CategoryEditComponent} from './categories/category-edit/category-edit.component';
 import {ProductEditComponent} from './product/product-edit/product-edit.component';
+import {OrderListComponent} from './order/order-list/order-list.component';
 
 
 
@@ -70,7 +71,7 @@ const routes: Routes = [
   },
   {
     path: 'order/list',
-    component: CategoryEditComponent
+    component: OrderListComponent
   },
   {
     path: '',

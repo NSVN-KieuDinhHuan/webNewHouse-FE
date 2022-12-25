@@ -9,10 +9,7 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>Danh mục</h1>
-          </div>
-          <div class="col-sm-6">
-            <div class="breadcrumb-item float-sm-right mr-50"><button type="button" class="btn btn-block btn-primary btn-lg "> <i class="fas fa-plus"></i>  Thêm danh mục</button></div>
+            <h1>Đơn đặt hàng</h1>
           </div>
         </div>
       </div><!-- /.container-fluid -->
@@ -27,7 +24,7 @@
           <div class="col-12">
             <div class="card">
               <div class="card-header">
-                <h3 class="card-title">Danh sách các danh mục</h3>
+                <h3 class="card-title">Danh sách Đơn</h3>
               </div>
               <!-- /.card-header -->
               <div class="card-body">
@@ -37,17 +34,18 @@
                     <th>STT</th>
                     <th>Người mua</th>
                     <th>Tên sản phẩm </th>
+                    <th>Ảnh </th>
                     <th>Số lượng</th>
                     <th>Ngày đặt hàng</th>
                     <th>Trạng thái</th>
                   </tr>
                   </thead>
                   <tbody class="text-center">
-                  <tr *ngFor="let category of categories;index as i">
+                  <tr *ngFor="let cart of cartDetailList;index as i">
                     <td>{{i+1}}</td>
-                    <td>{{category.name}}</td>
-                    <td><img src="http://localhost:8080/image/{{category.image}}" alt="" width="50px"></td>
-                    <td>{{category.description}}</td>
+                    <td>{{cart.dish.name}}</td>
+                    <td><img src="http://localhost:8080/image/{{cart.dish.image01}}" alt="" width="50px"></td>
+                    <td>{{cart.quantity}}</td>
                     <td><i class="fas fa-trash"></i></td>
                   </tr>
 
@@ -55,10 +53,11 @@
                   <tfoot>
                   <tr>
                     <th>STT</th>
-                    <th>Tên</th>
-                    <th>Ảnh</th>
+                    <th>Người mua</th>
+                    <th>Tên sản phẩm </th>
                     <th>Số lượng</th>
-                    <th>Hành Động</th>
+                    <th>Ngày đặt hàng</th>
+                    <th>Trạng thái</th>
                   </tr>
                   </tfoot>
                 </table>

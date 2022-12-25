@@ -13,9 +13,10 @@ import {CartDetailDto} from '../../model/cartDetailDto';
 import {CartDetail} from '../../model/cart-detail';
 
 import {OrderService} from '../../service/order/order.service';
-import {OrderDetailDto} from '../../model/orderDetailDto';
-import {OrderListDto} from '../../model/OrderListDto';
+
 import {DishService} from '../../service/product/dish.service';
+import {OrderDto} from '../../model/orderDto';
+import {OrderGroupDto} from '../../model/OrderGroupDto';
 
 @Component({
   selector: 'app-checkout',
@@ -84,7 +85,7 @@ export class CheckoutComponent implements OnInit {
       };
       this.userService.register(user).subscribe(() => {
         sessionStorage.setItem('user', JSON.stringify(user));
-        let orderDetailDtoList: OrderDetailDto[]=[];
+        let orderDetailDtoList: OrderDto[]=[];
         for (let i = 0; i < this.cartDetailList.length; i++) {
           let productOption: number[] =[];
           for (let j = 0; j < this.cartDetailList[i].options.length; j++) {
@@ -98,11 +99,11 @@ export class CheckoutComponent implements OnInit {
           orderDetailDtoList.push(orderDetailDto);
         }
 
-        const OrderListDto:OrderListDto = {
+        const OrderListDto:OrderGroupDto = {
           createDate: new Date().getDay().toString(),
           userPhone:user.phone,
           status:0,
-          orderDetailList:orderDetailDtoList
+
         }
 
         this.orderService.createOrderList(OrderListDto).subscribe((data) => {

@@ -5,7 +5,7 @@ import {OrderDto} from './orderDto';
 
 export interface OrderGroupDto {
   createDate?: string;
-  userPhone?:string;
+  user?:User;
   status?: number;
 
 }

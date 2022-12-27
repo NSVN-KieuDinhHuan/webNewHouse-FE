@@ -85,31 +85,35 @@ export class CheckoutComponent implements OnInit {
       };
       this.userService.register(user).subscribe(() => {
         sessionStorage.setItem('user', JSON.stringify(user));
-        let orderDetailDtoList: OrderDto[]=[];
-        for (let i = 0; i < this.cartDetailList.length; i++) {
-          let productOption: number[] =[];
-          for (let j = 0; j < this.cartDetailList[i].options.length; j++) {
-            productOption.push(this.cartDetailList[i].options[j].id);
-          }
-          const orderDetailDto= {
-            dishId: this.cartDetailList[i].dish.id,
-            quantity: this.cartDetailList[i].quantity,
-            productOption: productOption
-          }
-          orderDetailDtoList.push(orderDetailDto);
-        }
-
-        const OrderListDto:OrderGroupDto = {
-          createDate: new Date().getDay().toString(),
+        const orderGroupDto = {
+          createDate: new Date().toJSON().slice(0,10).replace(/-/g,'/'),
           userPhone:user.phone,
           status:0,
-
         }
+        this.orderService.saveOrderGroup(orderGroupDto).subscribe((res) => {
+          let orderDtoList = [];
+          for (let i = 0; i < this.cartDetailList.length; i++) {
+            let optionList: number[] = [];
+            for (let j = 0; j < this.cartDetailList[i].options.length; j++) {
+              optionList.push(this.cartDetailList[i].options[j].id);
+            }
+            const orderDto: OrderDto = {
+              dishId: this.cartDetailList[i].dish.id,
+              quantity: this.cartDetailList[i].quantity,
+              optionList: optionList,
+              orderGroup: res
+            }
+            orderDtoList.push(orderDto);
+          }
 
-        this.orderService.createOrderList(OrderListDto).subscribe((data) => {
-          sessionStorage.removeItem("cartId")
-          this.router.navigateByUrl('/newhome');
-        });
+          this.orderService.saveOrder(orderDtoList).subscribe((res) => {
+            this.notificationService.showMessage('suscess', "Đặt hàng thành công");
+          })
+
+
+        })
+
+
       }, error => {
         this.notificationService.showMessage('error', error.error.message);
       });

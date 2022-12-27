@@ -8,6 +8,9 @@ import {CartService} from '../../../service/cart/cart.service';
 import {CartDetailDto} from '../../../model/cartDetailDto';
 import {CartDetail} from '../../../model/cart-detail';
 import {Dish} from '../../../model/dish';
+import {OrderService} from '../../../service/order/order.service';
+import {OrderDto} from '../../../model/orderDto';
+import {OrderGroup} from '../../../model/OrderGroup';
 
 @Component({
   selector: 'app-order-list',
@@ -15,22 +18,22 @@ import {Dish} from '../../../model/dish';
   styleUrls: ['./order-list.component.css']
 })
 export class OrderListComponent implements OnInit {
-  cartDetailDto:CartDetailDto[]=[];
-  cartDetailList:CartDetail[]=[]
-  ProductList: Dish[];
-  cartId:number
-  quantity:number=1
-  billValue: number=0;
-  categories:Category[]
+  orderList:OrderDto[]=[]
+  orderGroup:OrderGroup[]=[]
+  categories:Category[]=[]
+  orderSum:any[]=[]
   constructor(    private  js: JsService,
                   private dishService: DishService,
                   private router: Router,
                   private cartService: CartService,
                   private activatedRoute: ActivatedRoute,
+                  private orderService:OrderService,
                   private categoryService:CategoryService) { }
 
   ngOnInit() {
     this.getCategoryList()
+    this.getOrderAll()
+    this.getOrderGroupAll()
 
   }
   getCategoryList() {
@@ -39,8 +42,30 @@ export class OrderListComponent implements OnInit {
     })
   }
 
-getOrderAll
+  getOrderAll() {
+  this.orderService.getOrderAll().subscribe(res => {
+    this.orderList=res
+    for (let i = 0; i < this.orderList.length; i++) {
+      let ordersumDetail= {
+        username: this.orderList[i].orderGroup.User.username
+
+      }
+    }
 
 
+  })
+
+
+
+}
+
+  getOrderGroupAll() {
+    this.orderService.getOrderGroupAll().subscribe(res => {
+      this.orderGroup=res
+
+
+    })
+
+  }
 
 }

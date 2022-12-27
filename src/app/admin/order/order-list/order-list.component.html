@@ -28,7 +28,7 @@
               </div>
               <!-- /.card-header -->
               <div class="card-body">
-                <table id="example2" class="table table-bordered table-hover">
+                <table id="example2" class="table table-bordered table-hover" *ngIf="orderList!=null">
                   <thead>
                   <tr class="text-center">
                     <th>STT</th>
@@ -41,11 +41,11 @@
                   </tr>
                   </thead>
                   <tbody class="text-center">
-                  <tr *ngFor="let cart of cartDetailList;index as i">
+                  <tr *ngFor="let order of orderList;index as i">
                     <td>{{i+1}}</td>
-                    <td>{{cart.dish.name}}</td>
-                    <td><img src="http://localhost:8080/image/{{cart.dish.image01}}" alt="" width="50px"></td>
-                    <td>{{cart.quantity}}</td>
+                    <td>{{order.dishId}}</td>
+                    <td>{{order.quantity}}</td>
+                    <td>{{order.orderGroup.User.username}}</td>
                     <td><i class="fas fa-trash"></i></td>
                   </tr>
 

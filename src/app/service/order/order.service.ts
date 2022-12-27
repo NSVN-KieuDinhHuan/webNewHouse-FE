@@ -9,6 +9,7 @@ import {Observable} from 'rxjs';
 import {OrderGroup} from '../../model/OrderGroup';
 import {OrderDto} from '../../model/orderDto';
 import {OrderGroupDto} from '../../model/OrderGroupDto';
+import {Order} from '../../model/order';
 
 const API_URL = `${environment.apiUrl}`;
 
@@ -21,8 +22,8 @@ export class OrderService {
   constructor(private httpClient: HttpClient) {
   }
 
-  saveOrder(orderDto: OrderDto[]) {
-    return this.httpClient.post(`${API_URL}/order`, orderDto);
+  saveOrder(order: Order[]) {
+    return this.httpClient.post(`${API_URL}/order`, order);
   }
 
   saveOrderGroup(orderDto: OrderGroupDto) {
@@ -33,7 +34,7 @@ export class OrderService {
     return this.httpClient.get<OrderGroup[]>(`${API_URL}/order-group`);
   }
 
-  getOrderAll(): Observable<OrderDto[]> {
-    return this.httpClient.get<OrderDto[]>(`${API_URL}/order`);
+  getOrderAll(): Observable<Order[]> {
+    return this.httpClient.get<Order[]>(`${API_URL}/order`);
   }
 }

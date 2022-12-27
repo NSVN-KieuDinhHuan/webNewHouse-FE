@@ -25,8 +25,8 @@ export class DishService {
   getById(id: number): Observable<Dish> {
     return this.httpClient.get<Dish>(`${API_URL}/product/${id}`);
   }
-    findAll(): Observable<result> {
-    return this.httpClient.get<result>(`${API_URL}/product/all`);
+    findAll(): Observable<Dish[]> {
+    return this.httpClient.get<Dish[]>(`${API_URL}/product/all`);
   }
   createDish(dish: FormData) {
     return this.httpClient.post<Dish>(`${API_URL}/product`, dish);

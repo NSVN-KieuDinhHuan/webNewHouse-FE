@@ -4,7 +4,7 @@ import {User} from './user';
 import {OrderDto} from './orderDto';
 
 export interface OrderGroupDto {
-  createDate?: string;
+  createDate?: Date;
   user?:User;
   status?: number;
 

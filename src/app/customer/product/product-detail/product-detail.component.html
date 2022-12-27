@@ -58,7 +58,7 @@
             <div class="product-meta-data">
               <h2>{{product.name}}</h2>
               <div class="line w-auto"></div>
-              <p class="product-price">{{product.price}} VND</p>
+              <p class="product-price">{{price}} VND</p>
 
               <!-- Ratings & Review -->
               <div class="ratings-review mb-15 d-flex align-items-center justify-content-between" style="font-size: 20px">
@@ -79,7 +79,7 @@
                   <tr *ngFor="let option of product.optionGroups, index as i" >
                     <td  class="mt-1" style="min-width: 100px;"> <p style="background: white">{{option.name}}  </p></td>
                     <td class="text-center">
-                      <select class=" form-select-lg mb-3" style="min-width: 250px" aria-label=".form-select-lg example" id="{{option.id}}" >
+                      <select class=" form-select-lg mb-3" style="min-width: 250px" aria-label=".form-select-lg example" id="{{option.id}}"  (change)="selectOption()">
                         <option  *ngFor="let y of optionGroups[i]"  value="{{y.id}}"  >{{y.name}}</option>
                       </select>
                     </td>

@@ -33,8 +33,10 @@ export class ProductDetailComponent implements OnInit {
     quantity: new FormControl(1),
   });
   cartId:number=0;
-
+  price:number=0;
   mainProductImg:string;
+  optionAll:Option[]
+  length:number;
 
   constructor(
               private  js: JsService,
@@ -46,11 +48,12 @@ export class ProductDetailComponent implements OnInit {
               private notificationService: NotificationService,
               private cartService: CartService
               ) {
-
+    this.length=5
   }
 
   ngOnInit() {
     this.js.jsActive()
+    this.getAllOption();
     this.quantity.setValue( 1)
     this.activatedRoute.paramMap.subscribe((paramMap: ParamMap) => {
       const id = +paramMap.get('product-id');
@@ -112,16 +115,29 @@ export class ProductDetailComponent implements OnInit {
   }
 
   selectOption() {
+    this.optionOfProduct=[]
     let optionList= this.product.optionGroups;
     let SelectOption=[];
     let SelectOptionName=[];
+    this.price= this.product.price;
     for (let i = 0; i < optionList.length; i++) {
       let option:number;
       let nameId=optionList[i].id.toString()
        option = $('#'+nameId).val();
       this.optionOfProduct.push(Number(option))
+      this.optionAll.forEach(x=>{
+        if(x.id==option) {
+          this.price=this.price+x.price
+        }
+      })
     }
+  }
 
+
+  getAllOption() {
+    this.optionService.getAll().subscribe(res => {
+      this.optionAll = res;
+    });
   }
   addDishIntoCart() {
     this.selectOption()
@@ -153,6 +169,7 @@ export class ProductDetailComponent implements OnInit {
     this.dishService.getById(id).subscribe(res => {
       if(res) {
       this.product = res
+        this.price=this.product.price
         this.getOptionGroup();
       if (this.product.image01 !=null) {
         this.product.image01=API_URL+res.image01;

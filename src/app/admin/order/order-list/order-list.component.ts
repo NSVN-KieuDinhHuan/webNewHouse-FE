@@ -11,6 +11,11 @@ import {Dish} from '../../../model/dish';
 import {OrderService} from '../../../service/order/order.service';
 import {OrderDto} from '../../../model/orderDto';
 import {OrderGroup} from '../../../model/OrderGroup';
+import {Observable} from 'rxjs';
+import {result} from '../../../model/result';
+import {Order} from '../../../model/order';
+import {OptionService} from '../../../service/option/option.service';
+import {Option} from '../../../model/option';
 
 @Component({
   selector: 'app-order-list',
@@ -18,22 +23,26 @@ import {OrderGroup} from '../../../model/OrderGroup';
   styleUrls: ['./order-list.component.css']
 })
 export class OrderListComponent implements OnInit {
-  orderList:OrderDto[]=[]
+  orderList:Order[]=[]
   orderGroup:OrderGroup[]=[]
   categories:Category[]=[]
-  orderSum:any[]=[]
+  orderSum:OrderDto[]=[]
+  product:Dish[]=[];
+  optionList:Option[]=[]
   constructor(    private  js: JsService,
                   private dishService: DishService,
                   private router: Router,
                   private cartService: CartService,
                   private activatedRoute: ActivatedRoute,
                   private orderService:OrderService,
-                  private categoryService:CategoryService) { }
+                  private categoryService:CategoryService,
+                  private optionService:OptionService) { }
 
   ngOnInit() {
+    this.getAllProduct()
     this.getCategoryList()
-    this.getOrderAll()
     this.getOrderGroupAll()
+    this.getOrderAll()
 
   }
   getCategoryList() {
@@ -46,24 +55,34 @@ export class OrderListComponent implements OnInit {
   this.orderService.getOrderAll().subscribe(res => {
     this.orderList=res
     for (let i = 0; i < this.orderList.length; i++) {
-      let ordersumDetail= {
-        username: this.orderList[i].orderGroup.User.username
+        let getProduct=this.product.filter(x => x.id==this.orderList[i].dishId)[0]
 
-      }
+        let ordersumDetail: OrderDto = {
+          user: this.orderList[i].orderGroup.user,
+          product: getProduct,
+          optionList :this.orderList[i].optionList,
+          quantity: this.orderList[i].quantity,
+          CreateDate: this.orderList[i].orderGroup.createDate,
+          status: this.orderList[i].orderGroup.status
+        }
+        this.orderSum.push(ordersumDetail);
     }
 
 
   })
-
-
-
 }
+
+
+    getAllProduct(){
+    this.dishService.findAll().subscribe(res => {
+      this.product= res;
+    })
+    }
+
 
   getOrderGroupAll() {
     this.orderService.getOrderGroupAll().subscribe(res => {
       this.orderGroup=res
-
-
     })
 
   }

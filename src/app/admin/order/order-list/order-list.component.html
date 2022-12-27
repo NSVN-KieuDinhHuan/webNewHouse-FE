@@ -41,12 +41,23 @@
                   </tr>
                   </thead>
                   <tbody class="text-center">
-                  <tr *ngFor="let order of orderList;index as i">
+                  <tr *ngFor="let order of orderSum;index as i">
                     <td>{{i+1}}</td>
-                    <td>{{order.dishId}}</td>
+                    <td>
+                      <div>{{order.user.username}}</div>
+                      <div> {{order.user.phone}},</div>
+                      <div> {{order.user.address}}</div>
+                    </td>
+                    <td>
+                      <div>{{order.product.name}}</div>
+                      <div *ngFor="let x of order.optionList">{{x.name}}</div>
+                    </td>
+                    <td>
+                      <img src="http://localhost:8080/image/{{order.product.image01}}" alt="" width="50px">
+                      </td>
                     <td>{{order.quantity}}</td>
-                    <td>{{order.orderGroup.User.username}}</td>
-                    <td><i class="fas fa-trash"></i></td>
+                    <td>{{order.CreateDate}}</td>
+                    <td>{{order.status}}</td>
                   </tr>
 
                   </tbody>
@@ -55,6 +66,7 @@
                     <th>STT</th>
                     <th>Người mua</th>
                     <th>Tên sản phẩm </th>
+                    <th>Ảnh </th>
                     <th>Số lượng</th>
                     <th>Ngày đặt hàng</th>
                     <th>Trạng thái</th>

@@ -17,6 +17,7 @@ import {OrderService} from '../../service/order/order.service';
 import {DishService} from '../../service/product/dish.service';
 import {OrderDto} from '../../model/orderDto';
 import {OrderGroupDto} from '../../model/OrderGroupDto';
+import {Order} from '../../model/order';
 
 @Component({
   selector: 'app-checkout',
@@ -85,29 +86,26 @@ export class CheckoutComponent implements OnInit {
       };
       this.userService.register(user).subscribe(() => {
         sessionStorage.setItem('user', JSON.stringify(user));
+        let dateTime=new Date().toJSON().slice(0,10).replace(/-/g,'/')
         const orderGroupDto = {
-          createDate: new Date().toJSON().slice(0,10).replace(/-/g,'/'),
+          createDate: new Date(dateTime),
           userPhone:user.phone,
           status:0,
         }
         this.orderService.saveOrderGroup(orderGroupDto).subscribe((res) => {
           let orderDtoList = [];
           for (let i = 0; i < this.cartDetailList.length; i++) {
-            let optionList: number[] = [];
-            for (let j = 0; j < this.cartDetailList[i].options.length; j++) {
-              optionList.push(this.cartDetailList[i].options[j].id);
-            }
-            const orderDto: OrderDto = {
+            const order: Order = {
               dishId: this.cartDetailList[i].dish.id,
               quantity: this.cartDetailList[i].quantity,
-              optionList: optionList,
+              optionList: this.cartDetailList[i].options,
               orderGroup: res
             }
-            orderDtoList.push(orderDto);
+            orderDtoList.push(order);
           }
 
           this.orderService.saveOrder(orderDtoList).subscribe((res) => {
-            this.notificationService.showMessage('suscess', "Đặt hàng thành công");
+            this.notificationService.showMessage('success', "Đặt hàng thành công");
           })
 
 

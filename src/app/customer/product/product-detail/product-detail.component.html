@@ -75,7 +75,7 @@
             </div>
             <form class="cart clearfix" [formGroup]="addProductForm" (ngSubmit)="addDishIntoCart()">
               <div class="mt-20" *ngIf="product != null" >
-                <table class="width-100" >
+                <table class="width-100" *ngIf="product.optionGroups!=null">
                   <tr *ngFor="let option of product.optionGroups, index as i" >
                     <td  class="mt-1" style="min-width: 100px;"> <p style="background: white">{{option.name}}  </p></td>
                     <td class="text-center">

@@ -46,7 +46,6 @@
                 </td>
                 <td class="cart_product_desc" style="min-width: 30%;">
                   <h6  >{{cartDetail.dish.name}}</h6>
-                  <h6  > Tùy chọn:</h6>
                   <div *ngFor="let opt of cartDetail.options">
                   <h6 >{{opt.name}}</h6>
                   </div>
@@ -75,12 +74,10 @@
             <div class="cart-btn text-center col-12 mt-30">
               <table class="col-12">
                 <tr>
-                  <td><a routerLink="/newhouse/shop/0" class="btn btn-warning mr-30 width-100">Quay lại</a></td>
-                  <td ><a routerLink="/newhouse/checkout" class="btn btn-warning ml-50">Thanh toán</a></td>
-
+                  <td> <button routerLink="/newhouse/shop/0" class="btn btn-warning mr-30 width-100">
+                    Quay lại </button></td>
+                  <td ><button routerLink="/newhouse/checkout" class="btn btn-warning ml-50">Thanh toán</button></td>
                 </tr>
-
-
               </table>
             </div>
           </div>

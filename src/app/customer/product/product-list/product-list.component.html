@@ -5,7 +5,7 @@
   <!-- Mobile Nav (max width 767px)-->
   <div class="mobile-nav">
     <!-- Navbar Brand -->
-    <div class="amado-navbar-brand">
+    <div class="amado-navbar-brand ">
       <a href="newhouse/home"><img src="assets/img/core-img/logo_newhouse_long.jpg" alt=""></a>
     </div>
     <!-- Navbar Toggler -->
@@ -15,8 +15,6 @@
   </div>
 
 <app-sidebar></app-sidebar>
-
-
   <div class="products-catagories-area clearfix ">
     <div class="amado-pro-catagory clearfix">
       <div class="container">
@@ -31,7 +29,7 @@
           <div class="col text-center">
             <div class="new_arrivals_sorting">
               <ul class="arrivals_grid_sorting clearfix button-group filters-button-group">
-                <li class="grid_sorting_button button d-flex flex-column justify-content-center align-items-center" id="cate0" (click)="getDishByCategory(0)" >Tất cả</li>
+                <li class="grid_sorting_button button d-flex flex-column justify-content-center align-items-center" id="category0" (click)="getDishByCategory(0)" >Tất cả</li>
                 <li *ngFor="let y of categories" class="grid_sorting_button button d-flex flex-column justify-content-center align-items-center" id="cate{{y.id}}" (click)="getDishByCategory(y.id)" >{{y.name}}</li>
               </ul>
             </div>
@@ -56,7 +54,7 @@
               <img src="{{url}}{{product.image01}}" alt="">
 
               <!-- Hover Thumb -->
-              <img class="hover-img" src="http://localhost:8080/image/{{product.image01}}" alt="">
+              <img class="hover-img" src="{{url}}{{product.image01}}" alt="">
               </a>
             </div>
 
@@ -89,7 +87,7 @@
 
       </div>
 
-      <div class="row mb-30">
+      <div class="row mb-30 align-items-center">
         <div class="col-12">
           <!-- Pagination -->
           <nav aria-label="navigation">

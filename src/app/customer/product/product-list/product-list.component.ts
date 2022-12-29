@@ -24,6 +24,7 @@ export class ProductListComponent implements OnInit {
   pageDisplay1 = 0;
   categoryId = 0;
   url: string = API_URL;
+  classname = 'grid_sorting_button button d-flex flex-column justify-content-center align-items-center';
 
   constructor(
     private  js: JsService,
@@ -44,7 +45,8 @@ export class ProductListComponent implements OnInit {
      this.getDishByCategory(0);
      this.getAllDishes(this.pageDisplay1);
      $('#0').hide();
-
+     this.classname = 'grid_sorting_button button d-flex flex-column justify-content-center align-items-center';
+     $('#category0').addClass(this.classname + ' active');
     }
 
   getAllDishes(page: number) {
@@ -54,22 +56,18 @@ export class ProductListComponent implements OnInit {
   }
 
   getDishByCategory(id: number) {
-    this.categoryId =  id;
-    const classname = 'grid_sorting_button button d-flex flex-column justify-content-center align-items-center';
     if (id === 0) {
      this.getAllDishes(0);
-     $('#cate0').addClass(classname + 'active');
+     $('#category0').addClass(this.classname + ' active');
+     this.categoryId = 0;
    } else {
-      $('#cate0').addClass(classname);
-    }
-    this.categories.forEach(x => {
-      const classname01 =  $('#cate' + id.toString()).attr('class');
-      $('#cate' + id.toString()).addClass(classname01);
-      if (x.id === id) {
-        $('#cate' + id.toString()).addClass(classname01 + ' active');
+      $('#cate' + id).addClass(this.classname + ' active');
+      if (this.categoryId === 0) {
+        $('#category0').addClass(this.classname);
+      } else {
+        $('#cate' + this.categoryId).addClass(this.classname);
       }
-    });
-
+    }
     // tslint:disable-next-line:triple-equals
     if (this.categoryId != null && this.categoryId != 0) {
       this.dishService.getDishbyCategoryID(this.categoryId).subscribe(res => {
@@ -77,6 +75,7 @@ export class ProductListComponent implements OnInit {
           this.ProductList = res;
         }
       });
+      this.categoryId = id;
     }
   }
 

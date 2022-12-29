@@ -34,8 +34,8 @@ export class ProductDetailComponent implements OnInit {
   addProductForm: FormGroup = new FormGroup({
     quantity: new FormControl(1),
   });
-  cartId: number = 0;
-  price: number = 0;
+  cartId = 0;
+  price = 0;
   mainProductImg: string;
   optionAll: Option[];
   length: number;
@@ -69,6 +69,7 @@ export class ProductDetailComponent implements OnInit {
      return this.addProductForm.get('quantity');
   }
   showMessage() {
+    // tslint:disable-next-line:only-arrow-functions
     $(function() {
       Swal.fire({
         icon: 'success',
@@ -80,15 +81,15 @@ export class ProductDetailComponent implements OnInit {
 
   }
   createCart(){
-   this.cartId= JSON.parse(sessionStorage.getItem("cartId"));
-   this.cartService.findAllCartGroup().subscribe((res:Cart[]) => {
-     this.cartAll=res;
-     let CartId=this.cartAll.length +1;
-     if(this.cartId!=null && res.length==0) {
+   this.cartId = JSON.parse(sessionStorage.getItem('cartId'));
+   this.cartService.findAllCartGroup().subscribe((res: Cart[]) => {
+     this.cartAll = res;
+     let CartId = this.cartAll.length +1;
+     if(this.cartId != null && res.length==0) {
        sessionStorage.removeItem("cartId")
        this.cartId=null;
      }
-     if(this.cartId==null) {
+     if(this.cartId == null) {
         this.cartService.createCartGroup(CartId).subscribe(() => {
             sessionStorage.setItem('cartId', JSON.stringify(CartId));
        })
@@ -117,21 +118,21 @@ export class ProductDetailComponent implements OnInit {
   }
 
   selectOption() {
-    this.optionOfProduct=[]
-    let optionList= this.product.optionGroups;
-    let SelectOption=[];
-    let SelectOptionName=[];
-    this.price= this.product.price;
-    for (let i = 0; i < optionList.length; i++) {
-      let option:number;
-      let nameId=optionList[i].id.toString()
-       option = $('#'+nameId).val();
+    this.optionOfProduct = [];
+    if (this.product != null) {
+       const optionList = this.product.optionGroups;
+       this.price = this.product.price;
+       for (let i = 0; i < optionList.length; i++) {
+         let option: number;
+         const nameId = optionList[i].id.toString();
+         option = $('#' + nameId).val();
       this.optionOfProduct.push(Number(option))
       this.optionAll.forEach(x=>{
         if(x.id==option) {
           this.price=this.price+x.price
         }
       })
+     }
     }
   }
 

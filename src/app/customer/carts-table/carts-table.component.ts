@@ -9,21 +9,23 @@ import {CartDetailDto} from '../../model/cartDetailDto';
 
 import {Dish} from '../../model/dish';
 import {DishService} from '../../service/product/dish.service';
+import {environment} from '../../../environments/environment';
 
 
-
+const IMG_URL = `${environment.urlImage}`;
 @Component({
   selector: 'app-carts-table',
   templateUrl: './carts-table.component.html',
   styleUrls: ['./carts-table.component.css']
 })
 export class CartsTableComponent implements OnInit {
-  cartDetailDto:CartDetailDto[]=[];
-  cartDetailList:CartDetail[]=[]
+  cartDetailDto: CartDetailDto[] = [];
+  cartDetailList: CartDetail[] = [];
   ProductList: Dish[];
-  cartId:number
-  quantity:number=1
-  billValue: number=0;
+  cartId: number;
+  quantity = 1;
+  billValue = 0;
+  imgUrl: string = IMG_URL;
 
   @Input()
   refreshNum = 0;
@@ -51,14 +53,16 @@ export class CartsTableComponent implements OnInit {
 
 
   getAllCart() {
-    if (this.cartId!=null) {
+    if (this.cartId != null) {
       this.cartService.getAllCartByCartGroupId(this.cartId).subscribe((res:CartDetailDto[]) => {
          this.cartDetailDto=res;
         for (let i = 0; i < this.cartDetailDto.length; i++) {
           for (let j = 0; j < this.ProductList.length; j++) {
-             if(this.cartDetailDto[i].dishId==this.ProductList[j].id) {
-               const CartDetail={
-                 id:this.cartDetailDto[i].id,
+
+             if (this.cartDetailDto[i].dishId == this.ProductList[j].id) {
+
+               const CartDetail = {
+                 id: this.cartDetailDto[i].id,
                  dish: this.ProductList[j],
                  quantity: this.cartDetailDto[i].quantity,
                  options: this.cartDetailDto[i].options

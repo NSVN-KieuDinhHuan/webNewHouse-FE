@@ -13,48 +13,50 @@ import {DishService} from '../../../service/product/dish.service';
 import {OptionService} from '../../../service/option/option.service';
 import {OptionGroup} from '../../../model/optionGroup';
 import {Option} from '../../../model/option';
-declare var $: any
+import {environment} from '../../../../environments/environment';
+declare var $: any;
 declare var Swal: any;
-declare var toastr: any;
+
+const IMG_URL = `${environment.urlImage}`;
 @Component({
   selector: 'app-product-create',
   templateUrl: './product-detail.component.html',
   styleUrls: ['./product-detail.component.css']
 })
 export class ProductDetailComponent implements OnInit {
-  product: Dish=null;
+  product: Dish = null;
   loggedIn: boolean;
   currentUser: any;
   cart: Cart;
-  cartAll:Cart[];
-  optionGroups:Option[][] =[];
-  optionOfProduct:number[]=[];
+  cartAll: Cart[];
+  optionGroups: Option[][] = [];
+  optionOfProduct: number[] = [];
   addProductForm: FormGroup = new FormGroup({
     quantity: new FormControl(1),
   });
-  cartId:number=0;
-  price:number=0;
-  mainProductImg:string;
-  optionAll:Option[]
-  length:number;
-  @Input() item = ''
+  cartId: number = 0;
+  price: number = 0;
+  mainProductImg: string;
+  optionAll: Option[];
+  length: number;
+
   constructor(
               private  js: JsService,
               private dishService: DishService,
               private activatedRoute: ActivatedRoute,
-              private optionService:OptionService,
+              private optionService: OptionService,
               private router: Router,
               private authService: AuthService,
               private notificationService: NotificationService,
               private cartService: CartService
               ) {
-    this.length=5
+
   }
 
   ngOnInit() {
-    this.js.jsActive()
+    this.js.jsActive();
     this.getAllOption();
-    this.quantity.setValue( 1)
+    this.quantity.setValue( 1);
     this.activatedRoute.paramMap.subscribe((paramMap: ParamMap) => {
       const id = +paramMap.get('product-id');
       this.getDetailProduct(id);
@@ -70,7 +72,7 @@ export class ProductDetailComponent implements OnInit {
     $(function() {
       Swal.fire({
         icon: 'success',
-        title: "Thêm thành công",
+        title: 'Thêm thành công',
         showConfirmButton: false,
         timer: 2000
       });
@@ -140,62 +142,62 @@ export class ProductDetailComponent implements OnInit {
     });
   }
   addDishIntoCart() {
-    this.selectOption()
+    this.selectOption();
     if (this.addProductForm.valid) {
-      let cartId= JSON.parse(sessionStorage.getItem("cartId"));
+      const cartId = JSON.parse(sessionStorage.getItem('cartId'));
       const cartDetail = {
         dishId: this.product.id,
         quantity: this.quantity.value,
-        optionList:this.optionOfProduct,
-        cartGroupId:cartId
+        optionList: this.optionOfProduct,
+        cartGroupId : cartId
       };
       this.cartService.addDishToCart(cartDetail).subscribe(() => {
-      this.showMessage()
-      })
+      this.showMessage();
+      });
 
     }
 }
-   increaseQuantity (){
-     this.quantity.setValue( this.quantity.value+1)
+   increaseQuantity() {
+     this.quantity.setValue( this.quantity.value + 1);
   }
-  decreaseQuantity (){
-    this.quantity.setValue( this.quantity.value-1)
+  decreaseQuantity() {
+    this.quantity.setValue( this.quantity.value - 1);
   }
-  setImgMain(img:string){
-    this.mainProductImg=img;
+  setImgMain(img: string) {
+    this.mainProductImg = img;
   }
-  getDetailProduct(id:number) {
-    const API_URL = "http://localhost:8080/image/"
+  getDetailProduct(id: number) {
+
     this.dishService.getById(id).subscribe(res => {
-      if(res) {
-      this.product = res
-        this.price=this.product.price
-        this.getOptionGroup();
-      if (this.product.image01 !=null) {
-        this.product.image01=API_URL+res.image01;
+      if (res) {
+      this.product = res;
+      this.price = this.product.price;
+      this.getOptionGroup();
+      if (this.product.image01 != null) {
+        this.product.image01 = IMG_URL + res.image01;
       }
-      if (this.product.image02 !=null) {
-        this.product.image02=API_URL+res.image02;
+      if (this.product.image02 != null) {
+        this.product.image02 = IMG_URL + res.image02;
       }
-      if (this.product.image03 !=null) {
-        this.product.image03=API_URL+res.image03;
+      if (this.product.image03 != null) {
+        this.product.image03 = IMG_URL + res.image03;
       }
-      if (this.product.image04 !=null) {
-        this.product.image04=API_URL+res.image04;
+      if (this.product.image04 != null) {
+        this.product.image04 = IMG_URL + res.image04;
       }
-      if (this.product.image05 !=null) {
-        this.product.image05=API_URL+res.image05;
+      if (this.product.image05 != null) {
+        this.product.image05 = IMG_URL + res.image05;
       }
-      if (this.product.image06 !=null) {
-        this.product.image06=API_URL+res.image06;
+      if (this.product.image06 != null) {
+        this.product.image06 = IMG_URL + res.image06;
       }
-      if (this.product.image07 !=null) {
-        this.product.image07=API_URL+res.image07;
+      if (this.product.image07 != null) {
+        this.product.image07 = IMG_URL + res.image07;
       }
-      if (this.product.image08 !=null) {
-        this.product.image08=API_URL+res.image08;
+      if (this.product.image08 != null) {
+        this.product.image08 = IMG_URL + res.image08;
       }
-        this.setImgMain(this.product.image01)
+      this.setImgMain(this.product.image01);
       }
     });
 

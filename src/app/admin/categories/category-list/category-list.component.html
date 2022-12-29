@@ -46,7 +46,7 @@
                   <tr *ngFor="let category of categories;index as i">
                     <td>{{i+1}}</td>
                     <td><a routerLink="/admin/category/edit/{{category.id}}">{{category.name}}</a></td>
-                    <td><img src="http://localhost:8080/image/{{category.image}}" alt="" width="50px"></td>
+                    <td><img src="{{imgUrl}}{{category.image}}" alt="" width="50px"></td>
                     <td>{{category.description}}</td>
                     <td><i class="fas fa-trash"></i></td>
                   </tr>

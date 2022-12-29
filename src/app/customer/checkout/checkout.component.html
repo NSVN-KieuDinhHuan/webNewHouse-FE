@@ -58,7 +58,7 @@
               <tr *ngFor="let cartDetail of cartDetailList;index as i">
                 <td style="max-width: 5%;">{{i+1}}</td>
                 <td class="border-danger" style="max-width: 14%;">
-                  <a href="#"><img src="http://localhost:8080/image/{{cartDetail.dish.image01}}" alt="Product" width="50px"></a>
+                  <a href="#"><img src="{{imgUrl}}{{cartDetail.dish.image01}}" alt="Product" width="50px"></a>
                 </td>
                 <td class="cart_product_desc" style="min-width: 30%;">
                   <h6>{{cartDetail.dish.name}}</h6>

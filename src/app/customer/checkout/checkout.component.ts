@@ -18,7 +18,8 @@ import {DishService} from '../../service/product/dish.service';
 import {OrderDto} from '../../model/orderDto';
 import {OrderGroupDto} from '../../model/OrderGroupDto';
 import {Order} from '../../model/order';
-
+import {environment} from '../../../environments/environment';
+const IMG_URL = `${environment.urlImage}`;
 @Component({
   selector: 'app-checkout',
   templateUrl: './checkout.component.html',
@@ -32,7 +33,7 @@ export class CheckoutComponent implements OnInit {
     phone: new FormControl('', Validators.required),
     username: new FormControl('', Validators.required),
   });
-
+  imgUrl: string = IMG_URL;
   carts: Cart[] = [];
   cartDetailDto:CartDetailDto[]=[];
   cartDetailList:CartDetail[]=[]

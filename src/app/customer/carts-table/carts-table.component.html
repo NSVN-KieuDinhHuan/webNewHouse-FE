@@ -42,7 +42,7 @@
               <tr *ngFor="let cartDetail of cartDetailList;index as i">
                 <td style="max-width: 5%;">{{i+1}}</td>
                 <td class="border-danger" style="max-width: 14%;">
-                  <a  href="#"><img src="http://localhost:8080/image/{{cartDetail.dish.image01}}" alt="Product" width="50px"></a>
+                  <a  href="#"><img src="{{imgUrl}}{{cartDetail.dish.image01}}" alt="Product" width="50px"></a>
                 </td>
                 <td class="cart_product_desc" style="min-width: 30%;">
                   <h6  >{{cartDetail.dish.name}}</h6>
@@ -75,8 +75,8 @@
             <div class="cart-btn text-center col-12 mt-30">
               <table class="col-12">
                 <tr>
-                  <td><a routerLink="/newhouse/shop" class="btn btn-warning mr-30 width-100">Quay lại</a></td>
-                  <td ><a routerLink="/newhouse/checkout" class="btn btn-warning ml-50 width-100">Thanh toán</a></td>
+                  <td><a routerLink="/newhouse/shop/0" class="btn btn-warning mr-30 width-100">Quay lại</a></td>
+                  <td ><a routerLink="/newhouse/checkout" class="btn btn-warning ml-50">Thanh toán</a></td>
 
                 </tr>
 

@@ -7,6 +7,8 @@ import {Dish} from '../../../model/dish';
 import {FormGroup} from '@angular/forms';
 import {Category} from '../../../model/category';
 import {DishService} from '../../../service/product/dish.service';
+import {environment} from '../../../../environments/environment';
+const IMG_URL = `${environment.urlImage}`;
 
 @Component({
   selector: 'app-prod-list',
@@ -16,16 +18,15 @@ import {DishService} from '../../../service/product/dish.service';
 
 export class ProdListComponent implements OnInit {
   ProductList: Dish[];
-  form  : FormGroup;
-  selectItem:number;
+  form: FormGroup;
+  selectItem: number;
   categories: Category[];
-  pageDisplay1:number
-
+  imgUrl: string = IMG_URL;
   constructor(    private  js: JsService,
                   private dishService: DishService,
                   private router: Router,
                   private activatedRoute: ActivatedRoute,
-                  private categoryService:CategoryService) {
+                  private categoryService: CategoryService) {
  }
 
   ngOnInit() {
@@ -33,7 +34,7 @@ export class ProdListComponent implements OnInit {
       this.getAllDishes(0);
   }
 
-  getAllDishes(page:number) {
+  getAllDishes(page: number) {
     this.dishService.getAll(page).subscribe(res => {
       this.ProductList = res.content;
     });

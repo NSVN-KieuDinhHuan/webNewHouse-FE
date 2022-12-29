@@ -7,9 +7,11 @@ import {Dish} from '../../model/dish';
 import {FormGroup} from '@angular/forms';
 import {Category} from '../../model/category';
 import {DishService} from '../../service/product/dish.service';
+import {environment} from '../../../environments/environment';
 declare  var WOW: any;
 declare  var jQuery: any;
 declare  var $: any;
+const IMG_URL = `${environment.urlImage}`;
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -21,7 +23,7 @@ export class HomeComponent implements OnInit {
   selectItem: number;
   categories: Category[];
   pageDisplay1: number;
-
+  imgUrl: string = IMG_URL;
   constructor(
     private  js: JsService,
     private dishService: DishService,
@@ -41,9 +43,6 @@ export class HomeComponent implements OnInit {
   getCategoryList() {
     this.categoryService.getAllCategory().subscribe(res => {
       this.categories = res;
-      for (let i = 0; i < this.categories.length; i++) {
-        this.categories[i].image="http://localhost:8080/image/"+this.categories[i].image;
-      }
     });
   }
 

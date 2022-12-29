@@ -15,13 +15,25 @@
   </div>
 
 <app-sidebar></app-sidebar>
+
+
   <div class="products-catagories-area clearfix ">
     <div class="amado-pro-catagory clearfix">
       <div class="container">
         <div class="row">
           <div class="col text-center">
-            <div class="section_title new_arrivals_title">
+            <div class=" new_arrivals_title">
 
+            </div>
+          </div>
+        </div>
+        <div class="row align-items-center">
+          <div class="col text-center">
+            <div class="new_arrivals_sorting">
+              <ul class="arrivals_grid_sorting clearfix button-group filters-button-group">
+                <li class="grid_sorting_button button d-flex flex-column justify-content-center align-items-center" id="cate0" (click)="getDishByCategory(0)" >Tất cả</li>
+                <li *ngFor="let y of categories" class="grid_sorting_button button d-flex flex-column justify-content-center align-items-center" id="cate{{y.id}}" (click)="getDishByCategory(y.id)" >{{y.name}}</li>
+              </ul>
             </div>
           </div>
         </div>
@@ -29,18 +41,7 @@
         <div class="col-12">
           <div class="product-topbar d-xl-flex align-items-end justify-content-between">
 
-            <!-- Sorting -->
-            <div class="product-sorting d-flex">
-              <p class="mr-15" style="background: white">Danh mục</p>
-              <div class="sort-by-date d-flex align-items-center mr-15" *ngIf="categories!=null">
-                <select id="categoryId" class=" form-select-lg" style="min-width: auto" aria-label=".form-select-lg example" (change)="getDishByCategory()">
-                  <option  value="0" >Tất cả</option>
-                  <option  *ngFor="let y of categories"  value="{{y.id}}">{{y.name}}</option>
-                </select>
-              </div>
 
-
-            </div>
           </div>
         </div>
       </div>
@@ -52,7 +53,7 @@
             <!-- Product Image -->
             <div class="product-img">
               <a routerLink="/newhouse/product/{{product.id}}">
-              <img src="http://localhost:8080/image/{{product.image01}}" alt="">
+              <img src="{{url}}{{product.image01}}" alt="">
 
               <!-- Hover Thumb -->
               <img class="hover-img" src="http://localhost:8080/image/{{product.image01}}" alt="">
@@ -88,26 +89,25 @@
 
       </div>
 
-      <div class="row">
+      <div class="row mb-30">
         <div class="col-12">
           <!-- Pagination -->
-
-
           <nav aria-label="navigation">
             <ul class="pagination justify-content-end mt-50">
               <table>
                 <tr>
-                  <td style="width: 50px"> <li class="page-item w-auto"><a class="page-link font-bold" (click)="backPage()" > <<</a></li>  </td>
+                  <td style="width: 50px"> <li class="page-item w-auto"><a class="page-link font-bold" (click)="backPage()" > <i class="fa fa-arrow-left"></i></a></li>  </td>
                   <td style="width: 50px">  <li id="0" class="page-item w-auto"><a class="page-link" (click)="backPage()">{{pageDisplay1}}</a></li></td>
                   <td style="width: 50px"> <li id="1" class="page-item w-auto active"><a class="page-link" (click)="getAllDishes(pageDisplay1 +1)">{{pageDisplay1 + 1}} </a></li></td>
                   <td style="width: 50px" > <li id="2" class="page-item w-auto"><a class="page-link" (click)="nextPage()">{{pageDisplay1 + 2}} </a></li></td>
-                  <td style="width: 50px" > <li class="page-item w-auto"><a class="page-link" (click)="nextPage()" >>></a></li></td>
+                  <td style="width: 50px" > <li class="page-item w-auto"><a class="page-link" (click)="nextPage()" ><i class="fa fa-arrow-right"></i></a></li></td>
                 </tr>
               </table>
             </ul>
           </nav>
         </div>
       </div>
+
       </div>
     </div>
   </div>

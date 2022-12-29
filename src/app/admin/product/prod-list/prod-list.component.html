@@ -51,7 +51,7 @@
                   <tr *ngFor="let product of ProductList;index as i">
                     <td>{{i+1}}</td>
                     <td><a routerLink="/admin/product/edit/{{product.id}}">{{product.name}}</a></td>
-                    <td><img src="http://localhost:8080/image/{{product.image01}}" alt="" width="50px"></td>
+                    <td><img src="{{imgUrl}}{{product.image01}}" alt="" width="50px"></td>
                     <td>{{product.price}}</td>
                     <td><i class="fas fa-trash"></i></td>
                   </tr>

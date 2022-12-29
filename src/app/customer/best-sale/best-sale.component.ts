@@ -25,12 +25,7 @@ export class BestSaleComponent implements OnInit {
     private dishService: DishService,
     private router: Router,
     private activatedRoute: ActivatedRoute,
-    private categoryService:CategoryService) {
-    this.js.jsActive();
-    this.activatedRoute.paramMap.subscribe((paramMap: ParamMap) => {
-      const id = paramMap.get('category-id');
-      this.getDishByCategory();
-    });
+    private categoryService: CategoryService) {
 
   }
 
@@ -45,16 +40,16 @@ export class BestSaleComponent implements OnInit {
 
   getAllDishes() {
     this.dishService.findAll().subscribe(res => {
-      this.ProductList = res
+      this.ProductList = res;
     });
   }
 
   getDishByCategory() {
-    this.categoryId=  $('#categoryId').val();
-    if(this.categoryId==0) {
+    this.categoryId =  $('#categoryId').val();
+    if(this.categoryId == 0) {
       this.getAllDishes();
     }
-    if(this.categoryId!=null && this.categoryId!=0) {
+    if (this.categoryId != null && this.categoryId != 0) {
       this.dishService.getDishbyCategoryID(this.categoryId).subscribe(res => {
         if(res) {
           this.ProductList = res;

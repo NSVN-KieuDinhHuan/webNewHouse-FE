@@ -16,6 +16,9 @@ import {RouterModule} from '@angular/router';
 import {HttpClientModule} from '@angular/common/http';
 import { CheckoutComponent } from './checkout/checkout.component';
 
+import { AboutCompannyComponent } from './about-companny/about-companny.component';
+import { BestSaleComponent } from './best-sale/best-sale.component';
+
 
 
 @NgModule({
@@ -30,6 +33,8 @@ import { CheckoutComponent } from './checkout/checkout.component';
     SidebarComponent,
     NewsletterComponent,
     CheckoutComponent,
+    AboutCompannyComponent,
+    BestSaleComponent,
   ],
   exports: [
     NewsletterComponent,

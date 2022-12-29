@@ -20,7 +20,8 @@
     <div class="amado-pro-catagory clearfix">
 
       <!-- Single Catagory -->
-      <div class="single-products-catagory clearfix" *ngFor="let category of categories; index as i">
+
+      <div class="single-products-catagory clearfix float-left" *ngFor="let category of categories; index as i">
         <a routerLink="/newhouse/shop/{{category.id}}">
           <img src="{{categories[i].image}}" alt="">
           <!-- Hover Content -->

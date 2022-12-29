@@ -5,6 +5,8 @@ import {CartsTableComponent} from './carts-table/carts-table.component';
 import {ProductDetailComponent} from './product/product-detail/product-detail.component';
 import {HomeComponent} from './home/home.component';
 import {CheckoutComponent} from './checkout/checkout.component';
+import {BestSaleComponent} from './best-sale/best-sale.component';
+
 
 
 
@@ -32,6 +34,10 @@ const routes: Routes = [
   {
     path: 'product/:product-id',
     component: ProductDetailComponent
+  },
+  {
+    path: 'bestsale/:product-id',
+    component: BestSaleComponent
   },
 ];
 

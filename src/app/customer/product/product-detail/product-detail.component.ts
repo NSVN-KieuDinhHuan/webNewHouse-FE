@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {JsService} from '../../../service/js.service';
 
 import {ActivatedRoute, ParamMap, Router} from '@angular/router';
@@ -37,7 +37,7 @@ export class ProductDetailComponent implements OnInit {
   mainProductImg:string;
   optionAll:Option[]
   length:number;
-
+  @Input() item = ''
   constructor(
               private  js: JsService,
               private dishService: DishService,

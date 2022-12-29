@@ -1,0 +1,97 @@
+<app-search></app-search>
+<!-- ##### Main Content Wrapper Start ##### -->
+<div class="main-content-wrapper d-flex clearfix">
+
+  <!-- Mobile Nav (max width 767px)-->
+  <div class="mobile-nav">
+    <!-- Navbar Brand -->
+    <div class="amado-navbar-brand">
+      <a href="index.html"><img src="assets/img/core-img/logo_newhouse_long.jpg" alt=""></a>
+    </div>
+    <!-- Navbar Toggler -->
+    <div class="amado-navbar-toggler">
+      <span></span><span></span><span></span>
+    </div>
+  </div>
+
+  <app-sidebar></app-sidebar>
+  <!-- Product Catagories Area Start -->
+  <div class="products-catagories-area clearfix">
+    <div class="amado-pro-catagory clearfix">
+
+    <div class="new_arrivals">
+        <div class="container">
+          <div class="row">
+            <div class="col text-center">
+              <div class="section_title new_arrivals_title">
+                <h2>Bán chạy</h2>
+              </div>
+            </div>
+          </div>
+          <div class="row align-items-center">
+            <div class="col text-center">
+              <div class="new_arrivals_sorting">
+                <ul class="arrivals_grid_sorting clearfix button-group filters-button-group" *ngIf="categories!=null" >
+                  <li   class="grid_sorting_button button d-flex flex-column justify-content-center align-items-center is-checked active" data-filter="*" (click)="getDishByCategory()" >Tất cả</li>
+
+                  <li  *ngFor="let y of categories" class="grid_sorting_button button d-flex flex-column justify-content-center align-items-center is-checked" data-filter="*" (click)="getDishByCategory()" >{{y.name}}</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="row" *ngIf="ProductList!=null">
+            <!-- Single Product Area -->
+            <div class="col-12 col-sm-3 col-md-12 col-xl-3" *ngFor="let product of ProductList;">
+              <div class="single-product-wrapper">
+                <!-- Product Image -->
+                <div class="product-img">
+                  <a routerLink="/newhouse/product/{{product.id}}">
+                    <img src="http://localhost:8080/image/{{product.image01}}" alt="">
+
+                    <!-- Hover Thumb -->
+                    <img class="hover-img" src="http://localhost:8080/image/{{product.image01}}" alt="">
+                  </a>
+                </div>
+
+                <!-- Product Description -->
+                <div class="product-description d-flex align-items-center justify-content-between">
+                  <!-- Product Meta Data -->
+                  <div class="product-meta-data ratings-cart">
+                    <div class="ratings">
+                      <i class="fa fa-star" aria-hidden="true"></i>
+                      <i class="fa fa-star" aria-hidden="true"></i>
+                      <i class="fa fa-star" aria-hidden="true"></i>
+                      <i class="fa fa-star" aria-hidden="true"></i>
+                      <i class="fa fa-star" aria-hidden="true"></i>
+                    </div>
+                    <div class="line"></div>
+                    <p class="product-price">{{product.price}} VND</p>
+                    <a routerLink="/newhouse/product/{{product.id}}">
+                      <h6>{{product.name}}</h6>
+                    </a>
+                  </div>
+                  <!-- Ratings & Cart -->
+                  <div class=" text-right">
+                    <!--                <div class="cart">-->
+                    <!--                  <a href="cart.html" data-toggle="tooltip" data-placement="left" title="thêm vào giỏ"><i class="fa fa-shopping-cart" style="font-size: 30px"></i></a>-->
+                    <!--                </div>-->
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+
+
+
+
+    </div>
+  </div>
+</div>
+<!-- ##### Main Content Wrapper End ##### -->
+<!--<app-newsletter></app-newsletter>-->
+<app-footer></app-footer>
+

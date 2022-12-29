@@ -15,12 +15,16 @@
   </div>
 
 <app-sidebar></app-sidebar>
+  <div class="products-catagories-area clearfix ">
+    <div class="amado-pro-catagory clearfix">
+      <div class="container">
+        <div class="row">
+          <div class="col text-center">
+            <div class="section_title new_arrivals_title">
 
-
-
-  <div class="amado_product_area section-padding-100">
-    <div class="container-fluid">
-
+            </div>
+          </div>
+        </div>
       <div class="row">
         <div class="col-12">
           <div class="product-topbar d-xl-flex align-items-end justify-content-between">
@@ -29,20 +33,13 @@
             <div class="product-sorting d-flex">
               <p class="mr-15" style="background: white">Danh mục</p>
               <div class="sort-by-date d-flex align-items-center mr-15" *ngIf="categories!=null">
-                <select id="categoryId" class=" form-select-lg" style="min-width: 150px" aria-label=".form-select-lg example" (change)="getDishByCategory()">
+                <select id="categoryId" class=" form-select-lg" style="min-width: auto" aria-label=".form-select-lg example" (change)="getDishByCategory()">
                   <option  value="0" >Tất cả</option>
                   <option  *ngFor="let y of categories"  value="{{y.id}}">{{y.name}}</option>
                 </select>
               </div>
 
-              <div class="view-product d-flex align-items-center">
-                <p class="mr-15" style="background: white">Lọc</p>
-                <select name="select" id="sortBydate" class="ml-15">
-                  <option value="date">Giá tăng dần</option>
-                  <option value="new">sản phẩm mới</option>
-                  <option value="buyLot">mua nhiều</option>
-                </select>
-              </div>
+
             </div>
           </div>
         </div>
@@ -110,6 +107,7 @@
             </ul>
           </nav>
         </div>
+      </div>
       </div>
     </div>
   </div>

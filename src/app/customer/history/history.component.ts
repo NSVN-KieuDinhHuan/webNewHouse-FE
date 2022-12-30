@@ -81,7 +81,7 @@ export class HistoryComponent implements OnInit {
         }
         this.orderSum.push(ordersumDetail);
       }
-     this.orderSumUser = this.orderSum.filter(x => {return x.user.id==this.user.id})
+     this.orderSumUser = this.orderSum.filter(x => {return x.user.phone==this.user.phone})
 
     })
   }

@@ -30,7 +30,7 @@
               <thead class="text-center">
               <tr>
                 <th style="max-width: 5%;"># </th>
-                <th style="max-width: 14%;" >Ảnh</th>
+                <th style="max-width: 15%;" >Ảnh</th>
                 <th style="min-width: 30%;">Tên sản phẩm</th>
                 <th style="max-width: 15%;">Giá(VND)</th>
                 <th style="max-width: 25%;" >Số Lượng</th>
@@ -41,7 +41,7 @@
 
               <tr *ngFor="let cartDetail of cartDetailList;index as i">
                 <td style="max-width: 5%;">{{i+1}}</td>
-                <td class="border-danger" style="max-width: 14%;">
+                <td class="border-danger" style="max-width: 15%;">
                   <a  href="#"><img src="{{imgUrl}}{{cartDetail.dish.image01}}" alt="Product" width="50px"></a>
                 </td>
                 <td class="cart_product_desc" style="min-width: 30%;">
@@ -56,11 +56,10 @@
                 <td class="qty text-center" style="max-width: 25%;">
                   <div class="cart-btn">
                     <div class="quantity">
-                      <span class="qty-plus  w-50 h-25" (click)="increaseDishQuantity(i,cartDetail.id)" aria-hidden="false"><i class="fa fa-caret-up text-center" aria-hidden="true"></i></span>
-                      <input type="text" class="text-center w-25 h-25 border-1 mr-15"  id="quantity"  name="quantity" [value]="cartDetail.quantity">
-                      <span class="qty-minus" (click)="decreaseDishQuantity(i,cartDetail.id)" aria-hidden="false"><i class="fa fa-caret-down" aria-hidden="true"></i></span>
+                      <span class="qty-plus  w-50 h-25" (click)="increaseDishQuantity(i,cartDetail.id)" aria-hidden="false"><i class="fa fa-plus" aria-hidden="true"></i></span>
+                      <input type="text" class="text-center w-25 h-25 border-transparent "  id="quantity"  name="quantity" [value]="cartDetail.quantity">
+                      <span class="qty-minus" (click)="decreaseDishQuantity(i,cartDetail.id)" aria-hidden="false"><i class="fa fa-minus font-italic" aria-hidden="true"></i></span>
                     </div>
-
                   </div>
                 </td>
                 <td style="max-width: 10%;" (click)="removeDishOfCart(i,cartDetail.id)"><i class="fa fa-trash"></i></td>
@@ -91,5 +90,4 @@
   </div>
 </div>
 <!-- ##### Main Content Wrapper End ##### -->
-<app-newsletter></app-newsletter>
 <app-footer></app-footer>

@@ -23,6 +23,7 @@ import { CategoryCreateComponent } from './categories/category-create/category-c
 import { CategoryEditComponent } from './categories/category-edit/category-edit.component';
 import { CategoryDeleteComponent } from './categories/category-delete/category-delete.component';
 import { ProductEditComponent } from './product/product-edit/product-edit.component';
+import { OrderEditComponent } from './order/order-edit/order-edit.component';
 
 
 
@@ -44,7 +45,8 @@ import { ProductEditComponent } from './product/product-edit/product-edit.compon
     CategoryCreateComponent,
     CategoryEditComponent,
     CategoryDeleteComponent,
-    ProductEditComponent],
+    ProductEditComponent,
+    OrderEditComponent],
   exports: [
     AdminComponent,
     FooterComponent,

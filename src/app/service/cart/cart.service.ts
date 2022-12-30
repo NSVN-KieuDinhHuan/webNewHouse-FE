@@ -49,6 +49,9 @@ export class CartService {
     return this.httpClient.get(`${API_URL}/carts/users/${currentUserId}`);
   }
 
+  emptyCart(id:number){
+     return this.httpClient.get(`${API_URL}/delete/cart/cart-group/${id}`);
+   }
 
 
 

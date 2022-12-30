@@ -94,7 +94,8 @@ export class CheckoutComponent implements OnInit {
           userPhone:user.phone,
           status:0,
         }
-        this.orderService.saveOrderGroup(orderGroupDto).subscribe((res) => {
+        this.orderService.saveOrderGroup(orderGroupDto).subscribe((res ) => {
+          let orderGroup:OrderGroupDto=res;
           let orderDtoList = [];
           for (let i = 0; i < this.cartDetailList.length; i++) {
             const order: Order = {
@@ -108,6 +109,9 @@ export class CheckoutComponent implements OnInit {
 
           this.orderService.saveOrder(orderDtoList).subscribe((res) => {
             this.notificationService.showMessage('success', "Đặt hàng thành công");
+            this.cartService.emptyCart(this.cartId).subscribe((res) => {
+              this.router.navigateByUrl('newhouse/history');
+            })
           })
         })
 
@@ -146,6 +150,9 @@ export class CheckoutComponent implements OnInit {
     }
   }
 
+  makeEmptyCart() {
+
+  }
   getAllDishes() {
     this.dishService.findAll().subscribe((res) => {
       this.ProductList = (<Dish[]> res);

@@ -47,30 +47,30 @@
               <thead class="text-center">
               <tr>
                 <th style="max-width: 5%;"># </th>
-                <th style="max-width: 14%;" >Ảnh</th>
+                <th style="max-width: 15%;" >Ảnh</th>
                 <th style="min-width: 30%;">Tên sản phẩm</th>
-                <th style="max-width: 15%;">Giá(VND)</th>
-                <th style="max-width: 25%;" >Số Lượng</th>
+                <th style="max-width: 20%;">Giá(VND)</th>
+                <th style="max-width: 20%;" >Số Lượng</th>
                 <th style="max-width: 10%;" >Xóa</th>
               </tr>
               </thead>
               <tbody class="text-center">
               <tr *ngFor="let cartDetail of cartDetailList;index as i">
                 <td style="max-width: 5%;">{{i+1}}</td>
-                <td class="border-danger" style="max-width: 14%;">
+                <td class="border-danger" style="max-width: 15%;">
                   <a href="#"><img src="{{imgUrl}}{{cartDetail.dish.image01}}" alt="Product" width="50px"></a>
                 </td>
                 <td class="cart_product_desc" style="min-width: 30%;">
                   <h6>{{cartDetail.dish.name}}</h6>
                 </td>
-                <td class="price" style="max-width: 15%;">
+                <td class="price" style="max-width: 20%;">
                   <span>{{cartDetail.dish.price}}</span>
                 </td>
-                <td class="qty text-center" style="max-width: 25%;">
+                <td class="qty text-center" style="max-width: 20%;">
                   <div class="cart-btn">
                     <div class="quantity">
                       <span class="qty-plus  w-50 h-25" (click)="increaseDishQuantity(i,cartDetail.id)" aria-hidden="false"><i class="fa fa-plus text-center" aria-hidden="true"></i></span>
-                      <input type="text" class="text-center w-25 h-25 border-1 "  id="quantity"  name="quantity" [value]="cartDetail.quantity">
+                      <input type="text" class="text-center w-25 h-25  border-transparent "  id="quantity"  name="quantity" [value]="cartDetail.quantity">
                       <span class="qty-minus" (click)="decreaseDishQuantity(i,cartDetail.id)" aria-hidden="false">  <i class="fa fa-minus font-italic" aria-hidden="true"></i> </span>
                     </div>
 

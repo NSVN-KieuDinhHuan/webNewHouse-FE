@@ -24,8 +24,8 @@ export class ProductListComponent implements OnInit {
   pageDisplay1 = 0;
   categoryId = 0;
   url: string = API_URL;
-  classname = 'grid_sorting_button button d-flex flex-column justify-content-center align-items-center';
-
+  currentItem=0;
+  nameClass= 'grid_sorting_button button d-flex flex-column justify-content-center align-items-center'
   constructor(
     private  js: JsService,
     private dishService: DishService,
@@ -34,59 +34,61 @@ export class ProductListComponent implements OnInit {
     private categoryService: CategoryService) {
     this.js.jsActive();
     this.activatedRoute.paramMap.subscribe((paramMap: ParamMap) => {
-      const id = paramMap.get('category-id');
-    });
-
-  }
+       const id = paramMap.get('category-id');
+        this.getCategoryList();
+        this.getDishByCategory(Number(id));
+      $('#category0').addClass(this.nameClass);
+      });
+    }
 
    ngOnInit() {
      this.pageDisplay1 = 0;
-     this.getCategoryList();
-     this.getDishByCategory(0);
-     this.getAllDishes(this.pageDisplay1);
+
      $('#0').hide();
-     this.classname = 'grid_sorting_button button d-flex flex-column justify-content-center align-items-center';
-     $('#category0').addClass(this.classname + ' active');
-    }
+   }
 
   getAllDishes(page: number) {
     this.dishService.getAll(page).subscribe(res => {
       this.ProductList = res.content;
+      $('#category0').addClass(this.nameClass+' active');
     });
   }
 
+  getCategoryroute(id: number){
+    this.router.navigateByUrl('/newhouse/shop/' + id);
+    $('#category0').addClass(this.nameClass);
+  }
   getDishByCategory(id: number) {
+    this.categoryId=id;
+    this.getCategoryroute(id)
+
     if (id === 0) {
-     this.getAllDishes(0);
-     $('#category0').addClass(this.classname + ' active');
-     this.categoryId = 0;
-   } else {
-      $('#cate' + id).addClass(this.classname + ' active');
-      if (this.categoryId === 0) {
-        $('#category0').addClass(this.classname);
-      } else {
-        $('#cate' + this.categoryId).addClass(this.classname);
-      }
+      this.getAllDishes(0);
     }
-    // tslint:disable-next-line:triple-equals
     if (this.categoryId != null && this.categoryId != 0) {
       this.dishService.getDishbyCategoryID(this.categoryId).subscribe(res => {
         if (res) {
           this.ProductList = res;
+          $('#category0').removeClass(this.nameClass+' active').addClass(this.nameClass);
+          this.categories.forEach(x=>{
+
+            $('#cate' +x.id).addClass(this.nameClass);
+          })
+          $('#cate' +id).addClass(this.nameClass+' active');
+
         }
       });
-      this.categoryId = id;
+
     }
   }
 
-
-    getCategoryList() {
+  getCategoryList() {
       this.categoryService.getAllCategory().subscribe(res => {
          this.categories = res;
       });
      }
 
-     nextPage() {
+  nextPage() {
        if (this.ProductList.length < 9) {
          this.pageDisplay1 -= 1;
          $('#2').hide();

@@ -6,6 +6,8 @@ import {ProductDetailComponent} from './product/product-detail/product-detail.co
 import {HomeComponent} from './home/home.component';
 import {CheckoutComponent} from './checkout/checkout.component';
 import {BestSaleComponent} from './best-sale/best-sale.component';
+import {AboutCompannyComponent} from './about-companny/about-companny.component';
+import {HistoryComponent} from './history/history.component';
 
 
 
@@ -38,6 +40,14 @@ const routes: Routes = [
   {
     path: 'bestsale/:product-id',
     component: BestSaleComponent
+  },
+  {
+    path: 'about',
+    component: AboutCompannyComponent
+  },
+  {
+    path: 'history',
+    component: HistoryComponent
   },
 ];
 

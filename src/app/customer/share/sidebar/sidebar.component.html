@@ -10,11 +10,11 @@
   </div>
   <!-- Amado Nav -->
   <nav class="amado-nav">
-    <ul>
-      <li ><a routerLink="/newhouse">Trang chủ</a></li>
-      <li ><a routerLink="/newhouse/shop/0">Sản Phẩm</a></li>
-      <li  ><a routerLink="/newhouse/shop">Bán chạy</a></li>
-      <li ><a routerLink="/newhouse/about">Về Công ty</a></li>
+    <ul class="align-items-center">
+      <li (click)="siderbarActive('sider01')" id="sider01" ><a routerLink="/newhouse">Trang chủ</a></li>
+      <li (click)="siderbarActive('sider02')" id="sider02" ><a routerLink="/newhouse/shop/0">Sản Phẩm</a></li>
+<!--      <li (click)="siderbarActive('sider03')" id="sider03"><a routerLink="/newhouse/shop">Bán chạy</a></li>-->
+      <li (click)="siderbarActive('sider04')" id="sider04" ><a routerLink="/newhouse/about">Về Công ty</a></li>
     </ul>
   </nav>
   <!-- Button Group -->
@@ -23,16 +23,15 @@
   </div>
   <!-- Cart Menu -->
   <div class="cart-fav-search mb-100">
-    <a href="newhouse/cart" class="cart-nav"><img src="assets/img/core-img/cart.png" alt=""> Giỏ hàng <span>({{this.cartLength}})</span></a>
-    <a href="#" class="fav-nav"><img src="assets/img/core-img/favorites.png" alt=""> Đã mua </a>
+    <a href="newhouse/cart" class="cart-nav"><img src="assets/img/core-img/cart.png" alt=""> Giỏ hàng (<span style="color: red">{{cartLengthChild}}</span>)</a>
+    <a routerLink="/newhouse/history" class="fav-nav"><img src="assets/img/core-img/favorites.png" alt=""> Đã mua </a>
     <a href="#" class="search-nav"><img src="assets/img/core-img/search.png" alt=""> Tìm Kiếm</a>
   </div>
   <!-- Social Button -->
+  <h4 class="mb-15"> Liên hệ với chúng tôi</h4>
   <div class="social-info d-flex justify-content-between">
-    <a href="https://zalo.me/0397312493"><img src="assets/img/core-img/cart.png" alt=""></a>
-    <a href="#"><i class="fa fa-instagram" aria-hidden="true"></i></a>
-    <a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a>
-    <a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a>
+    <a href="https://zalo.me/0397312493"><img src="assets/img/core-img/zaloLogo.jpg"  width="50px" alt=""></a>
+    <a href="https://zalo.me/0397312493"><img src="assets/img/core-img/ms_logo.png"  width="45px" alt=""></a>
   </div>
 
 

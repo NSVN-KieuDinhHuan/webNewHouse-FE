@@ -7,15 +7,13 @@ import {CustomerModule} from './customer/customer.module';
 import {JwtInterceptor} from './helper/jwt-interceptor';
 import {ErrorInterceptor} from './helper/error-interceptor';
 import {AdminModule} from './admin/admin.module';
-import { CompanyAboutComponent } from './company-about/company-about.component';
+;
 
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    CompanyAboutComponent,
-
 
   ],
   imports: [

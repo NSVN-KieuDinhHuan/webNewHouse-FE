@@ -11,7 +11,7 @@ import {Dish} from '../../model/dish';
 import {DishService} from '../../service/product/dish.service';
 import {environment} from '../../../environments/environment';
 
-
+declare var Swal: any;
 const IMG_URL = `${environment.urlImage}`;
 @Component({
   selector: 'app-carts-table',
@@ -26,6 +26,7 @@ export class CartsTableComponent implements OnInit {
   quantity = 1;
   billValue = 0;
   imgUrl: string = IMG_URL;
+  cartLength=0;
 
   @Input()
   refreshNum = 0;
@@ -55,6 +56,7 @@ export class CartsTableComponent implements OnInit {
   getAllCart() {
     if (this.cartId != null) {
       this.cartService.getAllCartByCartGroupId(this.cartId).subscribe((res:CartDetailDto[]) => {
+        this.cartLength=res.length;
          this.cartDetailDto=res;
         for (let i = 0; i < this.cartDetailDto.length; i++) {
           for (let j = 0; j < this.ProductList.length; j++) {
@@ -109,11 +111,36 @@ export class CartsTableComponent implements OnInit {
   }
 
   removeDishOfCart(index: number,id:number) {
-    this.cartService.deleteCartById(id).subscribe(
-      (res:CartDetail) => {
-        this.cartDetailList.splice(index,1)
-        this.summaryBill();
-      })
+    Swal.fire({
+      title: 'Bạn có muốn xóa bỏ sản phẩm ra khỏi giỏ hàng?',
+      showDenyButton: true,
+      showCancelButton: true,
+      confirmButtonText: 'Có',
+      denyButtonText: 'Không',
+      customClass: {
+        actions: 'my-actions',
+        cancelButton: 'order-1 right-gap',
+        confirmButton: 'order-2',
+        denyButton: 'order-3',
+      }
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.cartService.deleteCartById(id).subscribe(
+          (res:CartDetail) => {
+            this.cartDetailList.splice(index,1)
+            this.summaryBill();
+            if(this.cartLength>0){
+              this.cartLength -= 1;
+            }
+          })
+        Swal.fire('Đã Xóa!', '', 'success')
+      } else if (result.isDenied) {
+        Swal.fire('Thành công', '', 'info')
+      }
+    })
+
+
+
   }
 
   summaryBill(){

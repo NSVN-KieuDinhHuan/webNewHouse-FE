@@ -16,7 +16,9 @@ import {result} from '../../../model/result';
 import {Order} from '../../../model/order';
 import {OptionService} from '../../../service/option/option.service';
 import {Option} from '../../../model/option';
-
+import {environment} from '../../../../environments/environment';
+declare var $: any;
+const API_URL = `${environment.urlImage}`;
 @Component({
   selector: 'app-order-list',
   templateUrl: './order-list.component.html',
@@ -29,6 +31,7 @@ export class OrderListComponent implements OnInit {
   orderSum:OrderDto[]=[]
   product:Dish[]=[];
   optionList:Option[]=[]
+  imgUrl: string = API_URL;
   constructor(    private  js: JsService,
                   private dishService: DishService,
                   private router: Router,

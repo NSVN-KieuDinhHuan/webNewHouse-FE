@@ -19,6 +19,7 @@ import {OrderDto} from '../../model/orderDto';
 import {OrderGroupDto} from '../../model/OrderGroupDto';
 import {Order} from '../../model/order';
 import {environment} from '../../../environments/environment';
+declare var Swal: any;
 const IMG_URL = `${environment.urlImage}`;
 @Component({
   selector: 'app-checkout',
@@ -43,7 +44,7 @@ export class CheckoutComponent implements OnInit {
   billValue=0;
   currentUser: UserToken = {};
   loggedIn = false;
-
+  cartLength=0;
 
   constructor(private userService: UseService,
               private router: Router,
@@ -108,16 +109,14 @@ export class CheckoutComponent implements OnInit {
           this.orderService.saveOrder(orderDtoList).subscribe((res) => {
             this.notificationService.showMessage('success', "Đặt hàng thành công");
           })
-
-
         })
-
 
       }, error => {
         this.notificationService.showMessage('error', error.error.message);
       });
     }
   }
+
 
   logout() {
     this.authenticationService.logout();
@@ -190,11 +189,36 @@ export class CheckoutComponent implements OnInit {
       })
   }
   removeDishOfCart(index: number,id:number) {
-    this.cartService.deleteCartById(id).subscribe(
-      (res:CartDetail) => {
-        this.cartDetailList.splice(index,1)
-        this.summaryBill();
-      })
+    Swal.fire({
+      title: 'Bạn có muốn xóa bỏ sản phẩm ra khỏi giỏ hàng?',
+      showDenyButton: true,
+      showCancelButton: true,
+      confirmButtonText: 'Có',
+      denyButtonText: 'Không',
+      customClass: {
+        actions: 'my-actions',
+        cancelButton: 'order-1 right-gap',
+        confirmButton: 'order-2',
+        denyButton: 'order-3',
+      }
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.cartService.deleteCartById(id).subscribe(
+          (res:CartDetail) => {
+            this.cartDetailList.splice(index,1)
+            this.summaryBill();
+            if(this.cartLength>0){
+              this.cartLength -= 1;
+            }
+          })
+        Swal.fire('Đã Xóa!', '', 'success')
+      } else if (result.isDenied) {
+        Swal.fire('Thành công', '', 'info')
+      }
+    })
+
+
+
   }
 
   summaryBill(){

@@ -15,28 +15,28 @@
   </div>
 
   <app-sidebar></app-sidebar>
-  <!-- Product Catagories Area Start -->
-<!--  <div class="products-catagories-area clearfix">-->
-<!--    <div class="amado-pro-catagory clearfix">-->
+<!--   Product Catagories Area Start -->
+  <div class="products-catagories-area clearfix">
+    <div class="amado-pro-catagory clearfix">
 
-<!--      &lt;!&ndash; Single Catagory &ndash;&gt;-->
+      <!-- Single Catagory -->
 
-<!--      <div class="single-products-catagory clearfix float-left" *ngFor="let category of categories; index as i">-->
-<!--        <a routerLink="/newhouse/shop/{{category.id}}">-->
-<!--          <img src="{{imgUrl}}{{categories[i].image}}" alt="">-->
-<!--          &lt;!&ndash; Hover Content &ndash;&gt;-->
-<!--          <div class="hover-content">-->
-<!--            <div class="line"></div>-->
-<!--            <p>{{categories[i].name}}</p>-->
-<!--            <h4>{{categories[i].description}}</h4>-->
-<!--          </div>-->
-<!--        </a>-->
-<!--      </div>-->
+      <div class="single-products-catagory clearfix float-left" *ngFor="let category of categories; index as i">
+        <a (click)="getDishByCategory(categories[i].id)">
+          <img src="{{imgUrl}}{{categories[i].image}}" alt="">
+          <!-- Hover Content -->
+          <div class="hover-content">
+            <div class="line"></div>
+            <p>{{categories[i].name}}</p>
+            <h4>{{categories[i].description}}</h4>
+          </div>
+        </a>
+      </div>
 
 
-<!--    </div>-->
-<!--  </div>-->
-  <!-- Product Catagories Area End -->
+    </div>
+  </div>
+<!--   Product Catagories Area End -->
 </div>
 
 <!-- ##### Main Content Wrapper End ##### -->

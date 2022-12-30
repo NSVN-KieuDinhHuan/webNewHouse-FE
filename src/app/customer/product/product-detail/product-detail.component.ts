@@ -14,6 +14,7 @@ import {OptionService} from '../../../service/option/option.service';
 import {OptionGroup} from '../../../model/optionGroup';
 import {Option} from '../../../model/option';
 import {environment} from '../../../../environments/environment';
+import {CartDetail} from '../../../model/cart-detail';
 declare var $: any;
 declare var Swal: any;
 
@@ -39,7 +40,7 @@ export class ProductDetailComponent implements OnInit {
   mainProductImg: string;
   optionAll: Option[];
   length: number;
-
+  cartLength=0;
   constructor(
               private  js: JsService,
               private dishService: DishService,
@@ -51,6 +52,16 @@ export class ProductDetailComponent implements OnInit {
               private cartService: CartService
               ) {
 
+  }
+
+  getAllCartByCartGroupId() {
+    if (this.cartId!=null) {
+      this.cartService.getAllCartByCartGroupId(this.cartId).subscribe((res:CartDetail[]) => {
+        if(res) {
+          this.cartLength = res.length;
+        }
+      });
+    }
   }
 
   ngOnInit() {
@@ -153,6 +164,7 @@ export class ProductDetailComponent implements OnInit {
         cartGroupId : cartId
       };
       this.cartService.addDishToCart(cartDetail).subscribe(() => {
+        this.getAllCartByCartGroupId();
       this.showMessage();
       });
 

@@ -18,6 +18,7 @@ import { CheckoutComponent } from './checkout/checkout.component';
 
 import { AboutCompannyComponent } from './about-companny/about-companny.component';
 import { BestSaleComponent } from './best-sale/best-sale.component';
+import { HistoryComponent } from './history/history.component';
 
 
 
@@ -35,6 +36,7 @@ import { BestSaleComponent } from './best-sale/best-sale.component';
     CheckoutComponent,
     AboutCompannyComponent,
     BestSaleComponent,
+    HistoryComponent,
   ],
   exports: [
     NewsletterComponent,

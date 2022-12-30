@@ -1,0 +1,127 @@
+<app-search></app-search>
+<div class="modal fade" id="modal-primary">
+  <div class="modal-dialog">
+    <div class="modal-content bg-primary">
+      <div class="modal-header">
+        <h4 class="modal-title">Primary Modal</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>One fine body&hellip;</p>
+      </div>
+      <div class="modal-footer justify-content-between">
+        <button type="button" class="btn btn-outline-light" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-outline-light">Save changes</button>
+      </div>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+<!-- ##### Main Content Wrapper Start ##### -->
+<div class="main-content-wrapper d-flex clearfix">
+
+  <!-- Mobile Nav (max width 767px)-->
+  <div class="mobile-nav">
+    <!-- Navbar Brand -->
+    <div class="amado-navbar-brand">
+      <a href="index.html"><img src="assets/img/core-img/logo_newhouse_long.jpg" alt=""></a>
+    </div>
+    <!-- Navbar Toggler -->
+    <div class="amado-navbar-toggler">
+      <span></span><span></span><span></span>
+    </div>
+  </div>
+
+  <app-sidebar></app-sidebar>
+  <div class="products-catagories-area clearfix  mt-100">
+    <div class="amado-pro-catagory clearfix">
+
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1>Lịch sử</h1>
+          </div>
+        </div>
+      </div><!-- /.container-fluid -->
+
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+      <div class="container-fluid">
+        <!-- /.row -->
+        <div class="row">
+          <div class="col-lg-3">
+            <div class="card">
+              <div class="card-body" *ngIf="user!=null">
+                <h4 class="card-title">Thông tin </h4>
+                <p class="card-text"></p>
+                <p class="card-text">Họ và tên: {{user.username}}</p>
+                <p class="card-text">Email: {{user.email}}</p>
+                <p class="card-text">Số Điện thoại: {{user.phone}}</p>
+                <p class="card-text">Địa chỉ: {{user.address}}</p>
+
+              </div>
+            </div>
+
+          </div>
+          <div class="col-9">
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title">Lịch sử đặt hàng</h3>
+              </div>
+              <!-- /.card-header -->
+              <div class="card-body">
+                <table id="example1" class="table table-bordered table-striped">
+                  <thead>
+                  <tr>
+                    <th>STT</th>
+                    <th>Ảnh</th>
+                    <th>Tên</th>
+                    <th>số lượng</th>
+                    <th>Giá</th>
+                    <th>ngày đặt</th>
+                    <th>giao hàng</th>
+                    <th>Trạng thái</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <tr *ngFor="let order of orderSumUser;index as i">
+                    <td>{{i+1}}</td>
+                    <td><img src="{{imgUrl}}{{order.product.image01}}" alt="" width="50px"></td>
+                    <td>{{order.product.name}}
+                    </td>
+                    <td>{{order.quantity}}</td>
+                    <td>{{order.product.price}}</td>
+                    <td>{{order.CreateDate}}</td>
+                    <td>COD</td>
+                    <td>{{order.status}}</td>
+                  </tr>
+                </table>
+              </div>
+              <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+
+          </div>
+
+          <!-- /.col -->
+        </div>
+
+        <!-- /.row -->
+      </div><!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+
+    </div>
+  </div>
+</div>
+<!-- ##### Main Content Wrapper End ##### -->
+<app-footer></app-footer>
+
+

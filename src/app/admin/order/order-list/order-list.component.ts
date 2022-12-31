@@ -33,15 +33,15 @@ export class OrderListComponent implements OnInit {
   optionList:Option[]=[]
   imgUrl: string = API_URL;
   statusList =[{
-    id:0,
+    status:0,
     name:"Chờ giao"
   },
     {
-      id:1,
+      status:1,
       name:"Đã giao"
     },
     {
-      id:2,
+      status:2,
       name:"hủy đơn"
     },
   ]
@@ -74,11 +74,7 @@ export class OrderListComponent implements OnInit {
     for (let i = 0; i < this.orderList.length; i++) {
         let getProduct=this.product.filter(x => x.id==this.orderList[i].dishId)[0]
        let status="chờ giao";
-      for (let j = 0; j < this.statusList.length; j++) {
-        if(this.statusList[i].id==this.orderList[i].orderGroup.status){
-          status =this.statusList[i].name;
-        }
-      }
+
 
         let ordersumDetail: OrderDto = {
           user: this.orderList[i].orderGroup.user,

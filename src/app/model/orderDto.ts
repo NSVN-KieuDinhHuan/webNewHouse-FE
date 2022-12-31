@@ -9,5 +9,5 @@ export interface OrderDto {
   optionList:Option[],
   quantity:number,
   CreateDate:String,
-  status: number
+  status: string,
 }

@@ -23,6 +23,19 @@ export class OrderEditComponent implements OnInit {
   orderGroups:OrderGroup[];
   orderGroup:OrderGroup
   optionGroupList:OptionGroup[]
+  statusList =[{
+    id:0,
+    name:"Chờ giao"
+  },
+    {
+      id:1,
+      name:"Đã giao"
+    },
+    {
+      id:2,
+      name:"hủy đơn"
+    },
+  ]
   constructor(private js: JsService,
               private dishService: DishService,
               private activatedRoute : ActivatedRoute,
@@ -39,7 +52,6 @@ export class OrderEditComponent implements OnInit {
     })
   }
   ngOnInit() {
-
 
   }
 

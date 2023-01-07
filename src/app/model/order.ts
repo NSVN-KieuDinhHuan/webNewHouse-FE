@@ -5,5 +5,5 @@ export interface Order {
   dishId?: number;
   quantity?: number;
   optionList?: Option[];
-  orderGroup?: OrderGroup
+  orderGroup?: OrderGroup;
 }

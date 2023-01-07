@@ -21,7 +21,7 @@ jQuery(document).ready(function($)
 {
 	"use strict";
 
-	/* 
+	/*
 
 	1. Vars and Inits
 
@@ -54,7 +54,7 @@ jQuery(document).ready(function($)
 	initFavorite();
 	initTabs();
 
-	/* 
+	/*
 
 	2. Set Header
 
@@ -90,7 +90,7 @@ jQuery(document).ready(function($)
 		}
 	}
 
-	/* 
+	/*
 
 	3. Init Menu
 
@@ -153,7 +153,7 @@ jQuery(document).ready(function($)
 					    	panel.style.maxHeight = panel.scrollHeight + "px";
 					    }
 					}
-				}	
+				}
 			}
 		}
 	}
@@ -173,7 +173,7 @@ jQuery(document).ready(function($)
 		menuActive = false;
 	}
 
-	/* 
+	/*
 
 	4. Init Thumbnail
 
@@ -197,10 +197,10 @@ jQuery(document).ready(function($)
 					singleImage.css('background-image', 'url(' + img + ')');
 				});
 			});
-		}	
+		}
 	}
 
-	/* 
+	/*
 
 	5. Init Quantity
 
@@ -231,7 +231,7 @@ jQuery(document).ready(function($)
 		}
 	}
 
-	/* 
+	/*
 
 	6. Init Star Rating
 
@@ -260,13 +260,13 @@ jQuery(document).ready(function($)
 					{
 						$(stars[x]).find('i').removeClass('fa-star-o');
 						$(stars[x]).find('i').addClass('fa-star');
-					};
+					}
 				});
 			});
 		}
 	}
 
-	/* 
+	/*
 
 	7. Init Favorite
 
@@ -285,7 +285,7 @@ jQuery(document).ready(function($)
 		}
 	}
 
-	/* 
+	/*
 
 	8. Init Tabs
 

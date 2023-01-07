@@ -87,7 +87,6 @@ export class OrderListComponent implements OnInit {
         this.orderSum.push(ordersumDetail);
     }
 
-
   })
 }
 

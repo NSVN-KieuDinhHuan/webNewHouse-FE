@@ -7,7 +7,7 @@ import {CustomerModule} from './customer/customer.module';
 import {JwtInterceptor} from './helper/jwt-interceptor';
 import {ErrorInterceptor} from './helper/error-interceptor';
 import {AdminModule} from './admin/admin.module';
-;
+
 
 
 

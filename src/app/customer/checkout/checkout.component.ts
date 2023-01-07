@@ -19,6 +19,7 @@ import {OrderDto} from '../../model/orderDto';
 import {OrderGroupDto} from '../../model/OrderGroupDto';
 import {Order} from '../../model/order';
 import {environment} from '../../../environments/environment';
+import {OrderGroup} from '../../model/OrderGroup';
 declare var Swal: any;
 const IMG_URL = `${environment.urlImage}`;
 @Component({
@@ -94,8 +95,7 @@ export class CheckoutComponent implements OnInit {
           userPhone:user.phone,
           status:0,
         }
-        this.orderService.saveOrderGroup(orderGroupDto).subscribe((res ) => {
-          let orderGroup:OrderGroupDto=res;
+        this.orderService.saveOrderGroup(orderGroupDto).subscribe((res: OrderGroup ) => {
           let orderDtoList = [];
           for (let i = 0; i < this.cartDetailList.length; i++) {
             const order: Order = {
